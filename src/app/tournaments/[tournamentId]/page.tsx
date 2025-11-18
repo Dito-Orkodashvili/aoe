@@ -6,7 +6,7 @@ import { Trophy, Calendar, Users, Crown, Home, ArrowLeft, Award, Target } from "
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 
-const TournamentDetail = () => {
+const TournamentDetails = () => {
     const tournament = {
         title: "Autumn Championship 2024",
         date: "November 10, 2024",
@@ -84,7 +84,7 @@ const TournamentDetail = () => {
             {/* Header with Navigation */}
             <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-40">
                 <div className="container mx-auto max-w-6xl px-4 py-4 flex justify-between items-center">
-                    <Link href="/" className="flex items-center gap-2 text-xl font-bold text-foreground hover:text-primary transition-colors">
+                    <Link href="/public" className="flex items-center gap-2 text-xl font-bold text-foreground hover:text-primary transition-colors">
                         <Crown className="w-6 h-6" />
                         Georgian AoE II
                     </Link>
@@ -279,4 +279,4 @@ const TournamentDetail = () => {
     );
 };
 
-export default TournamentDetail;
+export default TournamentDetails;
