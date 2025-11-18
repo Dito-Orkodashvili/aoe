@@ -172,7 +172,7 @@ export default function Tournaments() {
                                             <p className="text-xl font-bold text-secondary">{tournament.prize}</p>
                                         </div>
                                         <div className="text-right">
-                                            <Link href={`/tournament/${index + 1}`}>
+                                            <Link href={`/tournaments/${index + 1}`}>
                                                 <Button variant="outline" size="sm" className="gap-2">
                                                     View Details
                                                     <ArrowRight className="w-4 h-4" />
