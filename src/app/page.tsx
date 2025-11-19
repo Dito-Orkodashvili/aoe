@@ -63,7 +63,11 @@ export default function Home() {
                       <Card className="border-2 hover:border-primary transition-all hover-scale">
                           <CardHeader>
                               <Shield className="w-12 h-12 text-primary mb-4" />
-                              <CardTitle>აქტიური ქომუნითი</CardTitle>
+                              <CardTitle>
+                                  <Link href="/players" className="hover:underline">
+                                    აქტიური ქომუნითი
+                                  </Link>
+                                </CardTitle>
                               <CardDescription>
                                   ემეგობრე ქართველ მოთამაშეებს, გაუზიარე სტრატეგიები და გააუმჯობესე შენი თამაში
                               </CardDescription>
