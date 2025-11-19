@@ -60,6 +60,28 @@ const players = [
         totalGames: 265,
         image: "players/guramata.png",
     },
+    {
+        id: 6,
+        name: "Zviad",
+        nickname: "zv",
+        elo: 2050,
+        rank: 6,
+        favoriteCiv: "Mongols",
+        winRate: 63,
+        totalGames: 4450,
+        image: "players/zv.png",
+    },
+    {
+        id: 7,
+        name: "Misha",
+        nickname: "Misha_Winemaker",
+        elo: 1961,
+        rank: 7,
+        favoriteCiv: "Berbers",
+        winRate: 100,
+        totalGames: 103,
+        image: "players/misha_winemaker.png",
+    },
 ];
 
 const Players = () => {
