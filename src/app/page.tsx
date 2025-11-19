@@ -1,17 +1,24 @@
-"use client"
 import {ThemeToggle} from "@/components/theme-toggle";
 import {Castle, Crown, Shield, Swords, Trophy, Users} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {createClient} from "@/lib/supabase/server";
+import {Navigation} from "@/components/navigation";
 
-export default function Home() {
+
+export default async function Home() {
+
+    const supabase = await createClient()
+
+    const { data: { user } } = await supabase.auth.getUser()
+    console.log("authedUser", user)
+
   return (
       <div className="min-h-screen bg-background">
+          <Navigation />
           {/* Theme Toggle */}
-          <div className="fixed top-4 right-4 z-50">
-              <ThemeToggle />
-          </div>
+
 
           {/* Hero Section */}
           <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-20 px-4">

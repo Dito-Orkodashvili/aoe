@@ -4,8 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Trophy, Calendar, Users, Crown, Home, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { createClient } from '@/lib/supabase/server';
+import {Navigation} from "@/components/navigation";
 
-export default function Tournaments() {
+export default async function Tournaments() {
+
+    const supabase = await createClient();
+    const { data: tournaments } = await supabase.from("tournament").select();
+
+
+    console.log(tournaments)
+
     const upcomingTournaments = [
         {
             title: "Georgian Winter Championship 2024",
@@ -59,24 +68,7 @@ export default function Tournaments() {
 
     return (
         <div className="min-h-screen bg-background">
-            {/* Header with Navigation */}
-            <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-40">
-                <div className="container mx-auto max-w-6xl px-4 py-4 flex justify-between items-center">
-                    <Link href="/" className="flex items-center gap-2 text-xl font-bold text-foreground hover:text-primary transition-colors">
-                        <Crown className="w-6 h-6" />
-                        ქართული AoE II
-                    </Link>
-                    <div className="flex items-center gap-4">
-                        <Link href="/">
-                            <Button variant="ghost" size="sm" className="gap-2">
-                                <Home className="w-4 h-4" />
-                                მთავარი
-                            </Button>
-                        </Link>
-                        <ThemeToggle />
-                    </div>
-                </div>
-            </header>
+            <Navigation />
 
             {/* Hero Section */}
             <section className="py-16 px-4 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
