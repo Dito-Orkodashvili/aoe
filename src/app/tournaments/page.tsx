@@ -6,6 +6,24 @@ import { Trophy, Calendar, Users, Crown, Home, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function Tournaments() {
+    const currentTournament = [
+        {
+            title: "Georgian National Cup",
+            date: "November 10, 2024",
+            expected winner: "Purple",
+            prize: "Mouse pad",
+            participants: (
+                                <a
+                                    href="https://aoe-nu.vercel.app/players"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="underline"
+                                >
+                                    8 qualified Players
+                                </a>
+                            ),
+        },
+
     const upcomingTournaments = [
         {
             title: "Georgian Winter Championship 2024",
