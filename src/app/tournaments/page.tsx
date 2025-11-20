@@ -7,18 +7,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { Trophy, Calendar, Users, Crown, Home, ArrowRight } from "lucide-react";
+import { Trophy, Calendar, Users, Crown, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
 import { Navigation } from "@/components/navigation";
 
 export default async function Tournaments() {
-  const supabase = await createClient();
-  const { data: tournaments } = await supabase.from("tournament").select();
-
-  console.log(tournaments);
-
   const upcomingTournaments = [
     {
       title: "Georgian Winter Championship 2024",
