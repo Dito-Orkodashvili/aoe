@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useToast, toast } from "@/hooks/use-toast";
 
