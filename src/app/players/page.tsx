@@ -3,15 +3,14 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Navigation } from "@/components/navigation";
 import { Trophy, Target, Swords } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
+
+export const dynamic = "force-dynamic";
 
 const Players = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
-  const { data: players, error } = await supabase.from("players").select();
-
-  console.log(players);
-  console.log(error);
+  const { data: players } = await supabase.from("players").select();
 
   return (
     <div className="min-h-screen bg-background">
