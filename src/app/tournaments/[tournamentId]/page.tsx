@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,19 +6,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ThemeToggle } from "@/components/theme-toggle";
-import {
-  Trophy,
-  Calendar,
-  Users,
-  Crown,
-  Home,
-  ArrowLeft,
-  Award,
-  Target,
-} from "lucide-react";
+import { Trophy, Calendar, Users, Award, Target } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Link from "next/link";
+import { Hero } from "@/components/sections/hero";
 
 const TournamentDetails = () => {
   const tournament = {
@@ -202,78 +191,33 @@ const TournamentDetails = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header with Navigation */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-40">
-        <div className="container mx-auto max-w-6xl px-4 py-4 flex justify-between items-center">
-          <Link
-            href="/public"
-            className="flex items-center gap-2 text-xl font-bold text-foreground hover:text-primary transition-colors"
-          >
-            <Crown className="w-6 h-6" />
-            Georgian AoE II
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/tournaments">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <ArrowLeft className="w-4 h-4" />
-                Tournaments
-              </Button>
-            </Link>
-            <Link href="/public">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <Home className="w-4 h-4" />
-                Home
-              </Button>
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
+    <>
       {/* Tournament Header */}
-      <section className="py-12 px-4 bg-gradient-to-br from-primary/10 via-background to-secondary/10 border-b border-border">
-        <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <Trophy className="w-10 h-10 text-primary" />
-                <h1 className="text-4xl md:text-5xl font-bold text-foreground">
-                  {tournament.title}
-                </h1>
-              </div>
-              <div className="flex flex-wrap gap-4 text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  {tournament.date}
-                </div>
-                <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4" />
-                  {tournament.participants} Players
-                </div>
-                <div className="flex items-center gap-2">
-                  <Target className="w-4 h-4" />
-                  {tournament.format}
-                </div>
-              </div>
+      <Hero>
+        <div className="flex justify-center mb-6">
+          <Trophy className="w-16 h-16 text-primary mx-auto animate-fade-in" />
+        </div>
+        <h1 className="text-5xl md:text-6xl font-bold text-foreground animate-fade-in">
+          {tournament.title}
+        </h1>
+        <div className="flex w-full justify-center">
+          <div className="flex flex-wrap gap-4 text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              {tournament.date}
             </div>
-            <Card className="border-2 border-accent/50 bg-accent/5">
-              <CardContent className="pt-6 text-center">
-                <Crown className="w-8 h-8 text-accent mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground mb-1">Champion</p>
-                <p className="text-2xl font-bold text-accent">
-                  {tournament.winner}
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Prize: {tournament.prize}
-                </p>
-              </CardContent>
-            </Card>
+            <div className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              {tournament.participants} Players
+            </div>
+            <div className="flex items-center gap-2">
+              <Target className="w-4 h-4" />
+              {tournament.format}
+            </div>
           </div>
         </div>
-      </section>
+      </Hero>
 
-      {/* Tournament Details Tabs */}
       <section className="py-12 px-4">
         <div className="container mx-auto max-w-6xl">
           <Tabs defaultValue="bracket" className="w-full">
@@ -421,14 +365,7 @@ const TournamentDetails = () => {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-border py-8 px-4">
-        <div className="container mx-auto max-w-6xl text-center text-muted-foreground">
-          <p>© 2024 Georgian AoE II Community. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
+    </>
   );
 };
 

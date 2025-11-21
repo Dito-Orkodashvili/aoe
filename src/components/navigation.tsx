@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
 import Link from "next/link";
 import type { User as UserType } from "@supabase/auth-js";
-import { Crown, Menu, User, LogOut } from "lucide-react";
+import { Menu, User, LogOut, Swords } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -54,7 +54,7 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
             href="/"
             className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
           >
-            <Crown className="w-6 h-6" />
+            <Swords className="w-6 h-6" />
             <span className="font-bold text-lg">Georgian AoE II</span>
           </Link>
 

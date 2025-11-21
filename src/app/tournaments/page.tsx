@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Trophy, Calendar, Users, Crown, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Navigation } from "@/components/navigation";
+import { Hero } from "@/components/sections/hero";
 
 export default async function Tournaments() {
   const upcomingTournaments = [
@@ -64,23 +65,19 @@ export default async function Tournaments() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-
-      {/* Hero Section */}
-      <section className="py-16 px-4 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
-        <div className="container mx-auto max-w-6xl text-center space-y-4">
+    <>
+      <Hero>
+        <div className="flex justify-center mb-6">
           <Trophy className="w-16 h-16 text-primary mx-auto animate-fade-in" />
-          <h1 className="text-5xl md:text-6xl font-bold text-foreground">
-            ტურნირები
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            შეერკინე საუკეთესო მოთამაშეებს და დაიმკვიდრე შენი ადგილი ისტორიაში!
-          </p>
         </div>
-      </section>
+        <h1 className="text-5xl md:text-6xl font-bold text-foreground animate-fade-in">
+          ტურნირები
+        </h1>
+        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in">
+          შეერკინე საუკეთესო მოთამაშეებს და დაიმკვიდრე შენი ადგილი ისტორიაში!
+        </p>
+      </Hero>
 
-      {/* Upcoming Tournaments */}
       <section className="py-16 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="flex items-center gap-3 mb-8">
@@ -258,13 +255,6 @@ export default async function Tournaments() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-border py-8 px-4">
-        <div className="container mx-auto max-w-6xl text-center text-muted-foreground">
-          <p>© 2024 Georgian AoE II Community. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
+    </>
   );
 }
