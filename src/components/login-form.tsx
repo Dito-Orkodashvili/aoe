@@ -25,9 +25,16 @@ export function LoginForm({
     setIsLoading(true);
     setError(null);
 
+    const isProd = process.env.NODE_ENV === "production";
+
+    const callbackUrl = isProd
+      ? "https://aoe-nu.vercel.app/"
+      : "http://localhost:3000";
+
     try {
       await supabase.auth.signInWithOAuth({
         provider: "google",
+        options: { redirectTo: callbackUrl },
       });
 
       if (error) throw error;

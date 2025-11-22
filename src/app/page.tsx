@@ -49,7 +49,6 @@ export default async function Home() {
           </Link>
         </div>
       </Hero>
-      {/* Features Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
@@ -96,7 +95,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
       <section className="py-20 px-4 bg-muted/50">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-3 gap-8 text-center">

@@ -1,9 +1,10 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Trophy, Users, Target, Swords } from "lucide-react";
+import { Trophy, Target, Swords } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Hero } from "@/components/sections/hero";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +17,13 @@ const Players = async () => {
     <>
       <Hero>
         <div className="flex justify-center mb-6">
-          <Users className="w-16 h-16 text-primary mx-auto animate-fade-in" />
+          <Image
+            src="/teutonic_knight.png"
+            alt="Teutonic knight"
+            width={80}
+            height={111}
+            className="animate-fade-in"
+          />
         </div>
         <h1 className="text-5xl md:text-6xl font-bold text-foreground animate-fade-in">
           Georgian AoE II Players

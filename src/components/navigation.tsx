@@ -18,6 +18,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { getInitials } from "@/lib/utils";
 
 interface NavigationProps {
   authedUser?: UserType | null;
@@ -26,14 +27,6 @@ interface NavigationProps {
 export const Navigation = ({ authedUser }: NavigationProps) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
-  };
 
   const logout = async () => {
     const supabase = createClient();
@@ -91,7 +84,7 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                         alt={authedUserName}
                       />
                       <AvatarFallback className="bg-primary text-primary-foreground">
-                        {getInitials(authedUser.user_metadata.full_name)}
+                        {getInitials(authedUserName)}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
@@ -108,9 +101,11 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile/settings">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profile</span>
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={logout} asChild>
