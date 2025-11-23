@@ -54,22 +54,16 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <Link
-              href="/"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Home
-            </Link>
-            <Link
               href="/tournaments"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              Tournaments
+              ტურნირები
             </Link>
             <Link
               href="/players"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              Players
+              მეომრები
             </Link>
             {authedUser ? (
               <DropdownMenu>
