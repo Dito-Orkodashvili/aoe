@@ -1,37 +1,33 @@
--- Create profiles table
+CREATE TYPE user_role AS ENUM ('user', 'admin');
+
 CREATE TABLE public.profiles (
                                  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-                                 full_name TEXT,
                                  avatar_url TEXT,
+                                 role user_role NOT NULL DEFAULT 'user',
                                  created_at TIMESTAMPTZ DEFAULT NOW(),
                                  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Enable RLS
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
--- Allow users to view their own profile
 CREATE POLICY "Users can view their own profile"
 ON public.profiles
 FOR SELECT
 USING (auth.uid() = id);
 
--- Allow users to update their own profile
 CREATE POLICY "Users can update their own profile"
 ON public.profiles
 FOR UPDATE
-USING (auth.uid() = id);
+                 USING (auth.uid() = id);
 
--- Make profiles publicly readable (remove if you want private profiles)
-CREATE POLICY "Public profiles are readable"
+CREATE POLICY "Public profile readable"
 ON public.profiles
 FOR SELECT
 USING (TRUE);
 
--- Create function to insert profile on user signup
 CREATE FUNCTION public.handle_new_user()
-    RETURNS TRIGGER
-    LANGUAGE plpgsql
+RETURNS TRIGGER
+LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
@@ -41,7 +37,6 @@ RETURN NEW;
 END;
 $$;
 
--- Trigger to auto-create profile
 CREATE TRIGGER on_auth_user_created
 AFTER INSERT ON auth.users
 FOR EACH ROW

@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Navigation } from "@/components/navigation";
-import { getUser } from "@/lib/supabase/get-user";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,8 +24,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getUser();
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -34,7 +31,7 @@ export default async function RootLayout({
       >
         <div className="min-h-screen bg-background">
           <Providers>
-            <Navigation authedUser={user} />
+            <Navigation />
             {children}
           </Providers>
         </div>

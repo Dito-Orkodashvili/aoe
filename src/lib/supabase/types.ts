@@ -165,8 +165,62 @@ export type Database = {
           },
         ]
       }
+      player_stats: {
+        Row: {
+          aoe_profile_id: string | null
+          elo_1v1: number | null
+          elo_team: number | null
+          games_played_1v1: number | null
+          games_played_team: number | null
+          id: string
+          last_sync: string
+          raw: Json | null
+          win_streak_1v1: number | null
+          win_streak_team: number | null
+          wins_1v1: number | null
+          wins_team: number | null
+        }
+        Insert: {
+          aoe_profile_id?: string | null
+          elo_1v1?: number | null
+          elo_team?: number | null
+          games_played_1v1?: number | null
+          games_played_team?: number | null
+          id?: string
+          last_sync?: string
+          raw?: Json | null
+          win_streak_1v1?: number | null
+          win_streak_team?: number | null
+          wins_1v1?: number | null
+          wins_team?: number | null
+        }
+        Update: {
+          aoe_profile_id?: string | null
+          elo_1v1?: number | null
+          elo_team?: number | null
+          games_played_1v1?: number | null
+          games_played_team?: number | null
+          id?: string
+          last_sync?: string
+          raw?: Json | null
+          win_streak_1v1?: number | null
+          win_streak_team?: number | null
+          wins_1v1?: number | null
+          wins_team?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_player_stats_profile"
+            columns: ["aoe_profile_id"]
+            isOneToOne: true
+            referencedRelation: "players"
+            referencedColumns: ["aoe_profile_id"]
+          },
+        ]
+      }
       players: {
         Row: {
+          aoe_profile_id: string | null
           created_at: string | null
           elo_local: number | null
           elo_official: number | null
@@ -181,6 +235,7 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          aoe_profile_id?: string | null
           created_at?: string | null
           elo_local?: number | null
           elo_official?: number | null
@@ -195,6 +250,7 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          aoe_profile_id?: string | null
           created_at?: string | null
           elo_local?: number | null
           elo_official?: number | null
@@ -214,22 +270,22 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string | null
-          full_name: string | null
           id: string
+          role: Database["public"]["Enums"]["user_role"]
           updated_at: string | null
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string | null
-          full_name?: string | null
           id: string
+          role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string | null
         }
         Update: {
           avatar_url?: string | null
           created_at?: string | null
-          full_name?: string | null
           id?: string
+          role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string | null
         }
         Relationships: []
@@ -353,6 +409,7 @@ export type Database = {
     }
     Enums: {
       player_rank: "bronze" | "silver" | "gold"
+      user_role: "user" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -481,6 +538,7 @@ export const Constants = {
   public: {
     Enums: {
       player_rank: ["bronze", "silver", "gold"],
+      user_role: ["user", "admin"],
     },
   },
 } as const
