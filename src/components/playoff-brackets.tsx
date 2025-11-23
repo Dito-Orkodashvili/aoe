@@ -1,4 +1,5 @@
 import { MatchCard } from "@/components/match-card";
+import { Card } from "@/components/ui/card";
 
 export const PlayoffBrackets = () => {
   const finalBracket = {
@@ -53,7 +54,7 @@ export const PlayoffBrackets = () => {
     },
   ];
   return (
-    <div className="m-2 p-4">
+    <Card className="p-4">
       <div className="mb-4 grid grid-flow-col grid-cols-3 items-center text-center text-sm font-bold uppercase">
         <div>Quarterfinals</div>
         <div>Semifinals</div>
@@ -74,6 +75,6 @@ export const PlayoffBrackets = () => {
           <MatchCard match={finalBracket} />
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
