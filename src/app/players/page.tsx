@@ -1,17 +1,16 @@
-import { createClient } from "@/lib/supabase/server";
 import { Hero } from "@/components/sections/hero";
 import Image from "next/image";
 import { PlayersList } from "@/components/players-list";
+import { getPlayers } from "@/lib/supabase/get-players";
+import { getPlayersStats, mergePlayersWithStats } from "@/lib/get-player-stats";
 
 export const dynamic = "force-dynamic";
 
 const Players = async () => {
-  const supabase = await createClient();
+  const players = await getPlayers();
+  const stats = await getPlayersStats(players);
 
-  const { data: players } = await supabase.from("players").select(`
-    *,
-    player_stats(*)
-  `);
+  const mergedPlayers = mergePlayersWithStats(players, stats);
 
   return (
     <>
@@ -35,7 +34,7 @@ const Players = async () => {
       </Hero>
 
       <div className="container mx-auto px-4 py-8">
-        {players && <PlayersList players={players} />}
+        {players && <PlayersList players={mergedPlayers} />}
       </div>
     </>
   );

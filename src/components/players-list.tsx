@@ -5,15 +5,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
   Flame,
-  Gamepad2,
   Info,
   LayoutGrid,
   List,
+  Mountain,
   Swords,
   Target,
   Trophy,
 } from "lucide-react";
-import { Tables } from "@/lib/supabase/types";
 import { Button } from "@/components/ui/button";
 import { useMemo, useState } from "react";
 import {
@@ -24,13 +23,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-type Player = Tables<"players"> & {
-  player_stats: Tables<"player_stats"> | null;
-};
+import { PlayerWithStats } from "@/lib/types";
 
 interface PlayerListProps {
-  players: Player[];
+  players: PlayerWithStats[];
 }
 
 export const PlayersList = ({ players }: PlayerListProps) => {
@@ -39,8 +35,8 @@ export const PlayersList = ({ players }: PlayerListProps) => {
   const sortedPlayers = useMemo(
     () =>
       players?.sort((a, b) => {
-        const eloA = a.player_stats?.elo_1v1 ?? 0;
-        const eloB = b.player_stats?.elo_1v1 ?? 0;
+        const eloA = a.one_v_one_stats?.rating ?? 0;
+        const eloB = b.one_v_one_stats?.rating ?? 0;
 
         return eloB - eloA;
       }),
@@ -109,7 +105,7 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                   <div className="flex items-center gap-2">
                     <Trophy className="w-5 h-5 text-primary" />
                     <span className="font-semibold">
-                      ELO: {player.player_stats?.elo_1v1 ?? "N/A"}
+                      ELO: {player.one_v_one_stats?.rating ?? "N/A"}
                     </span>
                   </div>
 
@@ -117,11 +113,10 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                     <Target className="w-5 h-5 text-primary" />
                     <span className="font-semibold">
                       Wins/Loses:{" "}
-                      {player.player_stats?.wins_1v1 &&
-                      player.player_stats?.games_played_1v1
-                        ? `${player.player_stats?.wins_1v1}/${
-                            player.player_stats?.games_played_1v1 -
-                            player.player_stats?.wins_1v1
+                      {player.one_v_one_stats?.wins &&
+                      player.one_v_one_stats?.losses
+                        ? `${player.one_v_one_stats?.wins}/${
+                            player.one_v_one_stats?.losses
                           }`
                         : "N/A"}
                     </span>
@@ -130,14 +125,15 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                   <div className="flex items-center gap-2">
                     <Flame className="w-5 h-5 text-primary" />
                     <span className="font-semibold">
-                      Win Streak: {player.player_stats?.win_streak_1v1 ?? "N/A"}
+                      Win Streak: {player.one_v_one_stats?.streak ?? "N/A"}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Gamepad2 className="w-5 h-5 text-primary" />
+                    <Mountain className="w-5 h-5 text-primary" />
                     <span className="font-semibold">
-                      Battles: {player.player_stats?.games_played_1v1 ?? "N/A"}
+                      Highest ELO:{" "}
+                      {player.one_v_one_stats?.highestrating ?? "N/A"}
                     </span>
                   </div>
 
@@ -167,7 +163,7 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                 <TableHead>Elo</TableHead>
                 <TableHead>Wins/Loses</TableHead>
                 <TableHead>Win Streak</TableHead>
-                <TableHead>Battles</TableHead>
+                <TableHead>Highest Elo</TableHead>
                 <TableHead>League</TableHead>
                 <TableHead>Favorite Civ</TableHead>
               </TableRow>
@@ -182,22 +178,21 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                     {player.nickname}
                   </TableCell>
                   <TableCell className="font-medium">
-                    {player.player_stats?.elo_1v1 ?? "N/A"}
+                    {player.one_v_one_stats?.rating ?? "N/A"}
                   </TableCell>
                   <TableCell className="font-semibold">
-                    {player.player_stats?.wins_1v1 &&
-                    player.player_stats?.games_played_1v1
-                      ? `${player.player_stats?.wins_1v1}/${
-                          player.player_stats?.games_played_1v1 -
-                          player.player_stats?.wins_1v1
+                    {player.one_v_one_stats?.wins &&
+                    player.one_v_one_stats?.losses
+                      ? `${player.one_v_one_stats?.wins}/${
+                          player.one_v_one_stats?.losses
                         }`
                       : "N/A"}
                   </TableCell>
                   <TableCell className="font-medium">
-                    {player.player_stats?.win_streak_1v1 ?? "N/A"}
+                    {player.one_v_one_stats?.streak ?? "N/A"}
                   </TableCell>
                   <TableCell className="font-medium">
-                    {player.player_stats?.games_played_1v1 ?? "N/A"}
+                    {player.one_v_one_stats?.highestrating ?? "N/A"}
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline">{player.league}</Badge>

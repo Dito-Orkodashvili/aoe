@@ -232,6 +232,7 @@ export type Database = {
           nickname: string
           picture_url: string | null
           region: string | null
+          steam_id: string | null
           user_id: string | null
         }
         Insert: {
@@ -247,6 +248,7 @@ export type Database = {
           nickname: string
           picture_url?: string | null
           region?: string | null
+          steam_id?: string | null
           user_id?: string | null
         }
         Update: {
@@ -262,6 +264,7 @@ export type Database = {
           nickname?: string
           picture_url?: string | null
           region?: string | null
+          steam_id?: string | null
           user_id?: string | null
         }
         Relationships: []
