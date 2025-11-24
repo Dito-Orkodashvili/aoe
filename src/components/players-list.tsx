@@ -49,7 +49,7 @@ export const PlayersList = ({ players }: PlayerListProps) => {
 
   return (
     <div>
-      <div className="flex justify-between mb-6 items-center">
+      <div className="flex justify-between mb-6 items-center gap-4">
         <p className="text-md md:text-xl text-muted-foreground flex gap-3 items-center">
           <span>
             <Info className="text-primary" />
@@ -146,9 +146,9 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                     <span>League: {player.league}</span>
                   </div>
 
-                  <div className="pt-2 border-t border-border">
+                  <div className="pt-2 border-t border-border flex gap-3">
                     <p className="text-sm text-muted-foreground mb-1">
-                      Favorite Civilization
+                      Favorite Civilization:
                     </p>
                     <Badge variant="secondary">{player.fav_civ}</Badge>
                   </div>
