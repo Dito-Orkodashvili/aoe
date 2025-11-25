@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "AOE II Georgia",
     images: [
       {
-        url: "/og/monaspa.png",
+        url: "/og/aoe2.png",
         width: 1200,
         height: 630,
         alt: "AOE2 Georgia Hero Image",
