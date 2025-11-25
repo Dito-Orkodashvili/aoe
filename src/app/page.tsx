@@ -1,4 +1,4 @@
-import { Castle, Shield, Swords, Trophy, Users } from "lucide-react";
+import { Castle, Trophy, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
