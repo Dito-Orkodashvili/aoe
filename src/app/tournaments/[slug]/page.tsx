@@ -106,29 +106,29 @@ const TournamentDetails = async ({
           <h3 className="text-3xl font-bold mb-8 text-center">
             Tournament Statistics
           </h3>
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             <Card>
               <CardContent className="pt-6 text-center">
-                <p className="text-4xl font-bold text-primary mb-2">32</p>
+                <p className="text-4xl font-bold text-primary mb-2">
+                  {tournament.participants.length}
+                </p>
                 <p className="text-muted-foreground">Total Players</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6 text-center">
-                <p className="text-4xl font-bold text-secondary mb-2">31</p>
-                <p className="text-muted-foreground">Matches Played</p>
+                <p className="text-4xl font-bold text-secondary mb-2">
+                  {tournament.matches.length}
+                </p>
+                <p className="text-muted-foreground">
+                  {tournament.prize_pool} GEL
+                </p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6 text-center">
                 <p className="text-4xl font-bold text-accent mb-2">500</p>
                 <p className="text-muted-foreground">Prize Pool (GEL)</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <p className="text-4xl font-bold text-primary mb-2">8h</p>
-                <p className="text-muted-foreground">Duration</p>
               </CardContent>
             </Card>
           </div>
