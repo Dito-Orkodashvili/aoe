@@ -126,9 +126,9 @@ const TournamentDetails = async ({
             <Card>
               <CardContent className="pt-6 text-center">
                 <p className="text-4xl font-bold text-accent mb-2">
-                  {tournament.prize_pool}
+                  {tournament.prize_pool} GEL
                 </p>
-                <p className="text-muted-foreground">Prize Pool (GEL)</p>
+                <p className="text-muted-foreground">Prize Pool</p>
               </CardContent>
             </Card>
           </div>
