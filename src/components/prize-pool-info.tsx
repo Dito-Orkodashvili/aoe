@@ -8,14 +8,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { distributePrizePool } from "@/lib/utils";
 
-const prizePool = [
-  { place: "1st Place", prize: "300 GEL" },
-  { place: "2nd Place", prize: "150 GEL" },
-  { place: "3rd-4th Place", prize: "50 GEL" },
-];
+interface PrizePoolInfoProps {
+  prize: number;
+  participantsCount: number;
+}
 
-export const PrizePoolInfo = () => {
+export const PrizePoolInfo = ({
+  prize,
+  participantsCount,
+}: PrizePoolInfoProps) => {
+  const distribution = distributePrizePool(prize, participantsCount);
+
+  const label = (place: number) => {
+    if (place === 1) return "1st Place";
+    if (place === 2) return "2nd Place";
+    if (place === 3) return "3rd Place";
+    if (place === 4) return "4th Place";
+    return `${place}th Place`;
+  };
+
   return (
     <Card className="flex-1">
       <CardHeader>
@@ -33,11 +46,13 @@ export const PrizePoolInfo = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {prizePool.map((prize, index) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium">{prize.place}</TableCell>
+            {distribution.map((item) => (
+              <TableRow key={item.place}>
+                <TableCell className="font-medium">
+                  {label(item.place)}
+                </TableCell>
                 <TableCell className="text-right font-bold text-secondary">
-                  {prize.prize}
+                  {item.amount} GEL
                 </TableCell>
               </TableRow>
             ))}

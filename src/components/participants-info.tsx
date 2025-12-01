@@ -15,19 +15,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getInitials } from "@/lib/utils";
+import { TTournamentInfo } from "@/lib/supabase/get-tournament-details";
 
-const allParticipants = [
-  { name: "Lucipher", elo: 2100, civ: "Mongols", status: "Champion" },
-  { name: "Archer", elo: 2050, civ: "Britons", status: "Runner-up" },
-  { name: "Sandriko", elo: 2000, civ: "Franks", status: "Semi-Finalist" },
-  { name: "Valchoka", elo: 1780, civ: "Celts", status: "Quarter-Finalist" },
-  { name: "Purple", elo: 1880, civ: "Koreans", status: "Round of 16" },
-  { name: "guramata", elo: 1800, civ: "Ethiopians", status: "Round of 16" },
-  { name: "zv", elo: 1850, civ: "Spanish", status: "Round of 16" },
-  { name: "Dito", elo: 1820, civ: "Huns", status: "Round of 16" },
-];
+interface ParticipantsInfoProps {
+  participants: TTournamentInfo["participants"];
+}
 
-export const ParticipantsInfo = () => {
+export const ParticipantsInfo = ({ participants }: ParticipantsInfoProps) => {
+  console.log("participants", participants);
   return (
     <Card>
       <CardHeader>
@@ -41,26 +38,36 @@ export const ParticipantsInfo = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Player</TableHead>
-              <TableHead>ELO</TableHead>
+              <TableHead>Photo</TableHead>
+              <TableHead>Alias</TableHead>
               <TableHead>Favorite Civ</TableHead>
               <TableHead className="text-right">Result</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {allParticipants.map((player, index) => (
+            {participants.map((participant, index) => (
               <TableRow key={index}>
-                <TableCell className="font-medium">{player.name}</TableCell>
-                <TableCell>{player.elo}</TableCell>
-                <TableCell>{player.civ}</TableCell>
+                <TableCell className="font-medium">
+                  <Avatar>
+                    <AvatarImage
+                      src={participant.player.picture_url ?? ""}
+                      alt={
+                        participant.player.name || participant.player.nickname
+                      }
+                    />
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      {getInitials(
+                        participant.player.name || participant.player.nickname,
+                      )}
+                    </AvatarFallback>
+                  </Avatar>
+                </TableCell>
+                <TableCell className="font-medium">
+                  {participant.player.nickname}
+                </TableCell>
+                <TableCell>{participant.player.fav_civ}</TableCell>
                 <TableCell className="text-right">
-                  <Badge
-                    variant={
-                      player.status === "Champion" ? "default" : "outline"
-                    }
-                  >
-                    {player.status}
-                  </Badge>
+                  <Badge>TBD</Badge>
                 </TableCell>
               </TableRow>
             ))}

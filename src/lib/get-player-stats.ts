@@ -1,10 +1,8 @@
-import { Tables } from "@/lib/supabase/types";
 import { PersonalStatResponse, PlayerWithStats } from "@/lib/types";
-
-type Player = Tables<"players">;
+import { TPlayer } from "@/lib/types/player.types";
 
 export async function getPlayersStats(
-  players: Player[],
+  players: TPlayer[],
 ): Promise<PersonalStatResponse> {
   const profileNames = players
     .filter((p) => p.steam_id)
@@ -20,7 +18,7 @@ export async function getPlayersStats(
 }
 
 export function mergePlayersWithStats(
-  players: Tables<"players">[],
+  players: TPlayer[],
   stats: PersonalStatResponse,
 ): PlayerWithStats[] {
   return players.map((player) => {

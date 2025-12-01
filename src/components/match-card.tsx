@@ -7,34 +7,39 @@ import {
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { clsx } from "clsx";
-
-interface Match {
-  player1: string;
-  player2: string;
-  score1: number;
-  score2: number;
-}
+import { TTournamentInfo } from "@/lib/supabase/get-tournament-details";
 
 interface MatchCardProps {
-  match?: Match;
+  match?: TTournamentInfo["matches"][0];
 }
 
 export const MatchCard = ({ match }: MatchCardProps) => {
+  if (!match) return <p>Match not found!</p>;
+
+  const { player1, player2, player1_score, player2_score } = match;
+
+  const isPlayer1Winning = Boolean(
+    player1_score && player2_score && player1_score > player2_score,
+  );
+  const isPlayer2Winning = Boolean(
+    player1_score && player2_score && player2_score > player1_score,
+  );
+
   return (
-    <Card className="hover:border-primary/50 transition-all mb-4 py-2">
+    <Card className="hover:border-primary/50 transition-all py-2">
       <CardContent className="p-0">
         <div className="flex justify-between items-center gap-4 relative">
           <div className="flex-1">
             <PlayerRow
-              score={match?.score1 ?? 0}
-              player={match?.player1 ?? "TBD"}
-              isWinning={Boolean(match && match.score1 > match.score2)}
+              score={player1_score ?? 0}
+              player={player1?.nickname ?? "TBD"}
+              isWinning={isPlayer1Winning}
             />
             <hr className="h-px my-2 bg-border border-0" />
             <PlayerRow
-              score={match?.score2 ?? 0}
-              player={match?.player2 ?? "TBD"}
-              isWinning={Boolean(match && match.score2 > match.score1)}
+              score={player2_score ?? 0}
+              player={player2?.nickname ?? "TBD"}
+              isWinning={isPlayer2Winning}
             />
           </div>
           <div className="absolute right-14 h-full flex items-center">

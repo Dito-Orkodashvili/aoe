@@ -1,22 +1,28 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Target, Trophy, Users } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Calculator, Calendar, Target, Trophy, Users } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Hero } from "@/components/sections/hero";
-import { PlayoffBrackets } from "@/components/playoff-brackets";
 import { PrizePoolInfo } from "@/components/prize-pool-info";
 import { TournamentInfo } from "@/components/tournament-info";
 import { ParticipantsInfo } from "@/components/participants-info";
+import { notFound } from "next/navigation";
+import { getTournamentDetails } from "@/lib/supabase/get-tournament-details";
+import { formatDate } from "@/lib/utils";
+import { MatchCard } from "@/components/match-card";
 
-const TournamentDetails = () => {
-  const tournament = {
-    title: "Autumn Championship 2024",
-    date: "November 10, 2024",
-    winner: "Purple",
-    prize: "500 GEL",
-    participants: 32,
-    format: "1v1 Single Elimination",
-    map: "Arabia",
-  };
+const TournamentDetails = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
+  const { slug } = await params;
+  const tournament = await getTournamentDetails(slug);
+  console.log("tournament: ", tournament);
+  if (!tournament) {
+    notFound();
+  }
+
+  const isShowmatch = tournament.max_participants === 2;
 
   return (
     <>
@@ -25,21 +31,23 @@ const TournamentDetails = () => {
           <Trophy className="w-16 h-16 text-primary mx-auto animate-fade-in" />
         </div>
         <h1 className="text-5xl md:text-6xl font-bold text-foreground animate-fade-in">
-          {tournament.title}
+          {tournament.name}
         </h1>
         <div className="flex w-full justify-center">
           <div className="flex flex-wrap gap-4 text-muted-foreground">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              {tournament.date}
-            </div>
+              {formatDate(tournament.created_at)}
+            </div>{" "}
+            |
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4" />
-              {tournament.participants} Players
-            </div>
+              {tournament.max_participants} Players
+            </div>{" "}
+            |
             <div className="flex items-center gap-2">
               <Target className="w-4 h-4" />
-              {tournament.format}
+              {isShowmatch ? "Showmatch" : tournament.format}
             </div>
           </div>
         </div>
@@ -47,27 +55,48 @@ const TournamentDetails = () => {
 
       <section className="py-12 px-4">
         <div className="container mx-auto max-w-6xl">
-          <Tabs defaultValue="prize-pool" className="w-full mb-8">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
-              <TabsTrigger value="prize-pool">Prize Pool</TabsTrigger>
-              <TabsTrigger value="format">Format</TabsTrigger>
-              <TabsTrigger value="participants">Participants</TabsTrigger>
-            </TabsList>
+          <div className="mb-8">
+            {isShowmatch ? (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Calculator className="w-6 h-6 text-primary" />
+                    Current Score
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="max-w-lg min-w-md">
+                    <MatchCard match={tournament.matches[0]} />
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <div></div>
+              // <PlayoffBrackets />
+            )}
+          </div>
+          <Card className="p-4">
+            <Tabs defaultValue="prize-pool" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsTrigger value="prize-pool">Info</TabsTrigger>
+                <TabsTrigger value="participants">Participants</TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="prize-pool" className="space-y-8">
-              <PrizePoolInfo />
-            </TabsContent>
+              <TabsContent value="prize-pool" className="space-y-8 flex gap-4">
+                <TournamentInfo tournament={tournament} />
+                {tournament.prize_pool && (
+                  <PrizePoolInfo
+                    prize={tournament.prize_pool}
+                    participantsCount={tournament.participants.length}
+                  />
+                )}
+              </TabsContent>
 
-            <TabsContent value="format">
-              <TournamentInfo />
-            </TabsContent>
-
-            <TabsContent value="participants">
-              <ParticipantsInfo />
-            </TabsContent>
-          </Tabs>
-
-          <PlayoffBrackets />
+              <TabsContent value="participants">
+                <ParticipantsInfo participants={tournament.participants} />
+              </TabsContent>
+            </Tabs>
+          </Card>
         </div>
       </section>
 

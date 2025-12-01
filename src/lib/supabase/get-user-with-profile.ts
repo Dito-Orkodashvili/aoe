@@ -1,12 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
-import { Tables } from "@/lib/supabase/types";
 import { User } from "@supabase/auth-js";
-
-type Profile = Tables<"profiles">;
+import { TProfile } from "@/lib/types/profile.types";
 
 type UserWithProfile = {
   user: User | null;
-  profile: Profile | null;
+  profile: TProfile | null;
 };
 
 export async function getUserWithProfile(): Promise<UserWithProfile> {

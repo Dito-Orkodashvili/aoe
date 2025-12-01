@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      donations: {
+        Row: {
+          amount: number
+          created_at: string | null
+          currency: string | null
+          display_name: string | null
+          id: string
+          is_anonymous: boolean | null
+          merchant_payment_id: string | null
+          pay_id: string | null
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          currency?: string | null
+          display_name?: string | null
+          id?: string
+          is_anonymous?: boolean | null
+          merchant_payment_id?: string | null
+          pay_id?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          currency?: string | null
+          display_name?: string | null
+          id?: string
+          is_anonymous?: boolean | null
+          merchant_payment_id?: string | null
+          pay_id?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       maps: {
         Row: {
           description: string | null
@@ -165,59 +204,6 @@ export type Database = {
           },
         ]
       }
-      player_stats: {
-        Row: {
-          aoe_profile_id: string | null
-          elo_1v1: number | null
-          elo_team: number | null
-          games_played_1v1: number | null
-          games_played_team: number | null
-          id: string
-          last_sync: string
-          raw: Json | null
-          win_streak_1v1: number | null
-          win_streak_team: number | null
-          wins_1v1: number | null
-          wins_team: number | null
-        }
-        Insert: {
-          aoe_profile_id?: string | null
-          elo_1v1?: number | null
-          elo_team?: number | null
-          games_played_1v1?: number | null
-          games_played_team?: number | null
-          id?: string
-          last_sync?: string
-          raw?: Json | null
-          win_streak_1v1?: number | null
-          win_streak_team?: number | null
-          wins_1v1?: number | null
-          wins_team?: number | null
-        }
-        Update: {
-          aoe_profile_id?: string | null
-          elo_1v1?: number | null
-          elo_team?: number | null
-          games_played_1v1?: number | null
-          games_played_team?: number | null
-          id?: string
-          last_sync?: string
-          raw?: Json | null
-          win_streak_1v1?: number | null
-          win_streak_team?: number | null
-          wins_1v1?: number | null
-          wins_team?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_player_stats_profile"
-            columns: ["aoe_profile_id"]
-            isOneToOne: true
-            referencedRelation: "players"
-            referencedColumns: ["aoe_profile_id"]
-          },
-        ]
-      }
       players: {
         Row: {
           aoe_profile_id: string | null
@@ -322,6 +308,48 @@ export type Database = {
           },
         ]
       }
+      tournament_maps: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_enabled: boolean | null
+          map_id: number
+          map_order: number | null
+          tournament_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_enabled?: boolean | null
+          map_id: number
+          map_order?: number | null
+          tournament_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_enabled?: boolean | null
+          map_id?: number
+          map_order?: number | null
+          tournament_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tournament_maps_map_id_fkey"
+            columns: ["map_id"]
+            isOneToOne: false
+            referencedRelation: "maps"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tournament_maps_tournament_id_fkey"
+            columns: ["tournament_id"]
+            isOneToOne: false
+            referencedRelation: "tournaments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tournament_participants: {
         Row: {
           id: string
@@ -363,43 +391,76 @@ export type Database = {
       }
       tournaments: {
         Row: {
+          allow_multi_phase: boolean | null
+          config: Json | null
+          cover_image_url: string | null
           created_at: string | null
+          created_by: string | null
           description: string | null
           end_date: string | null
+          format: string | null
           id: string
+          is_registration_open: boolean | null
+          match_format_default: string | null
+          max_participants: number | null
           name: string
           organizer: string | null
-          participants_num_limit: number | null
-          prize_pool: string | null
+          prize_pool: number | null
+          registration_ends_at: string | null
+          registration_starts_at: string | null
+          slug: string | null
           start_date: string | null
           status: string
           type: string | null
+          visibility: string | null
         }
         Insert: {
+          allow_multi_phase?: boolean | null
+          config?: Json | null
+          cover_image_url?: string | null
           created_at?: string | null
+          created_by?: string | null
           description?: string | null
           end_date?: string | null
+          format?: string | null
           id?: string
+          is_registration_open?: boolean | null
+          match_format_default?: string | null
+          max_participants?: number | null
           name: string
           organizer?: string | null
-          participants_num_limit?: number | null
-          prize_pool?: string | null
+          prize_pool?: number | null
+          registration_ends_at?: string | null
+          registration_starts_at?: string | null
+          slug?: string | null
           start_date?: string | null
           status: string
           type?: string | null
+          visibility?: string | null
         }
         Update: {
+          allow_multi_phase?: boolean | null
+          config?: Json | null
+          cover_image_url?: string | null
           created_at?: string | null
+          created_by?: string | null
           description?: string | null
           end_date?: string | null
+          format?: string | null
           id?: string
+          is_registration_open?: boolean | null
+          match_format_default?: string | null
+          max_participants?: number | null
           name?: string
           organizer?: string | null
-          participants_num_limit?: number | null
-          prize_pool?: string | null
+          prize_pool?: number | null
+          registration_ends_at?: string | null
+          registration_starts_at?: string | null
+          slug?: string | null
           start_date?: string | null
           status?: string
           type?: string | null
+          visibility?: string | null
         }
         Relationships: []
       }

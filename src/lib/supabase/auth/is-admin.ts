@@ -1,7 +1,5 @@
-import type { Tables } from "@/lib/supabase/types";
+import { TProfile } from "@/lib/types/profile.types";
 
-export type Profile = Tables<"profiles">;
-
-export function isAdmin(profile: Profile | null): boolean {
+export function isAdmin(profile: TProfile | null): boolean {
   return profile?.role === "admin";
 }

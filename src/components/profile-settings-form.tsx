@@ -7,13 +7,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Edit2 } from "lucide-react";
-import { Tables } from "@/lib/supabase/types";
 import { getInitials } from "@/lib/utils";
 import { User } from "@supabase/auth-js";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { TProfile } from "@/lib/types/profile.types";
 
 interface ProfileSettingsFormProps {
-  profileInfo?: Tables<"profiles"> | null;
+  profileInfo?: TProfile | null;
   userInfo: User;
 }
 

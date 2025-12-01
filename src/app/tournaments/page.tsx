@@ -1,68 +1,26 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Trophy, Calendar, Users, Crown, ArrowRight } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Trophy, Calendar, Crown, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { Navigation } from "@/components/navigation";
 import { Hero } from "@/components/sections/hero";
+import { getTournaments } from "@/lib/supabase/tournament/get-tournaments";
+import { formatDate } from "@/lib/utils";
+import { TournamentCard } from "@/components/tournament-card";
 
 export default async function Tournaments() {
-  const upcomingTournaments = [
-    {
-      title: "Georgian Winter Championship 2024",
-      date: "December 15, 2024",
-      prize: "500 GEL",
-      participants: "32 Players",
-      format: "1v1 Single Elimination",
-      status: "Open",
-    },
-    {
-      title: "Team Championship",
-      date: "December 22, 2024",
-      prize: "800 GEL",
-      participants: "16 Teams",
-      format: "4v4 Team Games",
-      status: "Open",
-    },
-    {
-      title: "New Year Cup",
-      date: "January 5, 2025",
-      prize: "1000 GEL",
-      participants: "64 Players",
-      format: "1v1 Double Elimination",
-      status: "Coming Soon",
-    },
-  ];
+  const tournaments = await getTournaments();
 
-  const pastTournaments = [
-    {
-      title: "Autumn Championship 2024",
-      date: "November 10, 2024",
-      winner: "Purple",
-      prize: "500 GEL",
-      participants: "32 Players",
-    },
-    {
-      title: "Summer Cup 2024",
-      date: "August 20, 2024",
-      winner: "Purple",
-      prize: "400 GEL",
-      participants: "24 Players",
-    },
-    {
-      title: "Spring Open 2024",
-      date: "May 15, 2024",
-      winner: "Purple",
-      prize: "600 GEL",
-      participants: "40 Players",
-    },
-  ];
+  const ongoingTournaments = tournaments.filter(
+    (tournament) => tournament.status === "ongoing",
+  );
+
+  const upcomingTournaments = tournaments.filter(
+    (tournament) => tournament.status === "upcoming",
+  );
+
+  const pastTournaments = tournaments.filter(
+    (tournament) => tournament.status === "completed",
+  );
 
   return (
     <>
@@ -76,6 +34,9 @@ export default async function Tournaments() {
         <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in">
           შეერკინე საუკეთესო მოთამაშეებს და დაიმკვიდრე შენი ადგილი ისტორიაში!
         </p>
+        <Button asChild>
+          <Link href="/tournaments/create">შექმენი ტურნირი</Link>
+        </Button>
       </Hero>
 
       <section className="py-16 px-4">
@@ -83,64 +44,20 @@ export default async function Tournaments() {
           <div className="flex items-center gap-3 mb-8">
             <Calendar className="w-8 h-8 text-primary" />
             <h2 className="text-4xl font-bold text-foreground">
-              მომავალი ტურნირები
+              მიმდინარე ტურნირები
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {upcomingTournaments.map((tournament, index) => (
-              <Card
-                key={index}
-                className="border-2 hover:border-primary transition-all hover-scale"
-              >
-                <CardHeader>
-                  <div className="flex justify-between items-start mb-2">
-                    <Badge
-                      variant={
-                        tournament.status === "Open" ? "default" : "secondary"
-                      }
-                    >
-                      {tournament.status}
-                    </Badge>
-                    <Trophy className="w-5 h-5 text-secondary" />
-                  </div>
-                  <CardTitle className="text-xl">{tournament.title}</CardTitle>
-                  <CardDescription className="space-y-2 text-base">
-                    <div className="flex items-center gap-2 text-foreground/80">
-                      <Calendar className="w-4 h-4" />
-                      {tournament.date}
-                    </div>
-                    <div className="flex items-center gap-2 text-foreground/80">
-                      <Users className="w-4 h-4" />
-                      {tournament.participants}
-                    </div>
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground">ფორმატი</p>
-                    <p className="font-semibold">{tournament.format}</p>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground">
-                      საპრიზო ფონდი
-                    </p>
-                    <p className="text-2xl font-bold text-secondary">
-                      {tournament.prize}
-                    </p>
-                  </div>
-                  <Button
-                    className="w-full gap-2"
-                    disabled={tournament.status !== "Open"}
-                  >
-                    {tournament.status === "Open"
-                      ? "Register Now"
-                      : "Coming Soon"}
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="space-y-4">
+            {ongoingTournaments.length > 0 ? (
+              ongoingTournaments.map((tournament) => (
+                <TournamentCard key={tournament.id} tournament={tournament} />
+              ))
+            ) : (
+              <p className="text-center text-muted-foreground my-4">
+                No tournaments to show yet!
+              </p>
+            )}
           </div>
         </div>
       </section>
@@ -156,54 +73,15 @@ export default async function Tournaments() {
           </div>
 
           <div className="space-y-4">
-            {pastTournaments.map((tournament, index) => (
-              <Card
-                key={index}
-                className="border-2 hover:border-accent/50 transition-all"
-              >
-                <CardContent className="pt-6">
-                  <div className="grid md:grid-cols-5 gap-4 items-center">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">
-                        Tournament
-                      </p>
-                      <p className="font-bold text-lg">{tournament.title}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Date</p>
-                      <p className="font-semibold">{tournament.date}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">
-                        Champion
-                      </p>
-                      <div className="flex items-center gap-2">
-                        <Crown className="w-5 h-5 text-accent" />
-                        <p className="font-bold text-accent">
-                          {tournament.winner}
-                        </p>
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">
-                        Prize
-                      </p>
-                      <p className="text-xl font-bold text-secondary">
-                        {tournament.prize}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <Link href={`/tournaments/${index + 1}`}>
-                        <Button variant="outline" size="sm" className="gap-2">
-                          View Details
-                          <ArrowRight className="w-4 h-4" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {pastTournaments.length > 0 ? (
+              pastTournaments.map((tournament) => (
+                <TournamentCard key={tournament.id} tournament={tournament} />
+              ))
+            ) : (
+              <p className="text-center text-muted-foreground my-4">
+                No tournaments to show yet!
+              </p>
+            )}
           </div>
         </div>
       </section>
