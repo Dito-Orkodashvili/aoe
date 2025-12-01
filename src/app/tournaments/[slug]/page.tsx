@@ -120,14 +120,14 @@ const TournamentDetails = async ({
                 <p className="text-4xl font-bold text-secondary mb-2">
                   {tournament.matches.length}
                 </p>
-                <p className="text-muted-foreground">
-                  {tournament.prize_pool} GEL
-                </p>
+                <p className="text-muted-foreground">Matches Played</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6 text-center">
-                <p className="text-4xl font-bold text-accent mb-2">500</p>
+                <p className="text-4xl font-bold text-accent mb-2">
+                  {tournament.prize_pool}
+                </p>
                 <p className="text-muted-foreground">Prize Pool (GEL)</p>
               </CardContent>
             </Card>
