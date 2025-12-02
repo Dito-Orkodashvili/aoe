@@ -1,9 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap");
 @import "tailwindcss";
 
 /* -----------------------------
    THEME TOKENS (Tailwind 4)
 -------------------------------- */
 @theme {
+  --font-medieval: "Cinzel Decorative", serif;
+
   --container-padding: 2rem;
   --container-2xl: 1400px;
 

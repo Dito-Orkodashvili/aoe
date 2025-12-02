@@ -113,22 +113,20 @@ export const PlayersList = ({ players }: PlayerListProps) => {
               </CardHeader>
               <CardContent className="px-6 pb-4 pt-0">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center gap-2 mb-3 font-medieval">
                     {player.aoe_profile_id ? (
                       <a
                         className="hover:underline hover:text-secondary font-semibold transition-all"
                         target="_blank"
                         href={`https://www.aoe2insights.com/user/${player.aoe_profile_id}/`}
                       >
-                        <h3 className="text-2xl font-bold">
-                          {player.nickname}
-                        </h3>
+                        <h3 className="text-xl font-bold">{player.nickname}</h3>
                       </a>
                     ) : (
                       <h3 className="text-2xl font-bold">{player.nickname}</h3>
                     )}
                   </div>
-
+                  <div className="bg-border w-full h-[1px]" />
                   <div className="flex items-center gap-2">
                     <ChartNoAxesCombined className="w-5 h-5 text-primary" />
                     <span className="font-semibold">
