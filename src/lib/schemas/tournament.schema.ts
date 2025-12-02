@@ -21,14 +21,7 @@ export const TournamentDetailsSchema = z.object({
   type: z.enum(["single_stage", "two_stage"], {
     required_error: "Please select a tournament type",
   }),
-  format: z.enum([
-    "single_elim",
-    "double_elim",
-    "round_robin",
-    "swiss",
-    "playoffs",
-    "free_for_all",
-  ]),
+  format: z.enum(["single_elim", "double_elim", "round_robin"]),
   visibility: z.enum(["public", "private", "unlisted"]),
   registration_starts_at: z.string().optional().nullable(),
   registration_ends_at: z.string().optional().nullable(),

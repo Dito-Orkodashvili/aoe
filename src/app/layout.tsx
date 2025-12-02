@@ -55,7 +55,7 @@ export default async function RootLayout({
         </div>
         <footer className="border-t border-border py-8 px-4">
           <div className="container mx-auto max-w-6xl text-center text-muted-foreground">
-            <p>© 2024 ქართული AoE II ქომუნითი.</p>
+            <p>© 2025 ქართული AoE II ქომუნითი.</p>
           </div>
         </footer>
       </body>

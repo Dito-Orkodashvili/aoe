@@ -4,17 +4,18 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
+  ChartNoAxesCombined,
   Flame,
+  Gamepad2,
   Info,
   LayoutGrid,
   List,
   Mountain,
   Swords,
-  Target,
   Trophy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useMemo, useState } from "react";
+import { ReactElement, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -24,10 +25,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { PlayerWithStats } from "@/lib/types";
+import { clsx } from "clsx";
+import { TPlayer } from "@/lib/types/player.types";
 
 interface PlayerListProps {
   players: PlayerWithStats[];
 }
+
+const leagueIcons: Record<TPlayer["league"], ReactElement> = {
+  bronze: <Trophy size={32} className="text-amber-700" />,
+  silver: <Trophy size={32} className="text-zinc-300" />,
+  gold: <Trophy size={32} className="text-amber-400" />,
+};
 
 export const PlayersList = ({ players }: PlayerListProps) => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -94,52 +103,77 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                   <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
                     Rank #{index + 1}
                   </Badge>
+                  <span
+                    className="absolute top-4 right-4 rounded-full bg-muted p-2 border border-muted-foreground"
+                    title={`${player.league} league`}
+                  >
+                    {leagueIcons[player.league]}
+                  </span>
                 </div>
               </CardHeader>
               <CardContent className="px-6 pb-4 pt-0">
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-2xl font-bold">{player.nickname}</h3>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 mb-4">
+                    {player.aoe_profile_id ? (
+                      <a
+                        className="hover:underline hover:text-secondary font-semibold transition-all"
+                        href={`https://www.aoe2insights.com/user/${player.aoe_profile_id}/`}
+                      >
+                        <h3 className="text-2xl font-bold">
+                          {player.nickname}
+                        </h3>
+                      </a>
+                    ) : (
+                      <h3 className="text-2xl font-bold">{player.nickname}</h3>
+                    )}
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Trophy className="w-5 h-5 text-primary" />
+                    <ChartNoAxesCombined className="w-5 h-5 text-primary" />
                     <span className="font-semibold">
-                      ELO: {player.one_v_one_stats?.rating ?? "N/A"}
+                      Rating:{" "}
+                      <span className="text-secondary font-bold">
+                        {player.one_v_one_stats?.rating ?? "N/A"}
+                      </span>
                     </span>
                   </div>
 
+                  {player.one_v_one_stats?.streak && (
+                    <div className="flex items-center gap-2">
+                      <Flame className="w-5 h-5 text-primary" />
+                      <span className="font-semibold">
+                        Win Streak:{" "}
+                        <span
+                          className={clsx(
+                            player.one_v_one_stats?.streak > 0
+                              ? "text-green-500"
+                              : "text-primary",
+                          )}
+                        >
+                          {player.one_v_one_stats?.streak ?? "N/A"}
+                        </span>
+                      </span>
+                    </div>
+                  )}
+
                   <div className="flex items-center gap-2">
-                    <Target className="w-5 h-5 text-primary" />
-                    <span className="font-semibold">
-                      Wins/Loses:{" "}
+                    <Gamepad2 className="w-5 h-5 text-primary" />
+                    <p className="font-semibold">
+                      Total Games:{" "}
                       {player.one_v_one_stats?.wins &&
                       player.one_v_one_stats?.losses
-                        ? `${player.one_v_one_stats?.wins}/${
-                            player.one_v_one_stats?.losses
-                          }`
+                        ? player.one_v_one_stats?.wins +
+                          player.one_v_one_stats?.losses
                         : "N/A"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Flame className="w-5 h-5 text-primary" />
-                    <span className="font-semibold">
-                      Win Streak: {player.one_v_one_stats?.streak ?? "N/A"}
-                    </span>
+                    </p>
                   </div>
 
                   <div className="flex items-center gap-2">
                     <Mountain className="w-5 h-5 text-primary" />
                     <span className="font-semibold">
-                      Highest ELO:{" "}
+                      Highest Rating:{" "}
                       {player.one_v_one_stats?.highestrating ?? "N/A"}
                     </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Swords className="w-5 h-5 text-primary" />
-                    <span>League: {player.league}</span>
                   </div>
 
                   <div className="pt-2 border-t border-border flex gap-3">
