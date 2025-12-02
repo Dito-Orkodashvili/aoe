@@ -174,8 +174,8 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                       {player.one_v_one_stats?.highestrating ?? "N/A"}
                     </span>
                   </div>
-
-                  <div className="pt-2 border-t border-border flex gap-3">
+                  <div className="bg-border w-full h-[1px]" />
+                  <div className="pt-2 flex gap-3">
                     <p className="text-sm text-muted-foreground mb-1">
                       Favorite Civilization:
                     </p>

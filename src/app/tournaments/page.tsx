@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Trophy, Calendar, Crown, ArrowRight } from "lucide-react";
+import { Calendar, Crown, Trophy } from "lucide-react";
 import Link from "next/link";
-import { Hero } from "@/components/sections/hero";
+import { PageHero } from "@/components/sections/hero";
 import { getTournaments } from "@/lib/supabase/tournament/get-tournaments";
-import { formatDate } from "@/lib/utils";
 import { TournamentCard } from "@/components/tournament-card";
 
 export default async function Tournaments() {
@@ -24,7 +23,7 @@ export default async function Tournaments() {
 
   return (
     <>
-      <Hero>
+      <PageHero>
         <div className="flex justify-center mb-6">
           <Trophy className="w-16 h-16 text-primary mx-auto animate-fade-in" />
         </div>
@@ -37,7 +36,7 @@ export default async function Tournaments() {
         <Button asChild>
           <Link href="/tournaments/create">შექმენი ტურნირი</Link>
         </Button>
-      </Hero>
+      </PageHero>
 
       <section className="py-16 px-4">
         <div className="container mx-auto max-w-6xl">

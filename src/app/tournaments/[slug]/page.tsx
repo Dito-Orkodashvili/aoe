@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calculator, Calendar, Target, Trophy, Users } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Hero } from "@/components/sections/hero";
 import { PrizePoolInfo } from "@/components/prize-pool-info";
 import { TournamentInfo } from "@/components/tournament-info";
 import { ParticipantsInfo } from "@/components/participants-info";
@@ -9,6 +8,8 @@ import { notFound } from "next/navigation";
 import { getTournamentDetails } from "@/lib/supabase/get-tournament-details";
 import { formatDate } from "@/lib/utils";
 import { MatchCard } from "@/components/match-card";
+import { Badge } from "@/components/ui/badge";
+import { PageHero } from "@/components/sections/hero";
 
 const TournamentDetails = async ({
   params,
@@ -26,7 +27,7 @@ const TournamentDetails = async ({
 
   return (
     <>
-      <Hero>
+      <PageHero>
         <div className="flex justify-center mb-6">
           <Trophy className="w-16 h-16 text-primary mx-auto animate-fade-in" />
         </div>
@@ -51,7 +52,10 @@ const TournamentDetails = async ({
             </div>
           </div>
         </div>
-      </Hero>
+        <Badge variant="destructive" className="animate-pulse">
+          მიმდინარე
+        </Badge>
+      </PageHero>
 
       <section className="py-12 px-4">
         <div className="container mx-auto max-w-6xl">

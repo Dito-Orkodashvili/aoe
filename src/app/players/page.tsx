@@ -1,4 +1,4 @@
-import { Hero } from "@/components/sections/hero";
+import { Hero, PageHero } from "@/components/sections/hero";
 import Image from "next/image";
 import { PlayersList } from "@/components/players-list";
 import { getPlayers } from "@/lib/supabase/get-players";
@@ -14,7 +14,7 @@ const Players = async () => {
 
   return (
     <>
-      <Hero>
+      <PageHero>
         <div className="flex justify-center mb-6">
           <Image
             src="/teutonic_knight.png"
@@ -31,7 +31,7 @@ const Players = async () => {
           Meet the top Age of Empires II players from Georgia&#39;s competitive
           community
         </p>
-      </Hero>
+      </PageHero>
 
       <div className="container mx-auto px-4 py-8">
         {players && <PlayersList players={mergedPlayers} />}
