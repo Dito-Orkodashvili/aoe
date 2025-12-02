@@ -128,13 +128,10 @@ export const Footer = () => {
         </div>
       </div>
       <div className="border-t">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 container mx-auto px-4 py-4">
-          <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} Georgian AoE II Community
-          </p>
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 container mx-auto px-4 py-4">
           <p className="text-xs text-muted-foreground">
             Made with <Heart className="inline h-3 w-3 text-red-500" /> for the
-            community
+            community. &copy; {new Date().getFullYear()}
           </p>
         </div>
       </div>
