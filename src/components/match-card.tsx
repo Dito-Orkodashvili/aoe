@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { clsx } from "clsx";
-import { TTournamentInfo } from "@/lib/supabase/get-tournament-details";
+import { TTournamentInfo } from "@/lib/supabase/tournament/get-tournament-details";
 
 interface MatchCardProps {
   match?: TTournamentInfo["matches"][0];

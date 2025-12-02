@@ -17,7 +17,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/lib/utils";
-import { TTournamentInfo } from "@/lib/supabase/get-tournament-details";
+import { TTournamentInfo } from "@/lib/supabase/tournament/get-tournament-details";
 
 interface ParticipantsInfoProps {
   participants: TTournamentInfo["participants"];

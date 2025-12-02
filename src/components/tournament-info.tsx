@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Info } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { TTournamentInfo } from "@/lib/supabase/get-tournament-details";
+import { TTournamentInfo } from "@/lib/supabase/tournament/get-tournament-details";
 
 interface TournamentInfoProps {
   tournament: TTournamentInfo;

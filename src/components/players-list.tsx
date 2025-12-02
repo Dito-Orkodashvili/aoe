@@ -11,7 +11,6 @@ import {
   LayoutGrid,
   List,
   Mountain,
-  Swords,
   Trophy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,6 +26,7 @@ import {
 import { PlayerWithStats } from "@/lib/types";
 import { clsx } from "clsx";
 import { TPlayer } from "@/lib/types/player.types";
+import Link from "next/link";
 
 interface PlayerListProps {
   players: PlayerWithStats[];
@@ -114,17 +114,12 @@ export const PlayersList = ({ players }: PlayerListProps) => {
               <CardContent className="px-6 pb-4 pt-0">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 mb-3 font-medieval">
-                    {player.aoe_profile_id ? (
-                      <a
-                        className="hover:underline hover:text-secondary font-semibold transition-all"
-                        target="_blank"
-                        href={`https://www.aoe2insights.com/user/${player.aoe_profile_id}/`}
-                      >
-                        <h3 className="text-xl font-bold">{player.nickname}</h3>
-                      </a>
-                    ) : (
-                      <h3 className="text-2xl font-bold">{player.nickname}</h3>
-                    )}
+                    <Link
+                      className="hover:underline hover:text-secondary font-semibold transition-all"
+                      href={`/players/${player.id}`}
+                    >
+                      <h3 className="text-xl font-bold">{player.nickname}</h3>
+                    </Link>
                   </div>
                   <div className="bg-border w-full h-[1px]" />
                   <div className="flex items-center gap-2">

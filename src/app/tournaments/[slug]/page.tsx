@@ -5,7 +5,7 @@ import { PrizePoolInfo } from "@/components/prize-pool-info";
 import { TournamentInfo } from "@/components/tournament-info";
 import { ParticipantsInfo } from "@/components/participants-info";
 import { notFound } from "next/navigation";
-import { getTournamentDetails } from "@/lib/supabase/get-tournament-details";
+import { getTournamentDetails } from "@/lib/supabase/tournament/get-tournament-details";
 import { formatDate } from "@/lib/utils";
 import { MatchCard } from "@/components/match-card";
 import { Badge } from "@/components/ui/badge";

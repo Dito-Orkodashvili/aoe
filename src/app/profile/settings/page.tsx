@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getUserWithProfile } from "@/lib/supabase/get-user-with-profile";
+import { getUserWithProfile } from "@/lib/supabase/user/get-user-with-profile";
 import { ProfileSettingsForm } from "@/components/profile-settings-form";
 
 const ProfileSettings = async () => {

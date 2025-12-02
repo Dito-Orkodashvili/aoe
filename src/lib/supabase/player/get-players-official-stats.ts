@@ -1,7 +1,7 @@
 import { PersonalStatResponse, PlayerWithStats } from "@/lib/types";
 import { TPlayer } from "@/lib/types/player.types";
 
-export async function getPlayersStats(
+export async function getPlayersOfficialStats(
   players: TPlayer[],
 ): Promise<PersonalStatResponse> {
   const profileNames = players

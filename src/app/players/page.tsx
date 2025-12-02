@@ -1,14 +1,17 @@
-import { Hero, PageHero } from "@/components/sections/hero";
+import { PageHero } from "@/components/sections/hero";
 import Image from "next/image";
 import { PlayersList } from "@/components/players-list";
-import { getPlayers } from "@/lib/supabase/get-players";
-import { getPlayersStats, mergePlayersWithStats } from "@/lib/get-player-stats";
+import { getPlayers } from "@/lib/supabase/player/get-players";
+import {
+  getPlayersOfficialStats,
+  mergePlayersWithStats,
+} from "@/lib/supabase/player/get-players-official-stats";
 
 export const dynamic = "force-dynamic";
 
 const Players = async () => {
   const players = await getPlayers();
-  const stats = await getPlayersStats(players);
+  const stats = await getPlayersOfficialStats(players);
 
   const mergedPlayers = mergePlayersWithStats(players, stats);
 
