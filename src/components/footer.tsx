@@ -28,7 +28,7 @@ export const Footer = () => {
                 href="/donations"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                Support Us
+                Support Tournaments
               </Link>
             </nav>
           </div>
@@ -97,7 +97,7 @@ export const Footer = () => {
             </h4>
             <div className="flex gap-3">
               <a
-                href="https://discord.gg/"
+                href="https://discord.gg/mVQqsBwA"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-foreground/5 hover:bg-foreground/10 flex items-center justify-center transition-colors"
@@ -106,7 +106,7 @@ export const Footer = () => {
                 <MessageCircle className="h-4 w-4" />
               </a>
               <a
-                href="https://youtube.com/"
+                href="https://www.youtube.com/@teamgeorgia-aoe2"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-foreground/5 hover:bg-foreground/10 flex items-center justify-center transition-colors"
@@ -115,7 +115,7 @@ export const Footer = () => {
                 <Youtube className="h-4 w-4" />
               </a>
               <a
-                href="https://twitch.tv/"
+                href="https://www.twitch.tv/team_georgia"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-foreground/5 hover:bg-foreground/10 flex items-center justify-center transition-colors"
