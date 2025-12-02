@@ -117,6 +117,7 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                     {player.aoe_profile_id ? (
                       <a
                         className="hover:underline hover:text-secondary font-semibold transition-all"
+                        target="_blank"
                         href={`https://www.aoe2insights.com/user/${player.aoe_profile_id}/`}
                       >
                         <h3 className="text-2xl font-bold">
