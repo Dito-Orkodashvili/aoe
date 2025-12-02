@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Navigation } from "@/components/navigation";
 import { getUser } from "@/lib/supabase/get-user";
+import { Footer } from "@/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,11 +54,7 @@ export default async function RootLayout({
             {children}
           </Providers>
         </div>
-        <footer className="border-t border-border py-8 px-4">
-          <div className="container mx-auto max-w-6xl text-center text-muted-foreground">
-            <p>© 2025 ქართული AoE II ქომუნითი.</p>
-          </div>
-        </footer>
+        <Footer />
       </body>
     </html>
   );
