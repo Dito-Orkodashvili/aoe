@@ -65,6 +65,12 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
             >
               მეომრები
             </Link>
+            <Link
+              href="/lobbies"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ლობი
+            </Link>
             <div className="flex items-center gap-2">
               {authedUser ? (
                 <DropdownMenu>

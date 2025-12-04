@@ -179,10 +179,10 @@ const PlayerDetails = async ({
 
                 <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                   <Badge variant="secondary" className="text-lg px-4 py-2">
-                    {one_v_one_stats?.rating || "N/A"} ELO
+                    {one_v_one_stats?.rating || "N/A"}
                   </Badge>
                   <Badge variant="outline" className="text-lg px-4 py-2">
-                    Peak: {one_v_one_stats?.highestrating}
+                    {one_v_one_stats?.highestrating ?? "N/A"}
                   </Badge>
                   <Badge variant="outline" className="text-lg px-4 py-2">
                     {fav_civ}
@@ -215,7 +215,7 @@ const PlayerDetails = async ({
           <CardContent className="p-6 text-center">
             <TrendingUp className="w-8 h-8 mx-auto mb-2 text-primary" />
             <p className="text-3xl font-bold text-foreground">
-              {one_v_one_stats?.streak}
+              {one_v_one_stats?.streak ?? 0}
             </p>
             <p className="text-sm text-muted-foreground">Win Streak</p>
           </CardContent>
