@@ -14,6 +14,7 @@ import { TransformedSpectateMatch } from "@/lib/types/lobby.types";
 import { usePlayersOfficialStats } from "@/hooks/query/use-players-official-stats";
 import { useState } from "react";
 import { mergeLobbyPlayersWithStats } from "@/lib/supabase/player/get-players-official-stats";
+import ReactCountryFlag from "react-country-flag";
 
 interface SpectateMatchInfoProps {
   match: TransformedSpectateMatch;
@@ -67,7 +68,7 @@ export const SpectateMatchInfo = ({ match }: SpectateMatchInfoProps) => {
                     key={player.profileid}
                     className="flex items-center justify-between p-2 rounded-md bg-muted/50"
                   >
-                    <div>
+                    <div className="flex gap-2 items-center">
                       <a
                         href={`https://www.aoe2insights.com/user/${player.profileid}/`}
                         className="font-medium text-sm hover:underline"
@@ -75,9 +76,17 @@ export const SpectateMatchInfo = ({ match }: SpectateMatchInfoProps) => {
                       >
                         {player.name}
                       </a>
-                      <p className="text-xs text-muted-foreground">
-                        {player.country.toUpperCase()}
-                      </p>
+                      {player.country && (
+                        <p className="text-xs text-muted-foreground">
+                          <ReactCountryFlag
+                            className="text-sm"
+                            countryCode={player.country.toUpperCase()}
+                            aria-label={player.country}
+                            title={player.country}
+                            svg
+                          />
+                        </p>
+                      )}
                     </div>
                     <Badge variant="secondary" className="text-xs">
                       {player.one_v_one_stats?.rating ? (
