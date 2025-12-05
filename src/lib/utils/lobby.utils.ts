@@ -109,7 +109,7 @@ export async function getSessionId() {
 //   }));
 // };
 
-export const GAME_MODE = {
+export const GAME_MODE: Record<EGameMode, string> = {
   [EGameMode["RandomMap"]]: "Random Map",
   [EGameMode["EmpireWars"]]: "Empire Wars",
   [EGameMode["Regicide"]]: "Regicide",

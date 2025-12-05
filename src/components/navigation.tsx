@@ -69,7 +69,7 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
               href="/lobbies"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              ლობი
+              ბრძლის ველი
             </Link>
             <div className="flex items-center gap-2">
               {authedUser ? (
@@ -144,21 +144,21 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                     className="text-muted-foreground hover:text-foreground transition-colors text-lg"
                     onClick={() => setOpen(false)}
                   >
-                    Home
+                    მთავარი
                   </Link>
                   <Link
                     href="/tournaments"
                     className="text-muted-foreground hover:text-foreground transition-colors text-lg"
                     onClick={() => setOpen(false)}
                   >
-                    Tournaments
+                    ტურნირები
                   </Link>
                   <Link
                     href="/players"
                     className="text-muted-foreground hover:text-foreground transition-colors text-lg"
                     onClick={() => setOpen(false)}
                   >
-                    Players
+                    მეომრები
                   </Link>
                   {authedUser ? (
                     <div className="mt-6 pt-6 border-t border-border">

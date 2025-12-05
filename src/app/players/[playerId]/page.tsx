@@ -93,12 +93,14 @@ const PlayerDetails = async ({
   const { playerId } = await params;
 
   const player = await getPlayerDetails(playerId);
-  const { steam_id } = player || {};
+  const { aoe_profile_id } = player || {};
 
   let playerStats = null;
 
-  if (steam_id) {
-    const playerOfficialStats = await getPlayerOfficialStats(steam_id);
+  if (aoe_profile_id) {
+    const playerOfficialStats = await getPlayerOfficialStats([
+      Number(aoe_profile_id),
+    ]);
 
     playerStats = mergePlayerWithStats(player, playerOfficialStats);
   }
@@ -108,9 +110,7 @@ const PlayerDetails = async ({
     fav_civ,
     nickname,
     created_at,
-    aoe_profile_id,
     name,
-    league,
     picture_url,
     region,
   } = playerStats || {};

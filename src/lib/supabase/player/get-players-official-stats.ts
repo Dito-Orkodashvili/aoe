@@ -1,5 +1,11 @@
 import { PersonalStatResponse, PlayerWithStats } from "@/lib/types";
 import { TPlayer } from "@/lib/types/player.types";
+import {
+  LobbyPlayerWithStats,
+  LobbySlot,
+  LobbySlots,
+  TransformedLobbySlot,
+} from "@/lib/types/lobby.types";
 
 export async function getPlayersOfficialStats(
   players: TPlayer[],
@@ -41,6 +47,33 @@ export function mergePlayersWithStats(
       ...player,
       one_v_one_stats: one_v_one,
       team_stats: team,
+    };
+  });
+}
+
+export function mergeLobbyPlayersWithStats(
+  players: TransformedLobbySlot[],
+  stats: PersonalStatResponse,
+): LobbyPlayerWithStats[] {
+  if (!stats || !stats.statGroups?.length) return [];
+
+  return players.map((player) => {
+    if (!player.profileid) return player;
+
+    const group = stats.statGroups.find((g) =>
+      g.members.some((m) => m.profile_id === player.profileid),
+    );
+
+    const lb = stats.leaderboardStats.filter(
+      (l) => l.statgroup_id === group?.id,
+    );
+
+    const one_v_one = lb.find((l) => l.leaderboard_id === 3) ?? null;
+    // const team = lb.find((l) => l.leaderboard_id === 4) ?? null;
+
+    return {
+      ...player,
+      one_v_one_stats: one_v_one,
     };
   });
 }

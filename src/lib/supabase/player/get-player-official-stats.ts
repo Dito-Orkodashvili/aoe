@@ -2,13 +2,11 @@ import { PersonalStatResponse, PlayerWithStats } from "@/lib/types";
 import { TPlayer } from "@/lib/types/player.types";
 
 export async function getPlayerOfficialStats(
-  steamId: string,
+  profileIds: number[],
 ): Promise<PersonalStatResponse> {
-  const profileNames = [`/steam/${steamId}`];
+  const encoded = encodeURIComponent(JSON.stringify(profileIds));
 
-  const encoded = encodeURIComponent(JSON.stringify(profileNames));
-
-  const url = `https://aoe-api.worldsedgelink.com/community/leaderboard/GetPersonalStat?title=age2&profile_names=${encoded}`;
+  const url = `https://aoe-api.worldsedgelink.com/community/leaderboard/GetPersonalStat?title=age2&profile_ids=${encoded}`;
 
   const res = await fetch(url, { next: { revalidate: 60 } });
 

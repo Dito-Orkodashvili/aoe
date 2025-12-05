@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { TPlayer } from "@/lib/types/player.types";
+import { LeaderboardStat } from "@/lib/types";
 
 export interface LiveGamesResponse {
   matches: LiveGame[];
@@ -112,7 +114,7 @@ export interface LobbyMatch {
   mapid: number;
   match_typeid: number;
   matchid: number;
-  mode: number;
+  mode: EGameMode;
   observable: boolean;
   observer_delay: number;
   open_slots: boolean;
@@ -210,4 +212,8 @@ export enum EGameMode {
   WonderRace = 9,
   CoOpCampaign = 10,
   CustomScenario = 11,
+}
+
+export interface LobbyPlayerWithStats extends LobbySlot {
+  one_v_one_stats?: LeaderboardStat | null;
 }
