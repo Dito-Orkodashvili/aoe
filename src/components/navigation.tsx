@@ -70,7 +70,7 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
               href="/lobbies"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              ბრძლის ველი
+              ბრძოლის ველი
             </Link>
             <div className="flex items-center gap-2">
               {authedUser ? (

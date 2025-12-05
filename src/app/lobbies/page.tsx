@@ -17,10 +17,10 @@ const Lobbies = async ({
         <div className="text-center space-y-3">
           <Swords className="w-16 h-16 text-primary mx-auto drop-shadow-lg animate-fade-in" />
           <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg animate-fade-in">
-            ბრძლის ველი
+            ბრძოლის ველი
           </h1>
           <p className="text-lg text-gray-200 max-w-2xl mx-auto animate-fade-in">
-            უყურე ლაივ ბრძლებს ან შეუერთდი აქტიურ ლობიებს
+            უყურე ლაივ ბრძოლებს ან შეუერთდი აქტიურ ლობიებს
           </p>
         </div>
       </PageHero>
