@@ -56,7 +56,7 @@ export const LobbyMatchInfo = ({ match }: LobbyMatchInfoProps) => {
                 >
                   <div>
                     <a
-                      href={`https://www.aoe2insights.com/user/${player.profileid}/`}
+                      href={`https://www.ageofempires.com/stats/?profileId=${player.profileid}&game=age2`}
                       className="font-medium text-sm hover:underline"
                       about="_blank"
                     >
