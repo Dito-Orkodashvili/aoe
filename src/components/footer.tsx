@@ -39,7 +39,7 @@ export const Footer = () => {
             </h4>
             <nav className="flex flex-col gap-2">
               <a
-                href="https://discord.gg/"
+                href="https://discord.gg/VUXdpQZU"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
@@ -97,7 +97,7 @@ export const Footer = () => {
             </h4>
             <div className="flex gap-3">
               <a
-                href="https://discord.gg/mVQqsBwA"
+                href="https://discord.gg/VUXdpQZU"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-foreground/5 hover:bg-foreground/10 flex items-center justify-center transition-colors"

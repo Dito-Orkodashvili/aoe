@@ -1,4 +1,4 @@
-import { Castle, Trophy, Users } from "lucide-react";
+import { Castle, Trophy, Twitch, Users, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Hero } from "@/components/sections/hero";
+import { FaDiscord, FaTwitch, FaYoutube } from "react-icons/fa";
 
 export default async function Home() {
   return (
@@ -30,23 +31,36 @@ export default async function Home() {
         <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in">
           შემოგვიერთდი და გაიგე ნამდვილი RTS-ის გემო!
         </p>
-        <div className="flex gap-4 justify-center pt-4 animate-fade-in">
-          <Button asChild size="lg" className="gap-2">
+        <div className="pt-12 animate-fade-in">
+          <div className="flex gap-6 justify-center">
             <a
-              href="https://discord.gg/mVQqsBwA"
+              href="https://discord.gg/VUXdpQZU"
               target="_blank"
               rel="noopener noreferrer"
+              className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-[#5865f2] border border-white/10 hover:border-[#5865f2] rounded-full text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-sm"
             >
-              <Users className="w-5 h-5" />
-              დისქორდი
+              <FaDiscord className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <span className="font-medium">Discord</span>
             </a>
-          </Button>
-          <Link href="/tournaments">
-            <Button size="lg" variant="outline" className="gap-2">
-              <Trophy className="w-5 h-5" />
-              ტურნირები
-            </Button>
-          </Link>
+            <a
+              href="https://www.youtube.com/@teamgeorgia-aoe2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-red-600/90 border border-white/10 hover:border-red-500 rounded-full text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-sm"
+            >
+              <FaYoutube className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <span className="font-medium">YouTube</span>
+            </a>
+            <a
+              href="https://www.twitch.tv/team_georgia"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-purple-600/90 border border-white/10 hover:border-purple-500 rounded-full text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-sm"
+            >
+              <FaTwitch className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <span className="font-medium">Twitch</span>
+            </a>
+          </div>
         </div>
       </Hero>
       <section className="py-20 px-4">
@@ -132,7 +146,7 @@ export default async function Home() {
               </p>
               <Button asChild size="lg" className="gap-2">
                 <a
-                  href="https://discord.gg/mVQqsBwA"
+                  href="https://discord.gg/VUXdpQZU"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
