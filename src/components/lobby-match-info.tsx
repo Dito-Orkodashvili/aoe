@@ -21,13 +21,20 @@ interface LobbyMatchInfoProps {
 
 export const LobbyMatchInfo = ({ match }: LobbyMatchInfoProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const playerIds = match.players.map((player) => player.profileid);
+  const filteredPlayers = match.players.filter((player) =>
+    Boolean(player.profileid),
+  );
+  const playerIds = filteredPlayers.map((player) => player.profileid);
 
-  const { data: userStats } = usePlayersOfficialStats(playerIds, {
+  const {
+    data: userStats,
+    isLoading,
+    isError,
+  } = usePlayersOfficialStats(playerIds, {
     enabled: isOpen,
   });
 
-  const mergedPlayers = mergeLobbyPlayersWithStats(match.players, userStats);
+  const mergedPlayers = mergeLobbyPlayersWithStats(filteredPlayers, userStats);
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -39,7 +46,7 @@ export const LobbyMatchInfo = ({ match }: LobbyMatchInfoProps) => {
               match.isGeorgianParticipating && "text-primary animate-pulse",
             )}
           />
-          {mergedPlayers.length}
+          {filteredPlayers.length}
         </Button>
       </PopoverTrigger>
       <PopoverPortal>
@@ -48,30 +55,38 @@ export const LobbyMatchInfo = ({ match }: LobbyMatchInfoProps) => {
             <h4 className="font-semibold text-sm border-b pb-2">
               Players in Match
             </h4>
-            <div className="space-y-2">
-              {mergedPlayers.map((player) => (
-                <div
-                  key={player.profileid}
-                  className="flex items-center justify-between p-2 rounded-md bg-muted/50"
-                >
-                  <div>
-                    <a
-                      href={`https://www.ageofempires.com/stats/?profileId=${player.profileid}&game=age2`}
-                      className="font-medium text-sm hover:underline"
-                      about="_blank"
-                    >
-                      {player.name}
-                    </a>
-                    <p className="text-xs text-muted-foreground">
-                      {player.civilization}
-                    </p>
+            {isLoading ? (
+              <p className="text-center">Loading...</p>
+            ) : isError ? (
+              <p>Error loading players</p>
+            ) : (
+              <div className="space-y-2">
+                {mergedPlayers.map((player) => (
+                  <div
+                    key={player.profileid}
+                    className="flex items-center justify-between p-2 rounded-md bg-muted/50"
+                  >
+                    <div>
+                      <a
+                        href={`https://www.ageofempires.com/stats/?profileId=${player.profileid}&game=age2`}
+                        className="font-medium text-sm hover:underline"
+                        about="_blank"
+                      >
+                        {player.name}
+                      </a>
+                      <p className="text-xs text-muted-foreground">
+                        {player.civilization}
+                      </p>
+                    </div>
+                    <Badge variant="secondary" className="text-xs">
+                      {player.one_v_one_stats?.rating ?? (
+                        <span className="text-sm">N/A</span>
+                      )}
+                    </Badge>
                   </div>
-                  <Badge variant="secondary" className="text-xs">
-                    {player.one_v_one_stats?.rating ?? "N/A"} ELO
-                  </Badge>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </PopoverContent>
       </PopoverPortal>

@@ -94,7 +94,7 @@ export const SpectateMatchInfo = ({ match }: SpectateMatchInfoProps) => {
                           {player.one_v_one_stats?.rating}
                         </span>
                       ) : (
-                        "N/A"
+                        <span className="text-sm">N/A</span>
                       )}
                     </Badge>
                   </div>
