@@ -31,7 +31,7 @@ const TournamentDetails = async ({
         <div className="flex justify-center mb-6">
           <Trophy className="w-16 h-16 text-primary mx-auto animate-fade-in" />
         </div>
-        <h1 className="text-5xl md:text-6xl font-bold text-foreground animate-fade-in">
+        <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg animate-fade-in">
           {tournament.name}
         </h1>
         <div className="flex w-full justify-center">

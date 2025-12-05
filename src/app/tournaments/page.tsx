@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, Crown, Trophy } from "lucide-react";
+import { Calendar, Crown, Swords, Trophy } from "lucide-react";
 import Link from "next/link";
 import { PageHero } from "@/components/sections/hero";
 import { getTournaments } from "@/lib/supabase/tournament/get-tournaments";
@@ -27,10 +27,10 @@ export default async function Tournaments() {
         <div className="flex justify-center mb-6">
           <Trophy className="w-16 h-16 text-primary mx-auto animate-fade-in" />
         </div>
-        <h1 className="text-5xl md:text-6xl font-bold text-foreground animate-fade-in">
+        <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg animate-fade-in">
           ტურნირები
         </h1>
-        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in">
+        <p className="text-lg text-gray-200 max-w-2xl mx-auto animate-fade-in">
           შეერკინე საუკეთესო მოთამაშეებს და დაიმკვიდრე შენი ადგილი ისტორიაში!
         </p>
         <Button asChild>

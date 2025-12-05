@@ -55,7 +55,13 @@ export const LobbyMatchInfo = ({ match }: LobbyMatchInfoProps) => {
                   className="flex items-center justify-between p-2 rounded-md bg-muted/50"
                 >
                   <div>
-                    <p className="font-medium text-sm">{player.name}</p>
+                    <a
+                      href={`https://www.aoe2insights.com/user/${player.profileid}/`}
+                      className="font-medium text-sm hover:underline"
+                      about="_blank"
+                    >
+                      {player.name}
+                    </a>
                     <p className="text-xs text-muted-foreground">
                       {player.civilization}
                     </p>
