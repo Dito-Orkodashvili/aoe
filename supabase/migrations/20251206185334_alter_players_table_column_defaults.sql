@@ -1,0 +1,3 @@
+ALTER TABLE players
+ALTER COLUMN tournament_elo SET DEFAULT 1000,
+ALTER COLUMN gender SET DEFAULT 'male';

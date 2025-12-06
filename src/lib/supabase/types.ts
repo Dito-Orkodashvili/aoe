@@ -207,51 +207,66 @@ export type Database = {
       players: {
         Row: {
           aoe_profile_id: string | null
+          bio: string | null
           created_at: string | null
-          elo_local: number | null
-          elo_official: number | null
           fav_civ: string | null
+          gender: string | null
           id: string
           last_name: string | null
           league: Database["public"]["Enums"]["player_rank"]
           name: string | null
           nickname: string
           picture_url: string | null
+          playing_since: string | null
           region: string | null
           steam_id: string | null
+          team: string | null
+          tournament_elo: number | null
+          twitch: string | null
           user_id: string | null
+          youtube: string | null
         }
         Insert: {
           aoe_profile_id?: string | null
+          bio?: string | null
           created_at?: string | null
-          elo_local?: number | null
-          elo_official?: number | null
           fav_civ?: string | null
+          gender?: string | null
           id?: string
           last_name?: string | null
           league?: Database["public"]["Enums"]["player_rank"]
           name?: string | null
           nickname: string
           picture_url?: string | null
+          playing_since?: string | null
           region?: string | null
           steam_id?: string | null
+          team?: string | null
+          tournament_elo?: number | null
+          twitch?: string | null
           user_id?: string | null
+          youtube?: string | null
         }
         Update: {
           aoe_profile_id?: string | null
+          bio?: string | null
           created_at?: string | null
-          elo_local?: number | null
-          elo_official?: number | null
           fav_civ?: string | null
+          gender?: string | null
           id?: string
           last_name?: string | null
           league?: Database["public"]["Enums"]["player_rank"]
           name?: string | null
           nickname?: string
           picture_url?: string | null
+          playing_since?: string | null
           region?: string | null
           steam_id?: string | null
+          team?: string | null
+          tournament_elo?: number | null
+          twitch?: string | null
           user_id?: string | null
+          youtube?: string | null
         }
         Relationships: []
       }

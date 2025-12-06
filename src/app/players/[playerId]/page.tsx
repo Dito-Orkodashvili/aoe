@@ -4,86 +4,32 @@ import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowLeft,
-  Calendar,
-  Clock,
+  ChartNoAxesCombined,
+  ExternalLink,
+  Flag,
+  Flame,
+  Gamepad2,
   Globe,
-  Swords,
-  Target,
-  TrendingUp,
+  Mountain,
   Trophy,
+  Twitch,
+  User,
+  Youtube,
 } from "lucide-react";
 import Link from "next/link";
 import { getPlayerDetails } from "@/lib/supabase/player/get-player-details";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { format } from "date-fns";
 import {
   getPlayerOfficialStats,
   mergePlayerWithStats,
 } from "@/lib/supabase/player/get-player-official-stats";
+import Image from "next/image";
 
-const recentMatches = [
-  {
-    opponent: "Hera",
-    result: "win",
-    map: "Arabia",
-    date: "2024-01-15",
-    elo: "+12",
-  },
-  {
-    opponent: "Liereyy",
-    result: "win",
-    map: "Arena",
-    date: "2024-01-14",
-    elo: "+10",
-  },
-  {
-    opponent: "TaToH",
-    result: "loss",
-    map: "Nomad",
-    date: "2024-01-13",
-    elo: "-8",
-  },
-  {
-    opponent: "DauT",
-    result: "win",
-    map: "Arabia",
-    date: "2024-01-12",
-    elo: "+15",
-  },
-  {
-    opponent: "MbL",
-    result: "win",
-    map: "Black Forest",
-    date: "2024-01-11",
-    elo: "+9",
-  },
-];
+const recentMatches: unknown[] = [];
 
-const civilizationStats = [
-  { name: "Vikings", games: 320, winRate: 82 },
-  { name: "Mongols", games: 280, winRate: 76 },
-  { name: "Mayans", games: 245, winRate: 74 },
-  { name: "Chinese", games: 198, winRate: 71 },
-  { name: "Britons", games: 167, winRate: 69 },
-];
+const civilizationStats: unknown[] = [];
 
-const achievements = [
-  {
-    title: "Red Bull Wololo Champion",
-    description: "Won the 2023 Red Bull Wololo tournament",
-    date: "2023-09-20",
-  },
-  {
-    title: "Hidden Cup 4 Winner",
-    description: "First place in Hidden Cup 4",
-    date: "2022-05-15",
-  },
-  {
-    title: "King of the Desert",
-    description: "Champion of KotD5",
-    date: "2023-03-10",
-  },
-];
+const achievements: unknown[] = [];
 
 const PlayerDetails = async ({
   params,
@@ -93,7 +39,19 @@ const PlayerDetails = async ({
   const { playerId } = await params;
 
   const player = await getPlayerDetails(playerId);
-  const { aoe_profile_id } = player || {};
+  const {
+    aoe_profile_id,
+    fav_civ,
+    nickname,
+    name,
+    last_name,
+    picture_url,
+    region,
+    twitch,
+    youtube,
+    bio,
+    team,
+  } = player || {};
 
   let playerStats = null;
 
@@ -105,22 +63,12 @@ const PlayerDetails = async ({
     playerStats = mergePlayerWithStats(player, playerOfficialStats);
   }
 
-  const {
-    one_v_one_stats,
-    fav_civ,
-    nickname,
-    created_at,
-    name,
-    picture_url,
-    region,
-  } = playerStats || {};
+  const { one_v_one_stats } = playerStats || {};
 
   let total1v1Games = 0;
-  let winRate = 0;
 
   if (one_v_one_stats?.wins && one_v_one_stats?.losses) {
     total1v1Games = one_v_one_stats.wins + one_v_one_stats.losses;
-    winRate = Math.floor((one_v_one_stats.wins / total1v1Games) * 100);
   }
 
   return (
@@ -130,18 +78,18 @@ const PlayerDetails = async ({
         className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
       >
         <ArrowLeft className="w-4 h-4" />
-        Back to Players
+        მეომრების სია
       </Link>
 
-      <div className="relative mb-8">
+      <div className="relative mb-4">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent rounded-2xl" />
-        <Card className="border-0 bg-card/50 backdrop-blur-sm">
+        <Card className="border-0 bg-card/50 backdrop-blur-sm p-0">
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
               <div className="relative">
                 <Avatar className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-4 border-primary/20">
                   <AvatarImage
-                    src={picture_url ?? ""}
+                    src={picture_url ?? "aoe/anonymous_player.webp"}
                     alt={nickname}
                     className="object-cover"
                   />
@@ -153,98 +101,185 @@ const PlayerDetails = async ({
                   </AvatarFallback>
                 </Avatar>
               </div>
-
               <div className="flex-1 text-center md:text-left">
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2 font-medieval">
+                <h1 className="text-3xl md:text-4xl font-bold text-foreground font-medieval">
                   {nickname}
                 </h1>
-                <p className="text-xl text-muted-foreground mb-4">{name}</p>
+                <p className="text-xl text-muted-foreground mb-4">
+                  {name} {last_name}
+                </p>
 
                 <div className="flex flex-wrap gap-4 justify-center md:justify-start mb-6">
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <Globe className="w-4 h-4" />
-                    {region}
+                    {region || "საქართველო"}
                   </div>
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <Trophy className="w-4 h-4" />
-                    Team ???
+                    {team ?? "Team Georgia"}
                   </div>
-                  {created_at && (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Calendar className="w-4 h-4" />
-                      Playing since {format(created_at, "yyyy")}
-                    </div>
-                  )}
                 </div>
-
-                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                  <Badge variant="secondary" className="text-lg px-4 py-2">
-                    {one_v_one_stats?.rating || "N/A"}
-                  </Badge>
-                  <Badge variant="outline" className="text-lg px-4 py-2">
-                    {one_v_one_stats?.highestrating ?? "N/A"}
-                  </Badge>
-                  <Badge variant="outline" className="text-lg px-4 py-2">
-                    {fav_civ}
-                  </Badge>
-                </div>
+                {(youtube || twitch || aoe_profile_id) && (
+                  <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                    {youtube && (
+                      <a
+                        href={youtube}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 transition-colors text-sm"
+                      >
+                        <Youtube className="w-4 h-4 text-red-500" />
+                        <span className="text-foreground">იუთუბი</span>
+                      </a>
+                    )}
+                    {twitch && (
+                      <a
+                        href={twitch}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 transition-colors text-sm"
+                      >
+                        <Twitch className="w-4 h-4 text-purple-500" />
+                        <span className="text-foreground">ტვიტჩი</span>
+                      </a>
+                    )}
+                    {aoe_profile_id && (
+                      <>
+                        <a
+                          href={`https://www.ageofempires.com/stats/?profileId=${aoe_profile_id}&game=age2&matchType=3`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 border border-primary/20 transition-colors text-sm"
+                        >
+                          <ExternalLink className="w-4 h-4 text-primary" />
+                          <span className="text-foreground">AoE პროფილი</span>
+                        </a>
+                        <a
+                          href={`https://www.aoe2insights.com/user/${aoe_profile_id}/`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 border border-primary/20 transition-colors text-sm"
+                        >
+                          <ExternalLink className="w-4 h-4 text-primary" />
+                          <span className="text-foreground">
+                            Aoe2Insights პროფილი
+                          </span>
+                        </a>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <Card className="mb-4">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2">
+            <User className="w-5 h-5 text-primary" />
+            {player.nickname}-ის შესახებ
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground leading-relaxed">
+            {bio ?? "ინფორმაცია არ გვაქვს :("}
+          </p>
+        </CardContent>
+      </Card>
+
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
         <Card>
           <CardContent className="p-6 text-center">
-            <Swords className="w-8 h-8 mx-auto mb-2 text-primary" />
+            <ChartNoAxesCombined className="w-8 h-8 mx-auto mb-2 text-primary" />
+            <p className="text-3xl font-bold text-foreground">
+              {one_v_one_stats?.rating ?? "N/A"}
+            </p>
+            <p className="text-sm text-muted-foreground">მიმდინარე რეიტინგი</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6 text-center">
+            <Mountain className="w-8 h-8 mx-auto mb-2 text-primary" />
+            <p className="text-3xl font-bold text-foreground">
+              {one_v_one_stats?.highestrating ?? "N/A"}
+            </p>
+            <p className="text-sm text-muted-foreground">პიკ რეიტინგი</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6 text-center">
+            <Flame className="w-8 h-8 mx-auto mb-2 text-primary" />
+            <p className="text-3xl font-bold text-foreground">
+              {one_v_one_stats?.streak || "N/A"}
+            </p>
+            <p className="text-sm text-muted-foreground">მოგებების სერია</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6 text-center">
+            <Gamepad2 className="w-8 h-8 mx-auto mb-2 text-primary" />
             <p className="text-3xl font-bold text-foreground">
               {total1v1Games}
             </p>
-            <p className="text-sm text-muted-foreground">Total Games</p>
+            <p className="text-sm text-muted-foreground">ბრძოლების რაოდენობა</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <Target className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <p className="text-3xl font-bold text-foreground">{winRate}%</p>
-            <p className="text-sm text-muted-foreground">Win Rate</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6 text-center">
-            <TrendingUp className="w-8 h-8 mx-auto mb-2 text-primary" />
+            {fav_civ ? (
+              <a
+                className="flex justify-center mb-2"
+                href={`https://ageofempires.fandom.com/wiki/${player.fav_civ}`}
+                about="_blank"
+              >
+                <Image
+                  src={`/aoe/civs/${fav_civ.toLowerCase()}.png`}
+                  alt={fav_civ}
+                  width={32}
+                  height={32}
+                  title={fav_civ}
+                />
+              </a>
+            ) : (
+              <Flag className="w-8 h-8 mx-auto mb-2 text-primary" />
+            )}
+
             <p className="text-3xl font-bold text-foreground">
-              {one_v_one_stats?.streak ?? 0}
+              {fav_civ ? (
+                <a
+                  className="flex justify-center"
+                  href={`https://ageofempires.fandom.com/wiki/${fav_civ}`}
+                  about="_blank"
+                >
+                  {fav_civ}
+                </a>
+              ) : (
+                "N/A"
+              )}
             </p>
-            <p className="text-sm text-muted-foreground">Win Streak</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6 text-center">
-            <Clock className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <p className="text-3xl font-bold text-foreground">???</p>
-            <p className="text-sm text-muted-foreground">Avg Game</p>
+            <p className="text-sm text-muted-foreground">საყვარელი ცივი</p>
           </CardContent>
         </Card>
       </div>
 
-      <Tabs defaultValue="matches" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3 max-w-md">
-          <TabsTrigger value="matches">Recent Matches</TabsTrigger>
-          <TabsTrigger value="civilizations">Civilizations</TabsTrigger>
-          <TabsTrigger value="achievements">Achievements</TabsTrigger>
+      <Tabs defaultValue="matches" className="space-y-4 w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="matches">უახლესი ბრძოლები</TabsTrigger>
+          <TabsTrigger value="civilizations">ცივილიზაციები</TabsTrigger>
+          <TabsTrigger value="achievements">მიღწევები</TabsTrigger>
         </TabsList>
 
         <TabsContent value="matches">
           <Card>
             <CardHeader>
-              <CardTitle>Recent Match History</CardTitle>
+              <CardTitle>უახლესი ბრძლების ისტორია</CardTitle>
             </CardHeader>
             <CardContent>
               {recentMatches.length > 0 ? (
                 <div className="space-y-3">
-                  {recentMatches.map((match, index) => (
+                  {/*{recentMatches.map((match, index) => (
                     <div
                       key={index}
                       className={`flex items-center justify-between p-4 rounded-lg border ${
@@ -281,11 +316,11 @@ const PlayerDetails = async ({
                         </p>
                       </div>
                     </div>
-                  ))}
+                  ))}*/}
                 </div>
               ) : (
                 <p className="text-muted-foreground text-center py-8">
-                  No recent matches
+                  უახლესი ბრძლები არ მოიძებნა
                 </p>
               )}
             </CardContent>
@@ -295,12 +330,12 @@ const PlayerDetails = async ({
         <TabsContent value="civilizations">
           <Card>
             <CardHeader>
-              <CardTitle>Civilization Statistics</CardTitle>
+              <CardTitle>ცივილიზაციების სტატისტიკა</CardTitle>
             </CardHeader>
             <CardContent>
               {civilizationStats.length > 0 ? (
                 <div className="space-y-6">
-                  {civilizationStats.map((civ, index) => (
+                  {/*{civilizationStats.map((civ, index) => (
                     <div key={index} className="space-y-2">
                       <div className="flex justify-between items-center">
                         <span className="font-medium text-foreground">
@@ -312,11 +347,11 @@ const PlayerDetails = async ({
                       </div>
                       <Progress value={civ.winRate} className="h-2" />
                     </div>
-                  ))}
+                  ))}*/}
                 </div>
               ) : (
                 <p className="text-muted-foreground text-center py-8">
-                  No civilization data
+                  ცივილიზაციების სტატისტიკა არ მოიძებნა
                 </p>
               )}
             </CardContent>
@@ -326,12 +361,12 @@ const PlayerDetails = async ({
         <TabsContent value="achievements">
           <Card>
             <CardHeader>
-              <CardTitle>Tournament Achievements</CardTitle>
+              <CardTitle>სატურნირო მიღწევები</CardTitle>
             </CardHeader>
             <CardContent>
               {achievements.length > 0 ? (
                 <div className="space-y-4">
-                  {achievements.map((achievement, index) => (
+                  {/*{achievements.map((achievement, index) => (
                     <div
                       key={index}
                       className="flex items-start gap-4 p-4 rounded-lg bg-primary/5 border border-primary/10"
@@ -349,7 +384,7 @@ const PlayerDetails = async ({
                         </p>
                       </div>
                     </div>
-                  ))}
+                  ))}*/}
                 </div>
               ) : (
                 <p className="text-muted-foreground text-center py-8">

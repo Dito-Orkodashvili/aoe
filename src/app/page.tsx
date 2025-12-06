@@ -32,7 +32,7 @@ export default async function Home() {
           შემოგვიერთდი და გაიგე ნამდვილი RTS-ის გემო!
         </p>
         <div className="pt-12 animate-fade-in">
-          <div className="flex gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <a
               href="https://discord.gg/VUXdpQZU"
               target="_blank"
