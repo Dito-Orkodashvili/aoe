@@ -40,13 +40,15 @@ export function mergePlayersWithStats(
       (l) => l.statgroup_id === group?.id,
     );
 
-    const one_v_one = lb.find((l) => l.leaderboard_id === 3) ?? null;
-    const team = lb.find((l) => l.leaderboard_id === 4) ?? null;
+    const one_v_one_stats = lb.find((l) => l.leaderboard_id === 3) ?? null;
+    const team_stats = lb.find((l) => l.leaderboard_id === 4) ?? null;
+
+    const isMisha = player.id === "548dc028-45f9-49fa-9a86-4f8e65d43cbb";
 
     return {
       ...player,
-      one_v_one_stats: one_v_one,
-      team_stats: team,
+      one_v_one_stats: isMisha ? team_stats : one_v_one_stats,
+      team_stats: team_stats,
     };
   });
 }

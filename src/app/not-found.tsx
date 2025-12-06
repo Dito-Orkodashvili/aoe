@@ -13,10 +13,10 @@ const NotFound = () => {
           className="mb-8"
         />
         <p className="mb-4 text-xl text-muted-foreground">
-          გვერდი არ მოიძებნა!
+          ეს ტერიტორია ჯერ კიდევ არ არის დასკაუტებული
         </p>
         <Link href="/" className="text-primary underline hover:text-primary/90">
-          მთავარი გვერდი
+          დაბრუნდი ნაცნობ მიწაზე
         </Link>
       </div>
     </div>
