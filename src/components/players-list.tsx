@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
   ChartNoAxesCombined,
+  Flag,
   Flame,
   Gamepad2,
   Info,
@@ -27,6 +28,7 @@ import { PlayerWithStats } from "@/lib/types";
 import { clsx } from "clsx";
 import { TPlayer } from "@/lib/types/player.types";
 import Link from "next/link";
+import Image from "next/image";
 
 interface PlayerListProps {
   players: PlayerWithStats[];
@@ -171,12 +173,25 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                       {player.one_v_one_stats?.highestrating ?? "N/A"}
                     </span>
                   </div>
-                  <div className="bg-border w-full h-[1px]" />
-                  <div className="pt-2 flex gap-3">
-                    <p className="text-sm text-muted-foreground mb-1">
-                      საყვარელი ცივი:
-                    </p>
-                    <Badge variant="secondary">{player.fav_civ}</Badge>
+                  <div className="flex items-center gap-2">
+                    <Flag className="w-5 h-5 text-primary" />
+                    <span className="font-semibold">საყვარელი ცივი: </span>
+                    {player.fav_civ ? (
+                      <a
+                        href={`https://ageofempires.fandom.com/wiki/${player.fav_civ}`}
+                        about="_blank"
+                      >
+                        <Image
+                          src={`/aoe/civs/${player.fav_civ.toLowerCase()}.png`}
+                          alt={player.fav_civ}
+                          width={28}
+                          height={28}
+                          title={player.fav_civ}
+                        />
+                      </a>
+                    ) : (
+                      "N/A"
+                    )}
                   </div>
                 </div>
               </CardContent>
