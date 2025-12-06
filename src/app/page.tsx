@@ -1,4 +1,4 @@
-import { Castle, Trophy, Twitch, Users, Youtube } from "lucide-react";
+import { Castle, Trophy, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -18,7 +18,7 @@ export default async function Home() {
       <Hero>
         <div className="flex justify-center mb-6">
           <Image
-            src="/monaspa.png"
+            src="/aoe/monaspa.png"
             alt="Monaspa"
             width={80}
             height={88}
@@ -40,7 +40,7 @@ export default async function Home() {
               className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-[#5865f2] border border-white/10 hover:border-[#5865f2] rounded-full text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-sm"
             >
               <FaDiscord className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span className="font-medium">Discord</span>
+              <span className="font-medium">დისქორდი</span>
             </a>
             <a
               href="https://www.youtube.com/@teamgeorgia-aoe2"
@@ -49,7 +49,7 @@ export default async function Home() {
               className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-red-600/90 border border-white/10 hover:border-red-500 rounded-full text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-sm"
             >
               <FaYoutube className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span className="font-medium">YouTube</span>
+              <span className="font-medium">იუთუბი</span>
             </a>
             <a
               href="https://www.twitch.tv/team_georgia"
@@ -58,7 +58,7 @@ export default async function Home() {
               className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-purple-600/90 border border-white/10 hover:border-purple-500 rounded-full text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-sm"
             >
               <FaTwitch className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span className="font-medium">Twitch</span>
+              <span className="font-medium">ტვიტჩი</span>
             </a>
           </div>
         </div>

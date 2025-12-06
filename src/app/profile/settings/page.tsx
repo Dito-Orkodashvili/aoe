@@ -12,10 +12,10 @@ const ProfileSettings = async () => {
       <div className="container mx-auto max-w-4xl px-4 py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">
-            Profile Settings
+            პროფილის მართვა
           </h1>
           <p className="text-muted-foreground">
-            Manage your account information and preferences
+            მართე შენი პირადი ინფორმაცია და ანგარიშის პარამეტრები
           </p>
         </div>
         <ProfileSettingsForm profileInfo={profile} userInfo={user} />

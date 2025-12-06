@@ -1,15 +1,22 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const NotFound = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
+    <div className="flex min-h-screen justify-center bg-muted">
+      <div className="text-center flex flex-col items-center pt-40">
+        <Image
+          alt="აუთპოსტი"
+          src="/aoe/outpost.png"
+          width={150}
+          height={150}
+          className="mb-8"
+        />
         <p className="mb-4 text-xl text-muted-foreground">
-          Oops! Page not found
+          გვერდი არ მოიძებნა!
         </p>
         <Link href="/" className="text-primary underline hover:text-primary/90">
-          Return to Home
+          მთავარი გვერდი
         </Link>
       </div>
     </div>

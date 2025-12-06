@@ -54,12 +54,12 @@ export const PlayersList = ({ players }: PlayerListProps) => {
 
   return (
     <div>
-      <div className="flex justify-between mb-6 items-center gap-4">
-        <p className="text-md md:text-xl text-muted-foreground flex gap-3 items-center">
+      <div className="flex justify-between mb-2 items-center gap-4">
+        <p className="text-sm md:text-md text-muted-foreground flex gap-3 items-center">
           <span>
-            <Info className="text-primary" />
+            <Info className="text-secondary" />
           </span>{" "}
-          Player rankings are based on official ratings
+          რენკირება ხდება ოფიციალური რეიტინგის მიხედვით!
         </p>
         <div className="flex gap-2">
           <Button
@@ -89,7 +89,7 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                 <div className="relative aspect-square overflow-hidden bg-muted">
                   <Avatar className="w-full h-full rounded-none">
                     <AvatarImage
-                      src={player.picture_url ?? ""}
+                      src={player.picture_url ?? "/aoe/anonymous_player.webp"}
                       alt={player.nickname}
                       className="object-cover"
                     />
@@ -101,7 +101,7 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                     </AvatarFallback>
                   </Avatar>
                   <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
-                    Rank #{index + 1}
+                    #{index + 1}
                   </Badge>
                   <span
                     className="absolute top-4 right-4 rounded-full bg-muted p-2 border border-border"
@@ -125,18 +125,18 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                   <div className="flex items-center gap-2">
                     <ChartNoAxesCombined className="w-5 h-5 text-primary" />
                     <span className="font-semibold">
-                      Rating:{" "}
+                      რეიტინგი:{" "}
                       <span className="text-secondary font-bold">
                         {player.one_v_one_stats?.rating ?? "N/A"}
                       </span>
                     </span>
                   </div>
 
-                  {player.one_v_one_stats?.streak && (
-                    <div className="flex items-center gap-2">
-                      <Flame className="w-5 h-5 text-primary" />
-                      <span className="font-semibold">
-                        Win Streak:{" "}
+                  <div className="flex items-center gap-2">
+                    <Flame className="w-5 h-5 text-primary" />
+                    <span className="font-semibold">
+                      მოგებათა სერია:{" "}
+                      {player.one_v_one_stats?.streak ? (
                         <span
                           className={clsx(
                             player.one_v_one_stats?.streak > 0
@@ -144,16 +144,18 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                               : "text-primary",
                           )}
                         >
-                          {player.one_v_one_stats?.streak ?? "N/A"}
+                          {player.one_v_one_stats?.streak}
                         </span>
-                      </span>
-                    </div>
-                  )}
+                      ) : (
+                        "N/A"
+                      )}
+                    </span>
+                  </div>
 
                   <div className="flex items-center gap-2">
                     <Gamepad2 className="w-5 h-5 text-primary" />
                     <p className="font-semibold">
-                      Total Games:{" "}
+                      სულ ბრძოლა:{" "}
                       {player.one_v_one_stats?.wins &&
                       player.one_v_one_stats?.losses
                         ? player.one_v_one_stats?.wins +
@@ -165,14 +167,14 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                   <div className="flex items-center gap-2">
                     <Mountain className="w-5 h-5 text-primary" />
                     <span className="font-semibold">
-                      Highest Rating:{" "}
+                      პიკ რეიტინგი:{" "}
                       {player.one_v_one_stats?.highestrating ?? "N/A"}
                     </span>
                   </div>
                   <div className="bg-border w-full h-[1px]" />
                   <div className="pt-2 flex gap-3">
                     <p className="text-sm text-muted-foreground mb-1">
-                      Favorite Civilization:
+                      საყვარელი ცივი:
                     </p>
                     <Badge variant="secondary">{player.fav_civ}</Badge>
                   </div>

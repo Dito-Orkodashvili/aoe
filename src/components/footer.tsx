@@ -6,36 +6,35 @@ export const Footer = () => {
     <footer className="border-t bg-muted/20">
       <div className="container mx-auto px-4 py-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {/* Navigation */}
           <div className="space-y-3">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Navigate
+              ნავიგაცია
             </h4>
             <nav className="flex flex-col gap-2">
               <Link
                 href="/tournaments"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                Tournaments
+                ტურნირები
               </Link>
               <Link
                 href="/players"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                Players
+                მეომრები
               </Link>
               <Link
                 href="/donations"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                Support Tournaments
+                ტურნირების დაფინანსება
               </Link>
             </nav>
           </div>
 
           <div className="space-y-3">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Community
+              სოც. არხები
             </h4>
             <nav className="flex flex-col gap-2">
               <a
@@ -44,7 +43,7 @@ export const Footer = () => {
                 rel="noopener noreferrer"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                Discord
+                დისქორდი
               </a>
               <a
                 href="https://youtube.com/"
@@ -52,7 +51,7 @@ export const Footer = () => {
                 rel="noopener noreferrer"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                YouTube
+                იუთუბი
               </a>
               <a
                 href="https://twitch.tv/"
@@ -60,27 +59,27 @@ export const Footer = () => {
                 rel="noopener noreferrer"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                Twitch
+                ტვიტჩი
               </a>
             </nav>
           </div>
 
           <div className="space-y-3">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Resources
+              რესურსები
             </h4>
             <nav className="flex flex-col gap-2">
               <a
                 href="#"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                Tournament Rules
+                თამაშის ინსტალაცია
               </a>
               <a
                 href="#"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                Getting Started
+                ბილდ ორდერები
               </a>
               <a
                 href="#"
@@ -93,7 +92,7 @@ export const Footer = () => {
 
           <div className="space-y-3">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Connect
+              დაკავშირება
             </h4>
             <div className="flex gap-3">
               <a

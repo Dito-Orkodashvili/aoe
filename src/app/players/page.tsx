@@ -21,7 +21,7 @@ const Players = async () => {
       <PageHero>
         <div className="flex justify-center space-y-3mb-6">
           <Image
-            src="/teutonic_knight.png"
+            src="/aoe/teutonic_knight.png"
             alt="Teutonic knight"
             width={60}
             height={91}
@@ -32,8 +32,7 @@ const Players = async () => {
           ქართველი მებრძოლები
         </h1>
         <p className="text-lg text-gray-200 max-w-2xl mx-auto animate-fade-in">
-          Meet the top Age of Empires II players from Georgia&#39;s competitive
-          community
+          გაიცანი ქართველი ტოპ მეომრები და შეუერთდი ბრძოლას!
         </p>
       </PageHero>
 

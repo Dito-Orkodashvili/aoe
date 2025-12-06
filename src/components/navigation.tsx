@@ -48,7 +48,7 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
             className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
           >
             <Swords className="w-6 h-6" />
-            <span className="font-bold text-lg">Georgian AoE II</span>
+            <span className="font-bold text-lg">ქართული AoE II</span>
             <Heart className="inline h-4 w-4 text-red-500" />
           </Link>
 
@@ -125,13 +125,11 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                   </Button>
                 </Link>
               )}
-              <ThemeToggle />
             </div>
           </div>
 
           {/* Mobile Navigation */}
           <div className="flex md:hidden items-center gap-2">
-            <ThemeToggle />
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild aria-label="Open Menu" aria-controls="menu">
                 <Button variant="ghost" size="icon">

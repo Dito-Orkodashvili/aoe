@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, Crown, Swords, Trophy } from "lucide-react";
+import { Calendar, Crown, Trophy } from "lucide-react";
 import Link from "next/link";
 import { PageHero } from "@/components/sections/hero";
 import { getTournaments } from "@/lib/supabase/tournament/get-tournaments";

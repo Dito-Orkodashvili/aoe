@@ -80,7 +80,7 @@ export const LobbyMatchInfo = ({ match }: LobbyMatchInfoProps) => {
                     </div>
                     <Badge variant="secondary" className="text-xs">
                       {player.one_v_one_stats?.rating ?? (
-                        <span className="text-sm">N/A</span>
+                        <span className="text-xs">N/A</span>
                       )}
                     </Badge>
                   </div>
