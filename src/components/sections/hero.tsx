@@ -7,6 +7,7 @@ export function PageHero({ children }: { children: React.ReactNode }) {
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="text-center space-y-6">{children}</div>
       </div>
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 }
