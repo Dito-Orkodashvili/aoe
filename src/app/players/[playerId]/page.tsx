@@ -320,16 +320,15 @@ const PlayerDetails = async ({
                           />
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                              <Map className="w-4 h-4 text-primary" />
                               <span className="font-semibold text-foreground">
                                 {capitalize(resolvedMapName)}
                               </span>
-                              <Badge
-                                variant={didWin ? "default" : "destructive"}
-                                className="ml-2"
-                              >
-                                {didWin ? "Victory" : "Defeat"}
-                              </Badge>
+
+                              {didWin ? (
+                                <Crown className="text-green-600 w-6 h-6" />
+                              ) : (
+                                <Skull className="text-red-500 w-6 h-6" />
+                              )}
                             </div>
                             <div className="flex items-center gap-4 text-sm text-muted-foreground">
                               <span className="flex items-center gap-1">
