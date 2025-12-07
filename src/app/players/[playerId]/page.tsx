@@ -307,7 +307,10 @@ const PlayerDetails = async ({
                     return (
                       <div
                         key={index}
-                        className={`rounded-xl border overflow-hidden`}
+                        className={clsx(
+                          `rounded-xl border-2 overflow-hidden`,
+                          didWin ? "border-green-800" : "border-red-900",
+                        )}
                       >
                         <div className="flex items-center gap-4 p-4 border-b border-border/50">
                           <ImageWithFallback
@@ -360,8 +363,8 @@ const PlayerDetails = async ({
                                   className={clsx(
                                     "flex items-center justify-between bg-background/50 rounded-lg px-3 py-2",
                                     didWin
-                                      ? "border border-green-800"
-                                      : "border border-red-900",
+                                      ? "border border-green-800/50"
+                                      : "border border-red-900/50",
                                   )}
                                 >
                                   <div className="flex items-center gap-2">
@@ -423,8 +426,8 @@ const PlayerDetails = async ({
                                   className={clsx(
                                     "flex items-center justify-between bg-background/50 rounded-lg px-3 py-2",
                                     didWin
-                                      ? "border border-green-800"
-                                      : "border border-red-900",
+                                      ? "border border-green-800/50"
+                                      : "border border-red-900/50",
                                   )}
                                 >
                                   <div className="flex items-center gap-2">
