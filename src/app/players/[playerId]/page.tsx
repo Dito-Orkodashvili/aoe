@@ -394,6 +394,7 @@ const PlayerDetails = async ({
                                     <p
                                       className={`text-xs font-medium ${p.ratingChange >= 0 ? "text-green-500" : "text-red-500"}`}
                                     >
+                                      {p.ratingChange >= 0 && "+"}
                                       {p.ratingChange}
                                     </p>
                                   </div>
@@ -456,6 +457,7 @@ const PlayerDetails = async ({
                                     <p
                                       className={`text-xs font-medium ${p.ratingChange >= 0 ? "text-green-500" : "text-red-500"}`}
                                     >
+                                      {p.ratingChange >= 0 && "+"}
                                       {p.ratingChange}
                                     </p>
                                   </div>
