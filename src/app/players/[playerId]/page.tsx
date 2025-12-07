@@ -40,6 +40,7 @@ import {
 import { clsx } from "clsx";
 import { capitalize, mapNameToIcon } from "@/lib/utils";
 import { ImageWithFallback } from "@/components/image-with-fallback";
+import { getCivById } from "@/lib/utils/civilization.utils";
 
 const civilizationStats: unknown[] = [];
 
@@ -66,6 +67,8 @@ const PlayerDetails = async ({
     bio,
     team,
   } = player || {};
+
+  const resolvedFavCiv = getCivById(fav_civ);
 
   let playerStats = null;
   let matchHistory: ExtractedMatchInfo[] = [];
@@ -245,18 +248,18 @@ const PlayerDetails = async ({
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            {fav_civ ? (
+            {resolvedFavCiv ? (
               <a
                 className="flex justify-center mb-2"
-                href={`https://ageofempires.fandom.com/wiki/${player.fav_civ}`}
+                href={`https://ageofempires.fandom.com/wiki/${resolvedFavCiv.name}`}
                 about="_blank"
               >
                 <Image
-                  src={`/aoe/civs/${fav_civ.toLowerCase()}.png`}
-                  alt={fav_civ}
+                  src={`/aoe/civs/${resolvedFavCiv.icon}`}
+                  alt={resolvedFavCiv.name}
                   width={32}
                   height={32}
-                  title={fav_civ}
+                  title={resolvedFavCiv.name}
                 />
               </a>
             ) : (
@@ -264,13 +267,13 @@ const PlayerDetails = async ({
             )}
 
             <p className="text-3xl font-bold text-foreground">
-              {fav_civ ? (
+              {resolvedFavCiv ? (
                 <a
                   className="flex justify-center"
-                  href={`https://ageofempires.fandom.com/wiki/${fav_civ}`}
+                  href={`https://ageofempires.fandom.com/wiki/${resolvedFavCiv.name}`}
                   about="_blank"
                 >
-                  {fav_civ}
+                  {resolvedFavCiv.name}
                 </a>
               ) : (
                 "N/A"

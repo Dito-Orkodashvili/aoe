@@ -1,6 +1,17 @@
 import { PlayerSettingsForm } from "@/components/player-settings-form";
+import { getUser } from "@/lib/supabase/user/get-user";
+import { getAuthedUserPlayer } from "@/lib/supabase/player/get-authed-user-player";
+import { redirect } from "next/navigation";
 
-const ProfileSettings = () => {
+const ProfileSettings = async () => {
+  const authedUser = await getUser();
+
+  if (!authedUser) {
+    redirect("/login");
+  }
+
+  const player = await getAuthedUserPlayer(authedUser.id);
+
   return (
     <div className="min-h-screen bg-background mb-8">
       <div className="container mx-auto max-w-4xl px-4 py-8">
@@ -14,7 +25,7 @@ const ProfileSettings = () => {
         </div>
 
         <div className="grid gap-6">
-          <PlayerSettingsForm />
+          <PlayerSettingsForm player={player} authedUser={authedUser} />
         </div>
       </div>
     </div>

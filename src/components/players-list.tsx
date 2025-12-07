@@ -29,6 +29,7 @@ import { clsx } from "clsx";
 import { TPlayer } from "@/lib/types/player.types";
 import Link from "next/link";
 import Image from "next/image";
+import { getCivById } from "@/lib/utils/civilization.utils";
 
 interface PlayerListProps {
   players: PlayerWithStats[];
@@ -82,123 +83,127 @@ export const PlayersList = ({ players }: PlayerListProps) => {
       </div>
       {viewMode === "grid" ? (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {sortedPlayers.map((player, index) => (
-            <Card
-              key={player.id}
-              className="overflow-hidden hover:shadow-lg transition-shadow pt-0 pb-0 gap-2"
-            >
-              <CardHeader className="p-0">
-                <div className="relative aspect-square overflow-hidden bg-muted">
-                  <Avatar className="w-full h-full rounded-none">
-                    <AvatarImage
-                      src={
-                        player.picture_url ?? "/aoe/anonymous_player_male.webp"
-                      }
-                      alt={player.nickname}
-                      className="object-cover"
-                    />
-                    <AvatarFallback className="rounded-none text-4xl">
-                      {player.nickname
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
-                    #{index + 1}
-                  </Badge>
-                  <span
-                    className="absolute top-4 right-4 rounded-full bg-muted p-2 border border-border"
-                    title={`${player.league} league`}
-                  >
-                    {leagueIcons[player.league]}
-                  </span>
-                </div>
-              </CardHeader>
-              <CardContent className="px-6 pb-4 pt-0">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 mb-3 font-medieval">
-                    <Link
-                      className="hover:underline hover:text-secondary font-semibold transition-all"
-                      href={`/players/${player.id}`}
+          {sortedPlayers.map((player, index) => {
+            const favCiv = getCivById(player.fav_civ);
+            return (
+              <Card
+                key={player.id}
+                className="overflow-hidden hover:shadow-lg transition-shadow pt-0 pb-0 gap-2"
+              >
+                <CardHeader className="p-0">
+                  <div className="relative aspect-square overflow-hidden bg-muted">
+                    <Avatar className="w-full h-full rounded-none">
+                      <AvatarImage
+                        src={
+                          player.picture_url ??
+                          "/aoe/anonymous_player_male.webp"
+                        }
+                        alt={player.nickname}
+                        className="object-cover"
+                      />
+                      <AvatarFallback className="rounded-none text-4xl">
+                        {player.nickname
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
+                      #{index + 1}
+                    </Badge>
+                    <span
+                      className="absolute top-4 right-4 rounded-full bg-muted p-2 border border-border"
+                      title={`${player.league} league`}
                     >
-                      <h3 className="text-xl font-bold">{player.nickname}</h3>
-                    </Link>
-                  </div>
-                  <div className="bg-border w-full h-[1px]" />
-                  <div className="flex items-center gap-2">
-                    <ChartNoAxesCombined className="w-5 h-5 text-primary" />
-                    <span className="font-semibold">
-                      რეიტინგი:{" "}
-                      <span className="text-secondary font-bold">
-                        {player.one_v_one_stats?.rating ?? "N/A"}
-                      </span>
+                      {leagueIcons[player.league]}
                     </span>
                   </div>
-
-                  <div className="flex items-center gap-2">
-                    <Flame className="w-5 h-5 text-primary" />
-                    <span className="font-semibold">
-                      მოგებათა სერია:{" "}
-                      {player.one_v_one_stats?.streak ? (
-                        <span
-                          className={clsx(
-                            player.one_v_one_stats?.streak > 0
-                              ? "text-green-500"
-                              : "text-primary",
-                          )}
-                        >
-                          {player.one_v_one_stats?.streak}
+                </CardHeader>
+                <CardContent className="px-6 pb-4 pt-0">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 mb-3 font-medieval">
+                      <Link
+                        className="hover:underline hover:text-secondary font-semibold transition-all"
+                        href={`/players/${player.id}`}
+                      >
+                        <h3 className="text-xl font-bold">{player.nickname}</h3>
+                      </Link>
+                    </div>
+                    <div className="bg-border w-full h-[1px]" />
+                    <div className="flex items-center gap-2">
+                      <ChartNoAxesCombined className="w-5 h-5 text-primary" />
+                      <span className="font-semibold">
+                        რეიტინგი:{" "}
+                        <span className="text-secondary font-bold">
+                          {player.one_v_one_stats?.rating ?? "N/A"}
                         </span>
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Flame className="w-5 h-5 text-primary" />
+                      <span className="font-semibold">
+                        მოგებათა სერია:{" "}
+                        {player.one_v_one_stats?.streak ? (
+                          <span
+                            className={clsx(
+                              player.one_v_one_stats?.streak > 0
+                                ? "text-green-500"
+                                : "text-primary",
+                            )}
+                          >
+                            {player.one_v_one_stats?.streak}
+                          </span>
+                        ) : (
+                          "N/A"
+                        )}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Gamepad2 className="w-5 h-5 text-primary" />
+                      <p className="font-semibold">
+                        სულ ბრძოლა:{" "}
+                        {player.one_v_one_stats?.wins &&
+                        player.one_v_one_stats?.losses
+                          ? player.one_v_one_stats?.wins +
+                            player.one_v_one_stats?.losses
+                          : "N/A"}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Mountain className="w-5 h-5 text-primary" />
+                      <span className="font-semibold">
+                        პიკ რეიტინგი:{" "}
+                        {player.one_v_one_stats?.highestrating ?? "N/A"}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Flag className="w-5 h-5 text-primary" />
+                      <span className="font-semibold">საყვარელი ცივი: </span>
+                      {favCiv ? (
+                        <a
+                          href={`https://ageofempires.fandom.com/wiki/${favCiv.name}`}
+                          about="_blank"
+                        >
+                          <Image
+                            src={`/aoe/civs/${favCiv.icon}`}
+                            alt={favCiv.name}
+                            width={28}
+                            height={28}
+                            title={favCiv.name}
+                          />
+                        </a>
                       ) : (
                         "N/A"
                       )}
-                    </span>
+                    </div>
                   </div>
-
-                  <div className="flex items-center gap-2">
-                    <Gamepad2 className="w-5 h-5 text-primary" />
-                    <p className="font-semibold">
-                      სულ ბრძოლა:{" "}
-                      {player.one_v_one_stats?.wins &&
-                      player.one_v_one_stats?.losses
-                        ? player.one_v_one_stats?.wins +
-                          player.one_v_one_stats?.losses
-                        : "N/A"}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Mountain className="w-5 h-5 text-primary" />
-                    <span className="font-semibold">
-                      პიკ რეიტინგი:{" "}
-                      {player.one_v_one_stats?.highestrating ?? "N/A"}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Flag className="w-5 h-5 text-primary" />
-                    <span className="font-semibold">საყვარელი ცივი: </span>
-                    {player.fav_civ ? (
-                      <a
-                        href={`https://ageofempires.fandom.com/wiki/${player.fav_civ}`}
-                        about="_blank"
-                      >
-                        <Image
-                          src={`/aoe/civs/${player.fav_civ.toLowerCase()}.png`}
-                          alt={player.fav_civ}
-                          width={28}
-                          height={28}
-                          title={player.fav_civ}
-                        />
-                      </a>
-                    ) : (
-                      "N/A"
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       ) : (
         <div className="border rounded-lg">

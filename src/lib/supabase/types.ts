@@ -209,15 +209,15 @@ export type Database = {
           aoe_profile_id: string | null
           bio: string | null
           created_at: string | null
-          fav_civ: string | null
-          gender: string | null
+          fav_civ: number | null
+          gender: Database["public"]["Enums"]["gender_enum"] | null
           id: string
           last_name: string | null
           league: Database["public"]["Enums"]["player_rank"]
           name: string | null
           nickname: string
           picture_url: string | null
-          playing_since: string | null
+          playing_since: number | null
           region: string | null
           steam_id: string | null
           team: string | null
@@ -230,15 +230,15 @@ export type Database = {
           aoe_profile_id?: string | null
           bio?: string | null
           created_at?: string | null
-          fav_civ?: string | null
-          gender?: string | null
+          fav_civ?: number | null
+          gender?: Database["public"]["Enums"]["gender_enum"] | null
           id?: string
           last_name?: string | null
           league?: Database["public"]["Enums"]["player_rank"]
           name?: string | null
           nickname: string
           picture_url?: string | null
-          playing_since?: string | null
+          playing_since?: number | null
           region?: string | null
           steam_id?: string | null
           team?: string | null
@@ -251,15 +251,15 @@ export type Database = {
           aoe_profile_id?: string | null
           bio?: string | null
           created_at?: string | null
-          fav_civ?: string | null
-          gender?: string | null
+          fav_civ?: number | null
+          gender?: Database["public"]["Enums"]["gender_enum"] | null
           id?: string
           last_name?: string | null
           league?: Database["public"]["Enums"]["player_rank"]
           name?: string | null
           nickname?: string
           picture_url?: string | null
-          playing_since?: string | null
+          playing_since?: number | null
           region?: string | null
           steam_id?: string | null
           team?: string | null
@@ -487,6 +487,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      gender_enum: "male" | "female"
       player_rank: "bronze" | "silver" | "gold"
       user_role: "user" | "admin"
     }
@@ -616,6 +617,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      gender_enum: ["male", "female"],
       player_rank: ["bronze", "silver", "gold"],
       user_role: ["user", "admin"],
     },

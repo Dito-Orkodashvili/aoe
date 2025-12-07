@@ -1,0 +1,55 @@
+import { TCivilization } from "@/lib/types/civilization.types";
+
+export const CIVILIZATIONS: TCivilization[] = [
+  { id: 0, name: "Aztecs", icon: "aztecs.png" },
+  { id: 1, name: "Bengalis", icon: "bengalis.png" },
+  { id: 2, name: "Berbers", icon: "berbers.png" },
+  { id: 3, name: "Bohemians", icon: "bohemians.png" },
+  { id: 4, name: "Britons", icon: "britons.png" },
+  { id: 5, name: "Bulgarians", icon: "bulgarians.png" },
+  { id: 6, name: "Burgundians", icon: "burgundians.png" },
+  { id: 7, name: "Burmese", icon: "burmese.png" },
+  { id: 8, name: "Byzantines", icon: "byzantines.png" },
+  { id: 9, name: "Celts", icon: "celts.png" },
+  { id: 10, name: "Chinese", icon: "chinese.png" },
+  { id: 11, name: "Cumans", icon: "cumans.png" },
+  { id: 12, name: "Dravidians", icon: "dravidians.png" },
+  { id: 13, name: "Ethiopians", icon: "ethiopians.png" },
+  { id: 14, name: "Franks", icon: "franks.png" },
+  { id: 15, name: "Goths", icon: "goths.png" },
+  { id: 16, name: "Gurjaras", icon: "gurjaras.png" },
+  { id: 17, name: "Hindustanis", icon: "hindustanis.png" },
+  { id: 18, name: "Huns", icon: "huns.png" },
+  { id: 19, name: "Incas", icon: "incas.png" },
+  { id: 20, name: "Italians", icon: "italians.png" },
+  { id: 21, name: "Japanese", icon: "japanese.png" },
+  { id: 22, name: "Khmer", icon: "khmer.png" },
+  { id: 23, name: "Koreans", icon: "koreans.png" },
+  { id: 24, name: "Lithuanians", icon: "lithuanians.png" },
+  { id: 25, name: "Magyars", icon: "magyars.png" },
+  { id: 26, name: "Malay", icon: "malay.png" },
+  { id: 27, name: "Malians", icon: "malians.png" },
+  { id: 28, name: "Mayans", icon: "mayans.png" },
+  { id: 29, name: "Mongols", icon: "mongols.png" },
+  { id: 30, name: "Persians", icon: "persians.png" },
+  { id: 31, name: "Poles", icon: "poles.png" },
+  { id: 32, name: "Portuguese", icon: "portuguese.png" },
+  { id: 33, name: "Romans", icon: "romans.png" },
+  { id: 34, name: "Saracens", icon: "saracens.png" },
+  { id: 35, name: "Sicilians", icon: "sicilians.png" },
+  { id: 36, name: "Slavs", icon: "slavs.png" },
+  { id: 37, name: "Spanish", icon: "spanish.png" },
+  { id: 38, name: "Tatars", icon: "tatars.png" },
+  { id: 39, name: "Teutons", icon: "teutons.png" },
+  { id: 40, name: "Turks", icon: "turks.png" },
+  { id: 41, name: "Vietnamese", icon: "vietnamese.png" },
+  { id: 42, name: "Vikings", icon: "vikings.png" },
+  { id: 43, name: "Armenians", icon: "armenians.png" },
+  { id: 44, name: "Georgians", icon: "georgians.png" },
+] as const;
+
+export const getCivById = (id?: number | null): TCivilization | undefined => {
+  if (!id) return;
+
+  return CIVILIZATIONS.find((c) => c.id === id);
+};

@@ -106,14 +106,14 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                     <DropdownMenuItem asChild>
                       <Link href="/profile/settings">
                         <User className="mr-2 h-4 w-4" />
-                        <span>Profile</span>
+                        <span>პარამეტრები</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={logout} asChild>
                       <button onClick={logout} className="w-full">
                         <LogOut className="mr-2 h-4 w-4" />
-                        <span>Log out</span>
+                        <span>გამოსვლა</span>
                       </button>
                     </DropdownMenuItem>
                   </DropdownMenuContent>

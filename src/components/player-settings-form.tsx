@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -27,112 +21,87 @@ import {
   Users,
   Youtube,
 } from "lucide-react";
-import { TProfile } from "@/lib/types/profile.types";
-import { User as AuthedUser } from "@supabase/auth-js";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { TPlayer } from "@/lib/types/player.types";
+import { CIVILIZATIONS } from "@/lib/utils/civilization.utils";
+import { savePlayerAction } from "@/app/profile/actions";
+import { User as AuthedUser } from "@supabase/auth-js";
 
 interface ProfileSettingsFormProps {
-  profileInfo?: TProfile | null;
-  userInfo?: AuthedUser;
+  player?: TPlayer | null;
+  authedUser: AuthedUser;
 }
 
-const AOE_CIVS = [
-  "Aztecs",
-  "Berbers",
-  "Britons",
-  "Bulgarians",
-  "Burgundians",
-  "Burmese",
-  "Byzantines",
-  "Celts",
-  "Chinese",
-  "Cumans",
-  "Dravidians",
-  "Ethiopians",
-  "Franks",
-  "Goths",
-  "Gurjaras",
-  "Hindustanis",
-  "Huns",
-  "Incas",
-  "Indians",
-  "Italians",
-  "Japanese",
-  "Khmer",
-  "Koreans",
-  "Lithuanians",
-  "Magyars",
-  "Malay",
-  "Malians",
-  "Mayans",
-  "Mongols",
-  "Persians",
-  "Poles",
-  "Portuguese",
-  "Romans",
-  "Saracens",
-  "Sicilians",
-  "Slavs",
-  "Spanish",
-  "Tatars",
-  "Teutons",
-  "Turks",
-  "Vietnamese",
-  "Vikings",
-];
-
-const REGIONS = [
-  "Europe",
-  "North America",
-  "South America",
-  "Asia",
-  "Africa",
-  "Oceania",
-  "Middle East",
-];
-const GENDERS = ["Male", "Female", "Other", "Prefer not to say"];
+const REGIONS = ["თბილის", "რუსთავი", "მუხრანი"];
 
 export const PlayerSettingsForm = ({
-  profileInfo,
-  userInfo,
+  player,
+  authedUser,
 }: ProfileSettingsFormProps) => {
   const { toast } = useToast();
-  // const userName = userInfo.user_metadata?.full_name;
-  // const avatar = profileInfo?.avatar_url ?? "";
   const [isEditing, setIsEditing] = useState(false);
+
+  const {
+    nickname,
+    name,
+    last_name,
+    fav_civ,
+    region,
+    aoe_profile_id,
+    steam_id,
+    youtube,
+    twitch,
+    gender,
+    playing_since,
+    team,
+    bio,
+  } = player ?? {};
+
   const [formData, setFormData] = useState({
-    // Account info
-    username: "SakartveloWarrior",
-    email: "warrior@aoe2.ge",
-    discordId: "Warrior#1234",
-    // Player info
-    nickname: "Warrior",
-    name: "Giorgi",
-    lastName: "Maisuradze",
-    favCiv: "Byzantines",
-    region: "Europe",
-    aoeProfileId: "12345678",
-    steamId: "76561198012345678",
-    youtube: "https://youtube.com/@warrior",
-    twitch: "https://twitch.tv/warrior",
-    gender: "Male",
-    playingSince: "2015",
-    team: "Georgia Legends",
-    bio: "Age of Empires II enthusiast from Tbilisi. Love playing Byzantines and Persians. Always looking for team games!",
+    nickname: nickname ?? "",
+    name: name ?? "",
+    last_name: last_name ?? "",
+    fav_civ: fav_civ ?? "",
+    region: region ?? "",
+    aoe_profile_id: aoe_profile_id ?? "",
+    steam_id: steam_id ?? "",
+    youtube: youtube ?? "",
+    twitch: twitch ?? "",
+    gender: gender ?? "male",
+    playing_since: playing_since ?? "",
+    team: team ?? "",
+    bio: bio ?? "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    const result = await savePlayerAction(authedUser.id, {
+      ...formData,
+      playing_since: playing_since ? Number(playing_since) : null,
+      fav_civ: fav_civ ? Number(fav_civ) : null,
+    });
+
+    if (!result.success) {
+      console.log(result.error);
+      toast({
+        title: "შეცდომა",
+        description: "პროფილის მონაცემები შევსებულია არასწორად.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsEditing(false);
+
     toast({
-      title: "Profile Updated",
-      description: "Your profile has been successfully updated.",
+      title: "პროფილი განახლდა",
+      description: "ინფორმაცია წარმატებით განახლდა.",
+      variant: "success",
     });
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({
       ...formData,
@@ -152,10 +121,7 @@ export const PlayerSettingsForm = ({
       <CardHeader>
         <div className="flex items-center gap-2 justify-between">
           <div>
-            <CardTitle>Player Information</CardTitle>
-            <CardDescription>
-              Your public player profile details
-            </CardDescription>
+            <CardTitle>მოთამაშის ინფორმაცია</CardTitle>
           </div>
           {!isEditing && (
             <Button
@@ -165,35 +131,34 @@ export const PlayerSettingsForm = ({
               className="gap-2"
             >
               <Edit2 className="w-4 h-4" />
-              Edit
+              რედაქტირება
             </Button>
           )}
         </div>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Basic Info */}
+        <form action={handleSubmit} className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="nickname">Nickname / In-Game Name</Label>
+              <Label htmlFor="nickname">მეტსახელი</Label>
               <Input
                 id="nickname"
                 name="nickname"
                 value={formData.nickname}
                 onChange={handleChange}
                 disabled={!isEditing}
-                placeholder="Your player nickname"
+                placeholder="შენი სახელი თამაშში"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="name">First Name</Label>
+              <Label htmlFor="name">სახელი</Label>
               <div className="relative">
                 <User className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                 <Input
                   id="name"
                   name="name"
-                  value={formData.name}
+                  value={formData.name!}
                   onChange={handleChange}
                   disabled={!isEditing}
                   className="pl-10"
@@ -202,57 +167,52 @@ export const PlayerSettingsForm = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="lastName">Last Name</Label>
+              <Label htmlFor="last_name">გვარი</Label>
               <Input
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
+                id="last_name"
+                name="last_name"
+                value={formData.last_name!}
                 onChange={handleChange}
                 disabled={!isEditing}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="gender">Gender</Label>
+              <Label htmlFor="gender">სქესი</Label>
               <Select
-                value={formData.gender}
+                value={formData.gender!}
                 onValueChange={(value) => handleSelectChange("gender", value)}
                 disabled={!isEditing}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select gender" />
+                  <SelectValue placeholder="აირჩიე სქესი" />
                 </SelectTrigger>
                 <SelectContent>
-                  {GENDERS.map((gender) => (
-                    <SelectItem key={gender} value={gender}>
-                      {gender}
-                    </SelectItem>
-                  ))}
+                  <SelectItem value="male">მამრობითი</SelectItem>
+                  <SelectItem value="female">მდედრობითი</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
 
-          {/* Gaming Info */}
           <div className="border-t border-border pt-6">
-            <h4 className="text-sm font-medium text-muted-foreground mb-4">
-              Gaming Details
-            </h4>
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="favCiv">Favorite Civilization</Label>
+                <Label htmlFor="fav_civ">საყვარელი ცივილიზაცია</Label>
                 <Select
-                  value={formData.favCiv}
-                  onValueChange={(value) => handleSelectChange("favCiv", value)}
+                  value={formData.fav_civ!.toString()}
+                  onValueChange={(value) =>
+                    handleSelectChange("fav_civ", value)
+                  }
                   disabled={!isEditing}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select civilization" />
+                    <SelectValue placeholder="აირჩიე ცივილიზაცია" />
                   </SelectTrigger>
                   <SelectContent>
-                    {AOE_CIVS.map((civ) => (
-                      <SelectItem key={civ} value={civ}>
-                        {civ}
+                    {CIVILIZATIONS.map((civ) => (
+                      <SelectItem key={civ.id} value={civ.id.toString()}>
+                        {civ.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -260,18 +220,18 @@ export const PlayerSettingsForm = ({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="region">Region</Label>
+                <Label htmlFor="region">რეგიონი</Label>
                 <div className="relative">
                   <Globe className="absolute left-3 top-3 w-4 h-4 text-muted-foreground z-10" />
                   <Select
-                    value={formData.region}
+                    value={formData.region!}
                     onValueChange={(value) =>
                       handleSelectChange("region", value)
                     }
                     disabled={!isEditing}
                   >
                     <SelectTrigger className="pl-10">
-                      <SelectValue placeholder="Select region" />
+                      <SelectValue placeholder="აირჩიე რეგიონი" />
                     </SelectTrigger>
                     <SelectContent>
                       {REGIONS.map((region) => (
@@ -285,32 +245,32 @@ export const PlayerSettingsForm = ({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="playingSince">Playing Since</Label>
+                <Label htmlFor="playing_since">თამაშის დაწყების წელი</Label>
                 <div className="relative">
                   <Calendar className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                   <Input
-                    id="playingSince"
-                    name="playingSince"
-                    value={formData.playingSince}
+                    id="playing_since"
+                    name="playing_since"
+                    value={formData.playing_since!}
                     onChange={handleChange}
                     disabled={!isEditing}
-                    placeholder="e.g., 2015"
+                    placeholder="მაგ. 2015"
                     className="pl-10"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="team">Team</Label>
+                <Label htmlFor="team">გუნდი</Label>
                 <div className="relative">
                   <Users className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="team"
                     name="team"
-                    value={formData.team}
+                    value={formData.team!}
                     onChange={handleChange}
                     disabled={!isEditing}
-                    placeholder="Your team name"
+                    placeholder="შენი გუნდის სახელი"
                     className="pl-10"
                   />
                 </div>
@@ -318,44 +278,40 @@ export const PlayerSettingsForm = ({
             </div>
           </div>
 
-          {/* External Profiles */}
           <div className="border-t border-border pt-6">
-            <h4 className="text-sm font-medium text-muted-foreground mb-4">
-              External Profiles
-            </h4>
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="aoeProfileId">AoE2.net Profile ID</Label>
+                <Label htmlFor="aoeProfileId">
+                  ageofempires.com პროფილის ID
+                </Label>
                 <Input
-                  id="aoeProfileId"
-                  name="aoeProfileId"
-                  value={formData.aoeProfileId}
+                  id="aoe_profile_id"
+                  name="aoe_profile_id"
+                  value={formData.aoe_profile_id!}
                   onChange={handleChange}
                   disabled={!isEditing}
-                  placeholder="Your aoe2.net profile ID"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="steamId">Steam ID</Label>
+                <Label htmlFor="steam_id">სთიმის ID</Label>
                 <Input
-                  id="steamId"
-                  name="steamId"
-                  value={formData.steamId}
+                  id="steam_id"
+                  name="steam_id"
+                  value={formData.steam_id!}
                   onChange={handleChange}
                   disabled={!isEditing}
-                  placeholder="Your Steam ID"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="youtube">YouTube Channel</Label>
+                <Label htmlFor="youtube">იუთუბ არხი</Label>
                 <div className="relative">
                   <Youtube className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="youtube"
                     name="youtube"
-                    value={formData.youtube}
+                    value={formData.youtube!}
                     onChange={handleChange}
                     disabled={!isEditing}
                     placeholder="https://youtube.com/@..."
@@ -365,13 +321,13 @@ export const PlayerSettingsForm = ({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="twitch">Twitch Channel</Label>
+                <Label htmlFor="twitch">ტვიტჩის არხი</Label>
                 <div className="relative">
                   <Twitch className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="twitch"
                     name="twitch"
-                    value={formData.twitch}
+                    value={formData.twitch!}
                     onChange={handleChange}
                     disabled={!isEditing}
                     placeholder="https://twitch.tv/..."
@@ -382,19 +338,18 @@ export const PlayerSettingsForm = ({
             </div>
           </div>
 
-          {/* Bio */}
           <div className="border-t border-border pt-6">
             <div className="space-y-2">
-              <Label htmlFor="bio">Bio</Label>
+              <Label htmlFor="bio">ბიოგრაფია</Label>
               <Textarea
                 id="bio"
                 name="bio"
-                value={formData.bio}
+                value={formData.bio!}
                 onChange={handleChange}
                 disabled={!isEditing}
                 rows={4}
                 className="resize-none"
-                placeholder="Tell others about yourself..."
+                placeholder="გვითხარი მეტი შენ შესახებ..."
               />
             </div>
           </div>
@@ -406,9 +361,9 @@ export const PlayerSettingsForm = ({
                 variant="outline"
                 onClick={() => setIsEditing(false)}
               >
-                Cancel
+                გაუქმება
               </Button>
-              <Button type="submit">Save Changes</Button>
+              <Button type="submit">ცვლილებების შენახვა</Button>
             </div>
           )}
         </form>

@@ -1,0 +1,2 @@
+ALTER TABLE players
+ALTER COLUMN fav_civ TYPE INT USING fav_civ::INT;

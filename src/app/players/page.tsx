@@ -6,7 +6,6 @@ import {
   getPlayersOfficialStats,
   mergePlayersWithStats,
 } from "@/lib/supabase/player/get-players-official-stats";
-import { Swords } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 

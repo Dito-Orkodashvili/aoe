@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/lib/utils";
 import { TTournamentInfo } from "@/lib/supabase/tournament/get-tournament-details";
+import { getCivById } from "@/lib/utils/civilization.utils";
 
 interface ParticipantsInfoProps {
   participants: TTournamentInfo["participants"];
@@ -44,32 +45,37 @@ export const ParticipantsInfo = ({ participants }: ParticipantsInfoProps) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {participants.map((participant, index) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium">
-                  <Avatar>
-                    <AvatarImage
-                      src={participant.player.picture_url ?? ""}
-                      alt={
-                        participant.player.name || participant.player.nickname
-                      }
-                    />
-                    <AvatarFallback className="bg-primary text-primary-foreground">
-                      {getInitials(
-                        participant.player.name || participant.player.nickname,
-                      )}
-                    </AvatarFallback>
-                  </Avatar>
-                </TableCell>
-                <TableCell className="font-medium">
-                  {participant.player.nickname}
-                </TableCell>
-                <TableCell>{participant.player.fav_civ}</TableCell>
-                <TableCell className="text-right">
-                  <Badge>TBD</Badge>
-                </TableCell>
-              </TableRow>
-            ))}
+            {participants.map((participant, index) => {
+              const favCiv = getCivById(participant.player.fav_civ);
+
+              return (
+                <TableRow key={index}>
+                  <TableCell className="font-medium">
+                    <Avatar>
+                      <AvatarImage
+                        src={participant.player.picture_url ?? ""}
+                        alt={
+                          participant.player.name || participant.player.nickname
+                        }
+                      />
+                      <AvatarFallback className="bg-primary text-primary-foreground">
+                        {getInitials(
+                          participant.player.name ||
+                            participant.player.nickname,
+                        )}
+                      </AvatarFallback>
+                    </Avatar>
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {participant.player.nickname}
+                  </TableCell>
+                  <TableCell>{favCiv?.name}</TableCell>
+                  <TableCell className="text-right">
+                    <Badge>TBD</Badge>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </CardContent>
