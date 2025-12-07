@@ -7,6 +7,7 @@ import {
   Calendar,
   ChartNoAxesCombined,
   Clock,
+  Crown,
   ExternalLink,
   Flag,
   Flame,
@@ -15,6 +16,7 @@ import {
   Map,
   Mountain,
   Shield,
+  Skull,
   Trophy,
   Twitch,
   User,
@@ -294,7 +296,7 @@ const PlayerDetails = async ({
             </CardHeader>
             <CardContent>
               {matchHistory.length > 0 ? (
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {matchHistory.map((match, index) => {
                     const didWin = didPlayerWin(aoe_profile_id, match.players);
 
@@ -306,11 +308,7 @@ const PlayerDetails = async ({
                     return (
                       <div
                         key={index}
-                        className={`rounded-xl border overflow-hidden ${
-                          didWin
-                            ? "bg-green-500/5 border-green-500/20"
-                            : "bg-red-500/5 border-red-500/20"
-                        }`}
+                        className={`rounded-xl border overflow-hidden`}
                       >
                         <div className="flex items-center gap-4 p-4 border-b border-border/50">
                           <ImageWithFallback
@@ -352,37 +350,56 @@ const PlayerDetails = async ({
                             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
                               Team 1
                             </p>
-                            {team1Players.map((p, pIndex) => (
-                              <div
-                                key={pIndex}
-                                className="flex items-center justify-between bg-background/50 rounded-lg px-3 py-2"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <Shield className="w-4 h-4 text-primary/70" />
-                                  <div>
-                                    <a
-                                      href={`https://www.ageofempires.com/stats/?profileId=${p.profileId}&game=age2&matchType=3`}
-                                      className="font-medium text-foreground hover:text-primary transition-colors text-sm"
+                            {team1Players.map((p, pIndex) => {
+                              const didWin = didPlayerWin(
+                                p.profileId.toString(),
+                                match.players,
+                              );
+
+                              return (
+                                <div
+                                  key={pIndex}
+                                  className={clsx(
+                                    "flex items-center justify-between bg-background/50 rounded-lg px-3 py-2",
+                                    didWin
+                                      ? "border border-green-800"
+                                      : "border border-red-900",
+                                  )}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <Shield className="w-4 h-4 text-primary/70" />
+                                    <div>
+                                      <div className="flex gap-2 items-center">
+                                        <a
+                                          href={`https://www.ageofempires.com/stats/?profileId=${p.profileId}&game=age2&matchType=3`}
+                                          className="font-medium text-foreground hover:text-primary transition-colors text-sm"
+                                        >
+                                          {p.alias}
+                                        </a>
+                                        {didWin ? (
+                                          <Crown className="text-green-600 w-4 h-4" />
+                                        ) : (
+                                          <Skull className="text-red-500 w-4 h-4" />
+                                        )}
+                                      </div>
+                                      <p className="text-xs text-muted-foreground">
+                                        {p.civilizationId}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="text-right">
+                                    <p className="text-sm font-medium text-foreground">
+                                      {p.oldRating}
+                                    </p>
+                                    <p
+                                      className={`text-xs font-medium ${p.ratingChange >= 0 ? "text-green-500" : "text-red-500"}`}
                                     >
-                                      {p.alias}
-                                    </a>
-                                    <p className="text-xs text-muted-foreground">
-                                      {p.civilizationId}
+                                      {p.ratingChange}
                                     </p>
                                   </div>
                                 </div>
-                                <div className="text-right">
-                                  <p className="text-sm font-medium text-foreground">
-                                    {p.oldRating}
-                                  </p>
-                                  <p
-                                    className={`text-xs font-medium ${p.ratingChange >= 0 ? "text-green-500" : "text-red-500"}`}
-                                  >
-                                    {p.ratingChange}
-                                  </p>
-                                </div>
-                              </div>
-                            ))}
+                              );
+                            })}
                           </div>
 
                           <div className="flex items-center justify-center md:hidden">
@@ -395,37 +412,56 @@ const PlayerDetails = async ({
                             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
                               Team 2
                             </p>
-                            {team2Players.map((p, pIndex) => (
-                              <div
-                                key={pIndex}
-                                className="flex items-center justify-between bg-background/50 rounded-lg px-3 py-2"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <Shield className="w-4 h-4 text-primary/70" />
-                                  <div>
-                                    <a
-                                      href={`https://www.ageofempires.com/stats/?profileId=${p.profileId}&game=age2&matchType=3`}
-                                      className="font-medium text-foreground hover:text-primary transition-colors text-sm"
+                            {team2Players.map((p, pIndex) => {
+                              const didWin = didPlayerWin(
+                                p.profileId.toString(),
+                                match.players,
+                              );
+
+                              return (
+                                <div
+                                  key={pIndex}
+                                  className={clsx(
+                                    "flex items-center justify-between bg-background/50 rounded-lg px-3 py-2",
+                                    didWin
+                                      ? "border border-green-800"
+                                      : "border border-red-900",
+                                  )}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <Shield className="w-4 h-4 text-primary/70" />
+                                    <div>
+                                      <div className="flex gap-2 items-center">
+                                        <a
+                                          href={`https://www.ageofempires.com/stats/?profileId=${p.profileId}&game=age2&matchType=3`}
+                                          className="font-medium text-foreground hover:text-primary transition-colors text-sm"
+                                        >
+                                          {p.alias}
+                                        </a>
+                                        {didWin ? (
+                                          <Crown className="text-green-600 w-4 h-4" />
+                                        ) : (
+                                          <Skull className="text-red-500 w-4 h-4" />
+                                        )}
+                                      </div>
+                                      <p className="text-xs text-muted-foreground">
+                                        {p.civilizationId}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="text-right">
+                                    <p className="text-sm font-medium text-foreground">
+                                      {p.oldRating}
+                                    </p>
+                                    <p
+                                      className={`text-xs font-medium ${p.ratingChange >= 0 ? "text-green-500" : "text-red-500"}`}
                                     >
-                                      {p.alias}
-                                    </a>
-                                    <p className="text-xs text-muted-foreground">
-                                      {p.civilizationId}
+                                      {p.ratingChange}
                                     </p>
                                   </div>
                                 </div>
-                                <div className="text-right">
-                                  <p className="text-sm font-medium text-foreground">
-                                    {p.oldRating}
-                                  </p>
-                                  <p
-                                    className={`text-xs font-medium ${p.ratingChange >= 0 ? "text-green-500" : "text-red-500"}`}
-                                  >
-                                    {p.ratingChange}
-                                  </p>
-                                </div>
-                              </div>
-                            ))}
+                              );
+                            })}
                           </div>
                         </div>
                       </div>
