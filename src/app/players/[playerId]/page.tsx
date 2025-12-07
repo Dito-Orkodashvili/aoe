@@ -60,7 +60,6 @@ const PlayerDetails = async ({
     name,
     last_name,
     picture_url,
-    steam_id,
     region,
     twitch,
     youtube,
@@ -107,7 +106,7 @@ const PlayerDetails = async ({
               <div className="relative">
                 <Avatar className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-4 border-primary/20">
                   <AvatarImage
-                    src={picture_url ?? "aoe/anonymous_player.webp"}
+                    src={picture_url ?? "/aoe/anonymous_player.webp"}
                     alt={nickname}
                     className="object-cover"
                   />
@@ -350,7 +349,7 @@ const PlayerDetails = async ({
                             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
                               Team 1
                             </p>
-                            {team1Players.map((p, pIndex) => {
+                            {team1Players?.map((p, pIndex) => {
                               const didWin = didPlayerWin(
                                 p.profileId.toString(),
                                 match.players,
@@ -413,7 +412,7 @@ const PlayerDetails = async ({
                             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
                               Team 2
                             </p>
-                            {team2Players.map((p, pIndex) => {
+                            {team2Players?.map((p, pIndex) => {
                               const didWin = didPlayerWin(
                                 p.profileId.toString(),
                                 match.players,
