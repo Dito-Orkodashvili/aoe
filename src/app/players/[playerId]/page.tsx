@@ -106,7 +106,7 @@ const PlayerDetails = async ({
               <div className="relative">
                 <Avatar className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-4 border-primary/20">
                   <AvatarImage
-                    src={picture_url ?? "/aoe/anonymous_player.webp"}
+                    src={picture_url ?? "/aoe/anonymous_player_male.webp"}
                     alt={nickname}
                     className="object-cover"
                   />

@@ -91,7 +91,9 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                 <div className="relative aspect-square overflow-hidden bg-muted">
                   <Avatar className="w-full h-full rounded-none">
                     <AvatarImage
-                      src={player.picture_url ?? "/aoe/anonymous_player.webp"}
+                      src={
+                        player.picture_url ?? "/aoe/anonymous_player_male.webp"
+                      }
                       alt={player.nickname}
                       className="object-cover"
                     />
