@@ -92,7 +92,7 @@ export function useLobbiesWs() {
       const sorted = Object.values(matchesRef.current).sort(
         (a, b) => b.lastUpdated - a.lastUpdated,
       );
-      console.log(sorted.find((m) => m.description.includes("GEORGIA")));
+
       setMatches(sorted);
     }, 120);
   }, []);

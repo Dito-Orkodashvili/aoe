@@ -43,3 +43,15 @@ export function distributePrizePool(amount: number, participants: number) {
     amount: Math.round(amount * pct),
   }));
 }
+
+export const mapNameToIcon = (name: string) => {
+  return name
+    .replace(/\.rms2?$/i, "")
+    .replace(/([a-z])([A-Z])/g, "$1_$2")
+    .toLowerCase();
+};
+
+export const capitalize = (str: string) => {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};

@@ -36,7 +36,7 @@ const Players = async () => {
         </p>
       </PageHero>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 mb-8">
         {players && <PlayersList players={mergedPlayers} />}
       </div>
     </>

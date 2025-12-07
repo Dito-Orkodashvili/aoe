@@ -4,13 +4,17 @@ import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowLeft,
+  Calendar,
   ChartNoAxesCombined,
+  Clock,
   ExternalLink,
   Flag,
   Flame,
   Gamepad2,
   Globe,
+  Map,
   Mountain,
+  Shield,
   Trophy,
   Twitch,
   User,
@@ -24,8 +28,16 @@ import {
   mergePlayerWithStats,
 } from "@/lib/supabase/player/get-player-official-stats";
 import Image from "next/image";
-
-const recentMatches: unknown[] = [];
+import { getPlayerMatchHistory } from "@/lib/supabase/match-history/get-recent-match-history";
+import { ExtractedMatchInfo } from "@/lib/types/match-history.types";
+import {
+  didPlayerWin,
+  groupPlayersByTeam,
+  timeAgo,
+} from "@/lib/supabase/match-history/extract-match-info";
+import { clsx } from "clsx";
+import { capitalize, mapNameToIcon } from "@/lib/utils";
+import { ImageWithFallback } from "@/components/image-with-fallback";
 
 const civilizationStats: unknown[] = [];
 
@@ -46,6 +58,7 @@ const PlayerDetails = async ({
     name,
     last_name,
     picture_url,
+    steam_id,
     region,
     twitch,
     youtube,
@@ -54,6 +67,7 @@ const PlayerDetails = async ({
   } = player || {};
 
   let playerStats = null;
+  let matchHistory: ExtractedMatchInfo[] = [];
 
   if (aoe_profile_id) {
     const playerOfficialStats = await getPlayerOfficialStats([
@@ -61,6 +75,8 @@ const PlayerDetails = async ({
     ]);
 
     playerStats = mergePlayerWithStats(player, playerOfficialStats);
+
+    matchHistory = await getPlayerMatchHistory(aoe_profile_id);
   }
 
   const { one_v_one_stats } = playerStats || {};
@@ -277,46 +293,144 @@ const PlayerDetails = async ({
               <CardTitle>უახლესი ბრძლების ისტორია</CardTitle>
             </CardHeader>
             <CardContent>
-              {recentMatches.length > 0 ? (
+              {matchHistory.length > 0 ? (
                 <div className="space-y-3">
-                  {/*{recentMatches.map((match, index) => (
-                    <div
-                      key={index}
-                      className={`flex items-center justify-between p-4 rounded-lg border ${
-                        match.result === "win"
-                          ? "bg-green-500/10 border-green-500/20"
-                          : "bg-red-500/10 border-red-500/20"
-                      }`}
-                    >
-                      <div className="flex items-center gap-4">
-                        <Badge
-                          variant={
-                            match.result === "win" ? "default" : "destructive"
-                          }
-                        >
-                          {match.result === "win" ? "W" : "L"}
-                        </Badge>
-                        <div>
-                          <p className="font-medium text-foreground">
-                            vs {match.opponent}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            {match.map}
-                          </p>
+                  {matchHistory.map((match, index) => {
+                    const didWin = didPlayerWin(aoe_profile_id, match.players);
+
+                    const teams = groupPlayersByTeam(match.players);
+                    const team1Players = teams[0];
+                    const team2Players = teams[1];
+
+                    const resolvedMapName = mapNameToIcon(match.mapName);
+                    return (
+                      <div
+                        key={index}
+                        className={`rounded-xl border overflow-hidden ${
+                          didWin
+                            ? "bg-green-500/5 border-green-500/20"
+                            : "bg-red-500/5 border-red-500/20"
+                        }`}
+                      >
+                        <div className="flex items-center gap-4 p-4 border-b border-border/50">
+                          <ImageWithFallback
+                            src={`/aoe/maps/${resolvedMapName}.png`}
+                            fallbackSrc={`/aoe/maps/unknown.png`}
+                            alt={resolvedMapName}
+                            width={64}
+                            height={64}
+                            className="rounded-lg object-cover"
+                          />
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Map className="w-4 h-4 text-primary" />
+                              <span className="font-semibold text-foreground">
+                                {capitalize(resolvedMapName)}
+                              </span>
+                              <Badge
+                                variant={didWin ? "default" : "destructive"}
+                                className="ml-2"
+                              >
+                                {didWin ? "Victory" : "Defeat"}
+                              </Badge>
+                            </div>
+                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                              <span className="flex items-center gap-1">
+                                <Calendar className="w-3 h-3" />
+                                {timeAgo(match.completionTime)}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
+                                {match.duration}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-4 p-4">
+                          <div className="space-y-2">
+                            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                              Team 1
+                            </p>
+                            {team1Players.map((p, pIndex) => (
+                              <div
+                                key={pIndex}
+                                className="flex items-center justify-between bg-background/50 rounded-lg px-3 py-2"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <Shield className="w-4 h-4 text-primary/70" />
+                                  <div>
+                                    <a
+                                      href={`https://www.ageofempires.com/stats/?profileId=${p.profileId}&game=age2&matchType=3`}
+                                      className="font-medium text-foreground hover:text-primary transition-colors text-sm"
+                                    >
+                                      {p.alias}
+                                    </a>
+                                    <p className="text-xs text-muted-foreground">
+                                      {p.civilizationId}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="text-right">
+                                  <p className="text-sm font-medium text-foreground">
+                                    {p.oldRating}
+                                  </p>
+                                  <p
+                                    className={`text-xs font-medium ${p.ratingChange >= 0 ? "text-green-500" : "text-red-500"}`}
+                                  >
+                                    {p.ratingChange}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="flex items-center justify-center md:hidden">
+                            <span className="text-lg font-bold text-muted-foreground">
+                              VS
+                            </span>
+                          </div>
+
+                          <div className="space-y-2">
+                            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                              Team 2
+                            </p>
+                            {team2Players.map((p, pIndex) => (
+                              <div
+                                key={pIndex}
+                                className="flex items-center justify-between bg-background/50 rounded-lg px-3 py-2"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <Shield className="w-4 h-4 text-primary/70" />
+                                  <div>
+                                    <a
+                                      href={`https://www.ageofempires.com/stats/?profileId=${p.profileId}&game=age2&matchType=3`}
+                                      className="font-medium text-foreground hover:text-primary transition-colors text-sm"
+                                    >
+                                      {p.alias}
+                                    </a>
+                                    <p className="text-xs text-muted-foreground">
+                                      {p.civilizationId}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="text-right">
+                                  <p className="text-sm font-medium text-foreground">
+                                    {p.oldRating}
+                                  </p>
+                                  <p
+                                    className={`text-xs font-medium ${p.ratingChange >= 0 ? "text-green-500" : "text-red-500"}`}
+                                  >
+                                    {p.ratingChange}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <p
-                          className={`font-medium ${match.result === "win" ? "text-green-500" : "text-red-500"}`}
-                        >
-                          {match.elo}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {match.date}
-                        </p>
-                      </div>
-                    </div>
-                  ))}*/}
+                    );
+                  })}
                 </div>
               ) : (
                 <p className="text-muted-foreground text-center py-8">
@@ -387,9 +501,7 @@ const PlayerDetails = async ({
                   ))}*/}
                 </div>
               ) : (
-                <p className="text-muted-foreground text-center py-8">
-                  No achievements yet
-                </p>
+                <p className="text-muted-foreground text-center py-8">--</p>
               )}
             </CardContent>
           </Card>

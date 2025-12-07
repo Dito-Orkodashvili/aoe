@@ -49,7 +49,7 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
           >
             <Swords className="w-6 h-6" />
             <span className="font-bold text-lg">ქართული AoE II</span>
-            <Heart className="inline h-4 w-4 text-red-500" />
+            <Heart className="inline h-5 w-5 text-red-500 animate-pulse" />
           </Link>
 
           {/* Desktop Navigation */}

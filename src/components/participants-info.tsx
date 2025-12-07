@@ -24,7 +24,6 @@ interface ParticipantsInfoProps {
 }
 
 export const ParticipantsInfo = ({ participants }: ParticipantsInfoProps) => {
-  console.log("participants", participants);
   return (
     <Card>
       <CardHeader>

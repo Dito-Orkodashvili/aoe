@@ -18,7 +18,7 @@ const TournamentDetails = async ({
 }) => {
   const { slug } = await params;
   const tournament = await getTournamentDetails(slug);
-  console.log("tournament: ", tournament);
+
   if (!tournament) {
     notFound();
   }
