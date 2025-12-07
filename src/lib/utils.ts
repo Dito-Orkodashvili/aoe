@@ -45,6 +45,8 @@ export function distributePrizePool(amount: number, participants: number) {
 }
 
 export const mapNameToIcon = (name: string) => {
+  if (name === "my map") return "megarandom";
+
   return name
     .replace(/\.rms2?$/i, "")
     .replace(/([a-z])([A-Z])/g, "$1_$2")
