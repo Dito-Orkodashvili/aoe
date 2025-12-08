@@ -7,7 +7,7 @@ const ProfileSettings = async () => {
   const authedUser = await getUser();
 
   if (!authedUser) {
-    redirect("/login");
+    redirect("/auth/login");
   }
 
   const player = await getAuthedUserPlayer(authedUser.id);

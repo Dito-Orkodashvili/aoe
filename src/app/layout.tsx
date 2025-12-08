@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Macondo, Noto_Sans_Georgian } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Navigation } from "@/components/navigation";
 import { getUser } from "@/lib/supabase/user/get-user";
 import { Footer } from "@/components/footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const macondoCursive = Macondo({
   subsets: ["latin"],
+  variable: "--font-macondo",
+  weight: "400",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const notoSerif = Noto_Sans_Georgian({
   subsets: ["latin"],
+  variable: "--font-noto",
+  weight: ["300", "400", "600", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -44,10 +47,12 @@ export default async function RootLayout({
   const authedUser = await getUser();
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${macondoCursive.variable} ${notoSerif.variable} antialiased`}
+    >
+      <body className="font-main">
         <div className="min-h-screen bg-background">
           <Providers>
             <Navigation authedUser={authedUser} />
