@@ -55,22 +55,28 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <Link
-              href="/tournaments"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              ტურნირები
-            </Link>
-            <Link
               href="/players"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               მეომრები
             </Link>
             <Link
+              href="/tournaments"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ტურნირები
+            </Link>
+            <Link
               href="/lobbies"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               ბრძოლის ველი
+            </Link>
+            <Link
+              href="/faq"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              FAQ
             </Link>
             <div className="flex items-center gap-2">
               {authedUser ? (
@@ -146,6 +152,13 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                     მთავარი
                   </Link>
                   <Link
+                    href="/players"
+                    className="text-muted-foreground hover:text-foreground transition-colors text-lg"
+                    onClick={() => setOpen(false)}
+                  >
+                    მეომრები
+                  </Link>
+                  <Link
                     href="/tournaments"
                     className="text-muted-foreground hover:text-foreground transition-colors text-lg"
                     onClick={() => setOpen(false)}
@@ -153,11 +166,18 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                     ტურნირები
                   </Link>
                   <Link
-                    href="/players"
+                    href="/lobbies"
                     className="text-muted-foreground hover:text-foreground transition-colors text-lg"
                     onClick={() => setOpen(false)}
                   >
-                    მეომრები
+                    ბრძოლის ველი
+                  </Link>
+                  <Link
+                    href="/faq"
+                    className="text-muted-foreground hover:text-foreground transition-colors text-lg"
+                    onClick={() => setOpen(false)}
+                  >
+                    FAQ
                   </Link>
                   {authedUser ? (
                     <div className="mt-6 pt-6 border-t border-border">
