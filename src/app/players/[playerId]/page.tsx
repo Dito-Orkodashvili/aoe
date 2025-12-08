@@ -1,6 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowLeft,
@@ -14,9 +12,7 @@ import {
   Flame,
   Gamepad2,
   Globe,
-  Map,
   Mountain,
-  Shield,
   Skull,
   Trophy,
   Twitch,
@@ -284,7 +280,6 @@ const PlayerDetails = async ({
           </CardContent>
         </Card>
       </div>
-
       <Tabs defaultValue="matches" className="space-y-4 w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="matches">უახლესი ბრძოლები</TabsTrigger>
@@ -368,6 +363,8 @@ const PlayerDetails = async ({
                                 match.players,
                               );
 
+                              const civ = getCivById(p.civilizationId);
+
                               return (
                                 <div
                                   key={pIndex}
@@ -379,8 +376,12 @@ const PlayerDetails = async ({
                                   )}
                                 >
                                   <div className="flex items-center gap-2">
-                                    <Shield className="w-4 h-4 text-primary/70" />
-                                    <div>
+                                    {didWin ? (
+                                      <Crown className="text-green-600 w-4 h-4" />
+                                    ) : (
+                                      <Skull className="text-red-500 w-4 h-4" />
+                                    )}
+                                    <div className="flex gap-2">
                                       <div className="flex gap-2 items-center">
                                         <a
                                           href={`https://www.ageofempires.com/stats/?profileId=${p.profileId}&game=age2&matchType=3`}
@@ -388,15 +389,17 @@ const PlayerDetails = async ({
                                         >
                                           {p.alias}
                                         </a>
-                                        {didWin ? (
-                                          <Crown className="text-green-600 w-4 h-4" />
-                                        ) : (
-                                          <Skull className="text-red-500 w-4 h-4" />
+                                        {p.civilizationId}
+                                        {civ && (
+                                          <Image
+                                            width={32}
+                                            height={32}
+                                            src={`/aoe/civs/${civ.icon}`}
+                                            title={civ.name}
+                                            alt={civ.name}
+                                          />
                                         )}
                                       </div>
-                                      <p className="text-xs text-muted-foreground">
-                                        {p.civilizationId}
-                                      </p>
                                     </div>
                                   </div>
                                   <div className="text-right">
@@ -431,6 +434,8 @@ const PlayerDetails = async ({
                                 match.players,
                               );
 
+                              const civ = getCivById(p.civilizationId);
+
                               return (
                                 <div
                                   key={pIndex}
@@ -442,8 +447,12 @@ const PlayerDetails = async ({
                                   )}
                                 >
                                   <div className="flex items-center gap-2">
-                                    <Shield className="w-4 h-4 text-primary/70" />
-                                    <div>
+                                    {didWin ? (
+                                      <Crown className="text-green-600 w-4 h-4" />
+                                    ) : (
+                                      <Skull className="text-red-500 w-4 h-4" />
+                                    )}
+                                    <div className="flex gap-2">
                                       <div className="flex gap-2 items-center">
                                         <a
                                           href={`https://www.ageofempires.com/stats/?profileId=${p.profileId}&game=age2&matchType=3`}
@@ -451,15 +460,17 @@ const PlayerDetails = async ({
                                         >
                                           {p.alias}
                                         </a>
-                                        {didWin ? (
-                                          <Crown className="text-green-600 w-4 h-4" />
-                                        ) : (
-                                          <Skull className="text-red-500 w-4 h-4" />
+                                        {p.civilizationId}
+                                        {civ && (
+                                          <Image
+                                            width={32}
+                                            height={32}
+                                            src={`/aoe/civs/${civ.icon}`}
+                                            title={civ.name}
+                                            alt={civ.name}
+                                          />
                                         )}
                                       </div>
-                                      <p className="text-xs text-muted-foreground">
-                                        {p.civilizationId}
-                                      </p>
                                     </div>
                                   </div>
                                   <div className="text-right">

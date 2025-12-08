@@ -1,5 +1,3 @@
-import { CIVILIZATIONS } from "@/lib/utils/civilization.utils";
-
 export const MAPS = [
   { id: 10875, name: "Arabia", icon: "arabia.png" },
   { id: 10876, name: "Archipelago", icon: "archipelago.png" },
