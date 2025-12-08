@@ -25,14 +25,14 @@ export default async function Home() {
             className="animate-fade-in"
           />
         </div>
-        <h1 className="text-5xl md:text-6xl font-bold text-foreground animate-fade-in">
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground animate-fade-in">
           ქართული AoE II ქომუნითი
         </h1>
-        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in">
+        <p className="text-l md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in">
           შემოგვიერთდი და გაიგე ნამდვილი RTS-ის გემო!
         </p>
-        <div className="pt-12 animate-fade-in">
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+        <div className="md:pt-8 lg:pt-12 animate-fade-in">
+          <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center">
             <a
               href="https://discord.gg/VUXdpQZU"
               target="_blank"
@@ -63,9 +63,9 @@ export default async function Home() {
           </div>
         </div>
       </Hero>
-      <section className="py-20 px-4">
+      <section className="py-10 md:py-16 lg:py-20 px-4">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-12 text-foreground">
             რატომ უნდა შემოგვიერთდე?
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -137,10 +137,10 @@ export default async function Home() {
         <div className="container mx-auto max-w-4xl">
           <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5">
             <CardContent className="pt-6 text-center space-y-6">
-              <h2 className="text-4xl font-bold text-foreground">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
                 მზად ხარ შემოგვიერთდე?
               </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
                 დამწყებს თუ პროფესიონალს, ყველას შეუძლია ჩვენი ქომუნითის ნაწილი
                 გახდეს.
               </p>
