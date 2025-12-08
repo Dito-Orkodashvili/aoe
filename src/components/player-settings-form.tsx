@@ -40,6 +40,10 @@ interface ProfileSettingsFormProps {
 }
 
 const REGIONS = ["თბილის", "რუსთავი", "მუხრანი"];
+const PLAYING_SINCE_YEARS = Array.from(
+  { length: new Date().getFullYear() - 1998 + 1 },
+  (_, i) => (new Date().getFullYear() - i).toString(),
+);
 
 export const PlayerSettingsForm = ({
   player,
@@ -98,7 +102,6 @@ export const PlayerSettingsForm = ({
       });
 
       if (!result.success) {
-        console.log(result.error);
         toast({
           title: "შეცდომა",
           description: "პროფილის მონაცემები შევსებულია არასწორად.",
@@ -224,7 +227,7 @@ export const PlayerSettingsForm = ({
               <div className="space-y-2">
                 <Label htmlFor="fav_civ">საყვარელი ცივილიზაცია</Label>
                 <Select
-                  value={formData.fav_civ!.toString()}
+                  value={formData.fav_civ.toString()}
                   onValueChange={(value) =>
                     handleSelectChange("fav_civ", value)
                   }
@@ -271,16 +274,25 @@ export const PlayerSettingsForm = ({
               <div className="space-y-2">
                 <Label htmlFor="playing_since">თამაშის დაწყების წელი</Label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="playing_since"
-                    name="playing_since"
-                    value={formData.playing_since!}
-                    onChange={handleChange}
+                  <Calendar className="absolute left-3 top-3 w-4 h-4 text-muted-foreground z-10" />
+                  <Select
+                    value={formData.playing_since.toString()}
+                    onValueChange={(value) =>
+                      handleSelectChange("playing_since", value)
+                    }
                     disabled={!isEditing}
-                    placeholder="მაგ. 2015"
-                    className="pl-10"
-                  />
+                  >
+                    <SelectTrigger className="pl-10">
+                      <SelectValue placeholder="აირჩიე წელი" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {PLAYING_SINCE_YEARS.map((year) => (
+                        <SelectItem key={year} value={year}>
+                          {year}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 

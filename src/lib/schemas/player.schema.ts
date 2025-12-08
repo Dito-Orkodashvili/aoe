@@ -7,7 +7,7 @@ export const PlayerSchema = z.object({
     .max(30, "მეტსახელი ძალიან გრძელია"),
   name: z.string().optional().nullable(),
   last_name: z.string().optional().nullable(),
-  fav_civ: z.number().optional().nullable(),
+  fav_civ: z.coerce.number().optional().nullable(),
   region: z.string().optional().nullable(),
   aoe_profile_id: z.string().min(1, "პროფილის ID აუცილებელია"),
   steam_id: z.string().optional().nullable(),
@@ -27,7 +27,7 @@ export const PlayerSchema = z.object({
   gender: z.enum(["male", "female"], {
     errorMap: () => ({ message: "გთხოვ აირჩიო სქესი" }),
   }),
-  playing_since: z.number().nullable(),
+  playing_since: z.coerce.number().nullable(),
   team: z.string().optional().nullable(),
   bio: z.string().optional().nullable(),
 });
