@@ -24,27 +24,30 @@ export default async function Tournaments() {
   return (
     <>
       <PageHero>
-        <div className="flex justify-center mb-6">
+        <div className="text-center space-y-3">
           <Trophy className="w-16 h-16 text-primary mx-auto animate-fade-in" />
+          <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg animate-fade-in">
+            ტურნირები
+          </h1>
+          <p className="text-lg text-gray-200 max-w-2xl mx-auto animate-fade-in">
+            შეერკინე საუკეთესო მოთამაშეებს და დაიმკვიდრე შენი ადგილი ისტორიაში!
+          </p>
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg animate-fade-in">
-          ტურნირები
-        </h1>
-        <p className="text-lg text-gray-200 max-w-2xl mx-auto animate-fade-in">
-          შეერკინე საუკეთესო მოთამაშეებს და დაიმკვიდრე შენი ადგილი ისტორიაში!
-        </p>
-        <Button asChild>
-          <Link href="/tournaments/create">შექმენი ტურნირი</Link>
-        </Button>
       </PageHero>
 
       <section className="py-16 px-4">
         <div className="container mx-auto max-w-6xl">
-          <div className="flex items-center gap-3 mb-8">
-            <Calendar className="w-8 h-8 text-primary" />
-            <h2 className="text-4xl font-bold text-foreground">
-              მიმდინარე ტურნირები
-            </h2>
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+              <Calendar className="w-8 h-8 text-primary" />
+              <h2 className="text-4xl font-bold text-foreground">
+                მიმდინარე ტურნირები
+              </h2>
+            </div>
+
+            <Button asChild className="mt-4">
+              <Link href="/tournaments/create">შექმენი ტურნირი</Link>
+            </Button>
           </div>
 
           <div className="space-y-4">
