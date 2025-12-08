@@ -12,7 +12,7 @@ export function extractMatchInfo(
 ): ExtractedMatchInfo[] {
   return matches
     .map((match) => {
-      const { mapname, completiontime, startgametime, matchhistorymember } =
+      const { id, mapname, completiontime, startgametime, matchhistorymember } =
         match;
 
       const durationSec = completiontime - startgametime;
@@ -39,6 +39,7 @@ export function extractMatchInfo(
       });
 
       return {
+        id,
         mapName: mapname,
         completionTime: completiontime,
         duration: durationStr,

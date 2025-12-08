@@ -8,6 +8,7 @@ import {
   ChartNoAxesCombined,
   Clock,
   Crown,
+  Download,
   ExternalLink,
   Flag,
   Flame,
@@ -77,12 +78,12 @@ const PlayerDetails = async ({
     const playerOfficialStats = await getPlayerOfficialStats([
       Number(aoe_profile_id),
     ]);
-    console.log("playerOfficialStats: ", playerOfficialStats);
+
     playerStats = mergePlayerWithStats(player, playerOfficialStats);
 
     matchHistory = await getPlayerMatchHistory(aoe_profile_id);
   }
-
+  console.log(matchHistory);
   const { one_v_one_stats } = playerStats || {};
 
   let total1v1Games = 0;
@@ -347,6 +348,13 @@ const PlayerDetails = async ({
                               </span>
                             </div>
                           </div>
+                          <a
+                            href={`https://aoe.ms/replay/?gameId=${match.id}&profileId=${aoe_profile_id}`}
+                            className="self-start flex gap-2 items-center text-sm text-blue-400 underline"
+                          >
+                            <Download className="text-green-600" width={16} />{" "}
+                            ჩანაწერი
+                          </a>
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-4 p-4">
