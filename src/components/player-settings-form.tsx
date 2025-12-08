@@ -306,7 +306,7 @@ export const PlayerSettingsForm = ({
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-1">
                 <Label htmlFor="aoeProfileId" required>
-                  ageofempires.com პროფილის ID
+                  ოფიციალური პროფილის ID
                 </Label>
                 <Input
                   id="aoe_profile_id"

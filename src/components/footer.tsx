@@ -82,7 +82,7 @@ export const Footer = () => {
                 ბილდ ორდერები
               </a>
               <a
-                href="#"
+                href="/faq"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
                 FAQ
