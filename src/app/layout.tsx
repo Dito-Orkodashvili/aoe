@@ -20,6 +20,7 @@ const notoSerif = Noto_Sans_Georgian({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://aoe-nu.vercel.app"),
   title: "AOE II ქართული ქომუნითი",
   openGraph: {
     title: "AOE II ქართული ქომუნითი",
