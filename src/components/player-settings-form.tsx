@@ -27,6 +27,12 @@ import { TPlayer } from "@/lib/types/player.types";
 import { CIVILIZATIONS } from "@/lib/utils/civilization.utils";
 import { savePlayerAction } from "@/app/profile/actions";
 import { User as AuthedUser } from "@supabase/auth-js";
+import {
+  getPlayerSchemaError,
+  PlayerSchema,
+  PlayerSchemaErrorsType,
+} from "@/lib/schemas/player.schema";
+import { FieldError } from "@/components/ui/field-error";
 
 interface ProfileSettingsFormProps {
   player?: TPlayer | null;
@@ -41,6 +47,7 @@ export const PlayerSettingsForm = ({
 }: ProfileSettingsFormProps) => {
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
+  const [errors, setErrors] = useState<PlayerSchemaErrorsType | null>(null);
 
   const {
     nickname,
@@ -75,29 +82,37 @@ export const PlayerSettingsForm = ({
   });
 
   const handleSubmit = async () => {
-    const result = await savePlayerAction(authedUser.id, {
-      ...formData,
-      playing_since: playing_since ? Number(playing_since) : null,
-      fav_civ: fav_civ ? Number(fav_civ) : null,
-    });
+    const validated = PlayerSchema.safeParse(formData);
+    const isValid = validated.success;
 
-    if (!result.success) {
-      console.log(result.error);
-      toast({
-        title: "შეცდომა",
-        description: "პროფილის მონაცემები შევსებულია არასწორად.",
-        variant: "destructive",
+    if (!isValid) {
+      setErrors(validated.error.format());
+    } else {
+      setErrors(null);
+      const result = await savePlayerAction(authedUser.id, {
+        ...formData,
+        playing_since: playing_since ? Number(playing_since) : null,
+        fav_civ: fav_civ ? Number(fav_civ) : null,
       });
-      return;
+
+      if (!result.success) {
+        console.log(result.error);
+        toast({
+          title: "შეცდომა",
+          description: "პროფილის მონაცემები შევსებულია არასწორად.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      setIsEditing(false);
+
+      toast({
+        title: "პროფილი განახლდა",
+        description: "ინფორმაცია წარმატებით განახლდა.",
+        variant: "success",
+      });
     }
-
-    setIsEditing(false);
-
-    toast({
-      title: "პროფილი განახლდა",
-      description: "ინფორმაცია წარმატებით განახლდა.",
-      variant: "success",
-    });
   };
 
   const handleChange = (
@@ -140,7 +155,9 @@ export const PlayerSettingsForm = ({
         <form action={handleSubmit} className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="nickname">მეტსახელი</Label>
+              <Label htmlFor="nickname" required>
+                მეტსახელი
+              </Label>
               <Input
                 id="nickname"
                 name="nickname"
@@ -149,6 +166,11 @@ export const PlayerSettingsForm = ({
                 disabled={!isEditing}
                 placeholder="შენი სახელი თამაშში"
               />
+              {getPlayerSchemaError("nickname", errors) && (
+                <FieldError>
+                  {getPlayerSchemaError("nickname", errors)}
+                </FieldError>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -280,8 +302,8 @@ export const PlayerSettingsForm = ({
 
           <div className="border-t border-border pt-6">
             <div className="grid gap-6 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="aoeProfileId">
+              <div className="space-y-1">
+                <Label htmlFor="aoeProfileId" required>
                   ageofempires.com პროფილის ID
                 </Label>
                 <Input
@@ -290,7 +312,21 @@ export const PlayerSettingsForm = ({
                   value={formData.aoe_profile_id!}
                   onChange={handleChange}
                   disabled={!isEditing}
+                  helperText={
+                    <a
+                      href="/faq#find-profile-id"
+                      className="text-blue-400 underline"
+                      target="_blank"
+                    >
+                      როგორ გავიგო ჩემი პროფილის ID?
+                    </a>
+                  }
                 />
+                {getPlayerSchemaError("aoe_profile_id", errors) && (
+                  <FieldError>
+                    {getPlayerSchemaError("aoe_profile_id", errors)}
+                  </FieldError>
+                )}
               </div>
 
               <div className="space-y-2">

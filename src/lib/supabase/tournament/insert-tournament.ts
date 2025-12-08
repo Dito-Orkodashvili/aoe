@@ -3,11 +3,11 @@
 import { TPlayer } from "@/lib/types/player.types";
 import { TSupabase } from "@/lib/types";
 import { TMap } from "@/lib/types/map.types";
-import { TTournamentDetails } from "@/lib/types/tournament.types";
+import { TournamentSchemaType } from "@/lib/schemas/tournament.schema";
 
 export async function insertTournament(
   supabase: TSupabase,
-  data: TTournamentDetails,
+  data: TournamentSchemaType,
   slug: string,
 ) {
   const { data: tournament, error } = await supabase
@@ -74,7 +74,7 @@ export async function insertMaps(
 export async function insertMatch(
   supabase: TSupabase,
   tournamentId: string,
-  data: TTournamentDetails,
+  data: TournamentSchemaType,
   participants: TPlayer[],
 ) {
   if (data.max_participants !== 2 || participants.length !== 2) return;

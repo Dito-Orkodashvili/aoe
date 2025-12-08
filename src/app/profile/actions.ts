@@ -6,18 +6,18 @@ import { revalidatePath } from "next/cache";
 
 type PlayerPayload = {
   nickname: string;
-  name: string | null;
-  last_name: string | null;
-  fav_civ: number | null;
-  region: string | null;
+  name?: string | null;
+  last_name?: string | null;
+  fav_civ?: number | null;
+  region?: string | null;
   aoe_profile_id: string;
-  steam_id: string;
-  youtube: string | null;
-  twitch: string | null;
+  steam_id?: string | null;
+  youtube?: string | null;
+  twitch?: string | null;
   gender: "male" | "female";
-  playing_since: number | null;
-  team: string | null;
-  bio: string | null;
+  playing_since?: number | null;
+  team?: string | null;
+  bio?: string | null;
   user_id?: string;
 };
 

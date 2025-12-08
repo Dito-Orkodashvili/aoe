@@ -17,12 +17,10 @@ export function mergePlayerWithStats(
   player: TPlayer,
   stats: PersonalStatResponse,
 ): PlayerWithStats {
-  if (!player?.steam_id) return player;
-
-  const profileName = `/steam/${player.steam_id}`;
+  if (!player?.aoe_profile_id) return player;
 
   const group = stats.statGroups.find((g) =>
-    g.members.some((m) => m.name === profileName),
+    g.members.some((m) => m.profile_id === Number(player.aoe_profile_id)),
   );
 
   const lb = stats.leaderboardStats.filter((l) => l.statgroup_id === group?.id);

@@ -185,7 +185,7 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                       {favCiv ? (
                         <a
                           href={`https://ageofempires.fandom.com/wiki/${favCiv.name}`}
-                          about="_blank"
+                          target="_blank"
                         >
                           <Image
                             src={`/aoe/civs/${favCiv.icon}`}

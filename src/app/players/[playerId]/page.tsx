@@ -77,7 +77,7 @@ const PlayerDetails = async ({
     const playerOfficialStats = await getPlayerOfficialStats([
       Number(aoe_profile_id),
     ]);
-
+    console.log("playerOfficialStats: ", playerOfficialStats);
     playerStats = mergePlayerWithStats(player, playerOfficialStats);
 
     matchHistory = await getPlayerMatchHistory(aoe_profile_id);
@@ -252,7 +252,7 @@ const PlayerDetails = async ({
               <a
                 className="flex justify-center mb-2"
                 href={`https://ageofempires.fandom.com/wiki/${resolvedFavCiv.name}`}
-                about="_blank"
+                target="_blank"
               >
                 <Image
                   src={`/aoe/civs/${resolvedFavCiv.icon}`}
@@ -271,7 +271,7 @@ const PlayerDetails = async ({
                 <a
                   className="flex justify-center"
                   href={`https://ageofempires.fandom.com/wiki/${resolvedFavCiv.name}`}
-                  about="_blank"
+                  target="_blank"
                 >
                   {resolvedFavCiv.name}
                 </a>

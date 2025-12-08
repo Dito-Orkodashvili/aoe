@@ -11,22 +11,22 @@ import { FormEvent, startTransition, useState } from "react";
 import { DetailsStep } from "./details-step";
 import { ParticipantsStep } from "./participants-step";
 import { MapsStep } from "./maps-step";
-import {
-  TTournamentDetails,
-  TDetailsErrors,
-} from "@/lib/types/tournament.types";
 import { TMap } from "@/lib/types/map.types";
 import { TPlayer } from "@/lib/types/player.types";
-import { TournamentDetailsSchema } from "@/lib/schemas/tournament.schema";
+import {
+  TournamentDetailsSchema,
+  TournamentSchemaErrorsType,
+  TournamentSchemaType,
+} from "@/lib/schemas/tournament.schema";
 import { useRouter } from "next/navigation";
 
 export const TournamentForm = () => {
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [participants, setParticipants] = useState<TPlayer[]>([]);
-  const [errors, setErrors] = useState<TDetailsErrors | null>(null);
+  const [errors, setErrors] = useState<TournamentSchemaErrorsType | null>(null);
   const [maps, setMaps] = useState<TMap[]>([]);
-  const [details, setDetails] = useState<TTournamentDetails>({
+  const [details, setDetails] = useState<TournamentSchemaType>({
     name: "",
     description: "",
     max_participants: 2,

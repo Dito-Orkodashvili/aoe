@@ -28,3 +28,16 @@ export const TournamentDetailsSchema = z.object({
   start_date: z.string().optional().nullable(),
   end_date: z.string().optional().nullable(),
 });
+
+export type TournamentSchemaType = z.infer<typeof TournamentDetailsSchema>;
+export type TournamentSchemaErrorsType = z.inferFormattedError<
+  typeof TournamentDetailsSchema
+>;
+
+export const getTournamentSchemaError = (
+  key: keyof TournamentSchemaErrorsType,
+  errors: TournamentSchemaErrorsType | null,
+): string | undefined => {
+  const fieldError = errors?.[key] as { _errors: string[] } | undefined;
+  return fieldError?._errors?.[0];
+};

@@ -9,16 +9,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Dispatch, SetStateAction } from "react";
-import {
-  TTournamentDetails,
-  TDetailsErrors,
-} from "@/lib/types/tournament.types";
 import { FieldError } from "@/components/ui/field-error";
+import {
+  getTournamentSchemaError,
+  TournamentSchemaErrorsType,
+  TournamentSchemaType,
+} from "@/lib/schemas/tournament.schema";
 
 interface DetailsStepProps {
-  details: TTournamentDetails;
-  setDetails: Dispatch<SetStateAction<TTournamentDetails>>;
-  errors: TDetailsErrors | null;
+  details: TournamentSchemaType;
+  setDetails: Dispatch<SetStateAction<TournamentSchemaType>>;
+  errors: TournamentSchemaErrorsType | null;
 }
 
 export const DetailsStep = ({
@@ -27,17 +28,12 @@ export const DetailsStep = ({
   errors,
 }: DetailsStepProps) => {
   const handleChange = (
-    name: keyof TTournamentDetails,
+    name: keyof TournamentSchemaType,
     value: string | number,
   ) => {
     setDetails((prev) => {
       return { ...prev, [name]: value };
     });
-  };
-
-  const getError = (key: keyof TDetailsErrors): string | undefined => {
-    const fieldError = errors?.[key] as { _errors: string[] } | undefined;
-    return fieldError?._errors?.[0];
   };
 
   const isShowmatch = details.max_participants === 2;
@@ -54,7 +50,9 @@ export const DetailsStep = ({
             onChange={(event) => handleChange("name", event.target.value)}
             id="name"
           />
-          {getError("name") && <FieldError>{getError("name")}</FieldError>}
+          {getTournamentSchemaError("name", errors) && (
+            <FieldError>{getTournamentSchemaError("name", errors)}</FieldError>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -80,8 +78,10 @@ export const DetailsStep = ({
             }
             id="prize_pool"
           />
-          {getError("prize_pool") && (
-            <FieldError>{getError("prize_pool")}</FieldError>
+          {getTournamentSchemaError("prize_pool", errors) && (
+            <FieldError>
+              {getTournamentSchemaError("prize_pool", errors)}
+            </FieldError>
           )}
         </div>
         <div className="space-y-2">
@@ -94,8 +94,10 @@ export const DetailsStep = ({
             }
             id="max_participants"
           />
-          {getError("max_participants") && (
-            <FieldError>{getError("max_participants")}</FieldError>
+          {getTournamentSchemaError("max_participants", errors) && (
+            <FieldError>
+              {getTournamentSchemaError("max_participants", errors)}
+            </FieldError>
           )}
         </div>
 
@@ -111,8 +113,10 @@ export const DetailsStep = ({
               }
               id="best_of"
             />
-            {getError("best_of") && (
-              <FieldError>{getError("best_of")}</FieldError>
+            {getTournamentSchemaError("best_of", errors) && (
+              <FieldError>
+                {getTournamentSchemaError("best_of", errors)}
+              </FieldError>
             )}
           </div>
         )}
@@ -139,7 +143,11 @@ export const DetailsStep = ({
                 One-staged: Single bracket. Two-staged: Group stage followed by
                 playoffs.
               </p>
-              {getError("type") && <FieldError>{getError("type")}</FieldError>}
+              {getTournamentSchemaError("type", errors) && (
+                <FieldError>
+                  {getTournamentSchemaError("type", errors)}
+                </FieldError>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -160,8 +168,10 @@ export const DetailsStep = ({
                   <SelectItem value="swiss">Swiss</SelectItem>
                 </SelectContent>
               </Select>
-              {getError("format") && (
-                <FieldError>{getError("format")}</FieldError>
+              {getTournamentSchemaError("format", errors) && (
+                <FieldError>
+                  {getTournamentSchemaError("format", errors)}
+                </FieldError>
               )}
             </div>
           </>

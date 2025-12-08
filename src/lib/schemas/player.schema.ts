@@ -10,7 +10,7 @@ export const PlayerSchema = z.object({
   fav_civ: z.number().optional().nullable(),
   region: z.string().optional().nullable(),
   aoe_profile_id: z.string().min(1, "პროფილის ID აუცილებელია"),
-  steam_id: z.string().min(1, "სთიმის ID აუცილებელია"),
+  steam_id: z.string().optional().nullable(),
   youtube: z
     .string()
     .url("იუთუბის ლინკი არასწორია")
@@ -33,3 +33,12 @@ export const PlayerSchema = z.object({
 });
 
 export type PlayerSchemaType = z.infer<typeof PlayerSchema>;
+export type PlayerSchemaErrorsType = z.inferFormattedError<typeof PlayerSchema>;
+
+export const getPlayerSchemaError = (
+  key: keyof PlayerSchemaErrorsType,
+  errors: PlayerSchemaErrorsType | null,
+): string | undefined => {
+  const fieldError = errors?.[key] as { _errors: string[] } | undefined;
+  return fieldError?._errors?.[0];
+};

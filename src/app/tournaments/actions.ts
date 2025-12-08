@@ -3,7 +3,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/utils";
-import { TTournamentDetails } from "@/lib/types/tournament.types";
 import { TPlayer } from "@/lib/types/player.types";
 import { TMap } from "@/lib/types/map.types";
 import {
@@ -12,10 +11,13 @@ import {
   insertParticipants,
   insertTournament,
 } from "@/lib/supabase/tournament/insert-tournament";
-import { TournamentDetailsSchema } from "@/lib/schemas/tournament.schema";
+import {
+  TournamentDetailsSchema,
+  TournamentSchemaType,
+} from "@/lib/schemas/tournament.schema";
 
 export async function createTournament(payload: {
-  details: TTournamentDetails;
+  details: TournamentSchemaType;
   participants: TPlayer[];
   maps: TMap[];
 }) {

@@ -2,21 +2,19 @@ import { PersonalStatResponse, PlayerWithStats } from "@/lib/types";
 import { TPlayer } from "@/lib/types/player.types";
 import {
   LobbyPlayerWithStats,
-  LobbySlot,
-  LobbySlots,
   TransformedLobbySlot,
 } from "@/lib/types/lobby.types";
 
 export async function getPlayersOfficialStats(
   players: TPlayer[],
 ): Promise<PersonalStatResponse> {
-  const profileNames = players
-    .filter((p) => p.steam_id)
-    .map((p) => `/steam/${p.steam_id}`);
+  const profileIds = players
+    .filter((p) => p.aoe_profile_id)
+    .map((p) => p.aoe_profile_id);
 
-  const encoded = encodeURIComponent(JSON.stringify(profileNames));
+  const encoded = encodeURIComponent(JSON.stringify(profileIds));
 
-  const url = `https://aoe-api.worldsedgelink.com/community/leaderboard/GetPersonalStat?title=age2&profile_names=${encoded}`;
+  const url = `https://aoe-api.worldsedgelink.com/community/leaderboard/GetPersonalStat?title=age2&profile_ids=${encoded}`;
 
   const res = await fetch(url, { next: { revalidate: 60 } });
 
@@ -28,12 +26,10 @@ export function mergePlayersWithStats(
   stats: PersonalStatResponse,
 ): PlayerWithStats[] {
   return players.map((player) => {
-    if (!player.steam_id) return player;
-
-    const profileName = `/steam/${player.steam_id}`;
+    if (!player.aoe_profile_id) return player;
 
     const group = stats.statGroups.find((g) =>
-      g.members.some((m) => m.name === profileName),
+      g.members.some((m) => m.name === player.aoe_profile_id),
     );
 
     const lb = stats.leaderboardStats.filter(

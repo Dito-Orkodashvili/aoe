@@ -70,7 +70,7 @@ export const LobbyMatchInfo = ({ match }: LobbyMatchInfoProps) => {
                       <a
                         href={`https://www.ageofempires.com/stats/?profileId=${player.profileid}&game=age2`}
                         className="font-medium text-sm hover:underline"
-                        about="_blank"
+                        target="_blank"
                       >
                         {player.name}
                       </a>
