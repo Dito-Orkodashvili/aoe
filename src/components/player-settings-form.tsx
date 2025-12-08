@@ -65,7 +65,7 @@ export const PlayerSettingsForm = ({
     bio,
   } = player ?? {};
 
-  const [formData, setFormData] = useState({
+  const defaultValue = {
     nickname: nickname ?? "",
     name: name ?? "",
     last_name: last_name ?? "",
@@ -79,7 +79,9 @@ export const PlayerSettingsForm = ({
     playing_since: playing_since ?? "",
     team: team ?? "",
     bio: bio ?? "",
-  });
+  };
+
+  const [formData, setFormData] = useState(defaultValue);
 
   const handleSubmit = async () => {
     const validated = PlayerSchema.safeParse(formData);
@@ -395,7 +397,11 @@ export const PlayerSettingsForm = ({
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => setIsEditing(false)}
+                onClick={() => {
+                  setErrors(null);
+                  setIsEditing(false);
+                  setFormData(defaultValue);
+                }}
               >
                 გაუქმება
               </Button>
