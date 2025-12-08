@@ -12,9 +12,8 @@ export async function getPlayersOfficialStats(
     .filter((p) => p.aoe_profile_id)
     .map((p) => p.aoe_profile_id);
 
-  const encoded = encodeURIComponent(JSON.stringify(profileIds));
-
-  const url = `https://aoe-api.worldsedgelink.com/community/leaderboard/GetPersonalStat?title=age2&profile_ids=${encoded}`;
+  const formatted = `[${profileIds.map((id) => `'${id}'`).join(",")}]`;
+  const url = `https://aoe-api.worldsedgelink.com/community/leaderboard/GetPersonalStat?title=age2&profile_ids=${formatted}`;
 
   const res = await fetch(url, { next: { revalidate: 60 } });
 
@@ -29,7 +28,7 @@ export function mergePlayersWithStats(
     if (!player.aoe_profile_id) return player;
 
     const group = stats.statGroups.find((g) =>
-      g.members.some((m) => m.name === player.aoe_profile_id),
+      g.members.some((m) => m.profile_id === Number(player.aoe_profile_id)),
     );
 
     const lb = stats.leaderboardStats.filter(
