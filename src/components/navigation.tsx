@@ -206,7 +206,7 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                         onClick={() => setOpen(false)}
                       >
                         <User className="mr-2 h-4 w-4" />
-                        Profile
+                        პროფილი
                       </Button>
                       <Button
                         variant="outline"
@@ -217,13 +217,13 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                         }}
                       >
                         <LogOut className="mr-2 h-4 w-4" />
-                        <span>Log out</span>
+                        <span>გამოსვლა</span>
                       </Button>
                     </div>
                   ) : (
                     <Link href="/auth/login">
                       <Button variant="default" className="w-full mt-4">
-                        Log In
+                        შესვლა
                       </Button>
                     </Link>
                   )}
