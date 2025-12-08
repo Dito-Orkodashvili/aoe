@@ -64,7 +64,7 @@ export interface MatchHistoryMember {
 }
 
 export interface ExtractedMatchInfo {
-  id: string;
+  id: number;
   mapName: string;
   completionTime: number;
   duration: string;
