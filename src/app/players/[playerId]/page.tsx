@@ -58,6 +58,7 @@ const PlayerDetails = async ({
     nickname,
     name,
     last_name,
+    gender,
     picture_url,
     region,
     twitch,
@@ -88,7 +89,7 @@ const PlayerDetails = async ({
   if (one_v_one_stats?.wins && one_v_one_stats?.losses) {
     total1v1Games = one_v_one_stats.wins + one_v_one_stats.losses;
   }
-
+  const playerDefaultPhotoURL = gender === 'female'? "/aoe/anonymous_player_female.webp" : "/aoe/anonymous_player_male.webp";
   return (
     <main className="container mx-auto px-4 py-8">
       <Link
@@ -107,7 +108,7 @@ const PlayerDetails = async ({
               <div className="relative">
                 <Avatar className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-4 border-primary/20">
                   <AvatarImage
-                    src={picture_url ?? "/aoe/anonymous_player_male.webp"}
+                    src={picture_url ?? playerDefaultPhotoURL}
                     alt={nickname}
                     className="object-cover"
                   />
