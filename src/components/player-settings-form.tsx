@@ -12,22 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Calendar,
-  Edit2,
-  Globe,
-  Twitch,
-  User,
-  Users,
-  Youtube,
-} from "lucide-react";
-import {
-  ChangeEvent,
-  FormEvent,
-  FormEventHandler,
-  useState,
-  useTransition,
-} from "react";
+import { Calendar, Globe, Twitch, User, Users, Youtube } from "lucide-react";
+import { ChangeEvent, FormEvent, useState, useTransition } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { TPlayer } from "@/lib/types/player.types";
 import { CIVILIZATIONS } from "@/lib/utils/civilization.utils";
@@ -39,7 +25,6 @@ import {
   PlayerSchemaErrorsType,
 } from "@/lib/schemas/player.schema";
 import { FieldError } from "@/components/ui/field-error";
-import { useFormStatus } from "react-dom";
 
 interface ProfileSettingsFormProps {
   player?: TPlayer | null;
@@ -57,7 +42,6 @@ export const PlayerSettingsForm = ({
   authedUser,
 }: ProfileSettingsFormProps) => {
   const { toast } = useToast();
-  const [isEditing, setIsEditing] = useState(false);
   const [errors, setErrors] = useState<PlayerSchemaErrorsType | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -124,8 +108,6 @@ export const PlayerSettingsForm = ({
           return;
         }
 
-        setIsEditing(false);
-
         toast({
           title: "პროფილი განახლდა",
           description: "ინფორმაცია წარმატებით განახლდა.",
@@ -158,17 +140,6 @@ export const PlayerSettingsForm = ({
           <div>
             <CardTitle>მოთამაშის ინფორმაცია</CardTitle>
           </div>
-          {!isEditing && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsEditing(true)}
-              className="gap-2"
-            >
-              <Edit2 className="w-4 h-4" />
-              რედაქტირება
-            </Button>
-          )}
         </div>
       </CardHeader>
       <CardContent>
@@ -183,7 +154,6 @@ export const PlayerSettingsForm = ({
                 name="nickname"
                 value={formData.nickname}
                 onChange={handleChange}
-                disabled={!isEditing}
                 placeholder="შენი სახელი თამაშში"
               />
               {getPlayerSchemaError("nickname", errors) && (
@@ -202,7 +172,6 @@ export const PlayerSettingsForm = ({
                   name="name"
                   value={formData.name!}
                   onChange={handleChange}
-                  disabled={!isEditing}
                   className="pl-10"
                 />
               </div>
@@ -215,7 +184,6 @@ export const PlayerSettingsForm = ({
                 name="last_name"
                 value={formData.last_name!}
                 onChange={handleChange}
-                disabled={!isEditing}
               />
             </div>
 
@@ -224,7 +192,6 @@ export const PlayerSettingsForm = ({
               <Select
                 value={formData.gender!}
                 onValueChange={(value) => handleSelectChange("gender", value)}
-                disabled={!isEditing}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="აირჩიე სქესი" />
@@ -246,7 +213,6 @@ export const PlayerSettingsForm = ({
                   onValueChange={(value) =>
                     handleSelectChange("fav_civ", value)
                   }
-                  disabled={!isEditing}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="აირჩიე ცივილიზაცია" />
@@ -270,7 +236,6 @@ export const PlayerSettingsForm = ({
                     onValueChange={(value) =>
                       handleSelectChange("region", value)
                     }
-                    disabled={!isEditing}
                   >
                     <SelectTrigger className="pl-10">
                       <SelectValue placeholder="აირჩიე რეგიონი" />
@@ -295,7 +260,6 @@ export const PlayerSettingsForm = ({
                     onValueChange={(value) =>
                       handleSelectChange("playing_since", value)
                     }
-                    disabled={!isEditing}
                   >
                     <SelectTrigger className="pl-10">
                       <SelectValue placeholder="აირჩიე წელი" />
@@ -320,7 +284,6 @@ export const PlayerSettingsForm = ({
                     name="team"
                     value={formData.team!}
                     onChange={handleChange}
-                    disabled={!isEditing}
                     placeholder="შენი გუნდის სახელი"
                     className="pl-10"
                   />
@@ -340,7 +303,6 @@ export const PlayerSettingsForm = ({
                   name="aoe_profile_id"
                   value={formData.aoe_profile_id!}
                   onChange={handleChange}
-                  disabled={!isEditing}
                   helperText={
                     <a
                       href="/faq#find-profile-id"
@@ -365,7 +327,6 @@ export const PlayerSettingsForm = ({
                   name="steam_id"
                   value={formData.steam_id!}
                   onChange={handleChange}
-                  disabled={!isEditing}
                 />
               </div>
 
@@ -378,7 +339,6 @@ export const PlayerSettingsForm = ({
                     name="youtube"
                     value={formData.youtube!}
                     onChange={handleChange}
-                    disabled={!isEditing}
                     placeholder="https://youtube.com/@..."
                     className="pl-10"
                   />
@@ -394,7 +354,6 @@ export const PlayerSettingsForm = ({
                     name="twitch"
                     value={formData.twitch!}
                     onChange={handleChange}
-                    disabled={!isEditing}
                     placeholder="https://twitch.tv/..."
                     className="pl-10"
                   />
@@ -411,7 +370,6 @@ export const PlayerSettingsForm = ({
                 name="bio"
                 value={formData.bio!}
                 onChange={handleChange}
-                disabled={!isEditing}
                 rows={4}
                 className="resize-none"
                 placeholder="გვითხარი მეტი შენ შესახებ..."
@@ -419,24 +377,21 @@ export const PlayerSettingsForm = ({
             </div>
           </div>
 
-          {isEditing && (
-            <div className="flex gap-3 justify-end pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  setErrors(null);
-                  setIsEditing(false);
-                  setFormData(defaultValue);
-                }}
-              >
-                გაუქმება
-              </Button>
-              <Button type="submit">
-                {isPending ? "იგზავნება..." : "ცვლილებების შენახვა"}
-              </Button>
-            </div>
-          )}
+          <div className="flex gap-3 justify-end pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setErrors(null);
+                setFormData(defaultValue);
+              }}
+            >
+              გაუქმება
+            </Button>
+            <Button type="submit">
+              {isPending ? "იგზავნება..." : "ცვლილებების შენახვა"}
+            </Button>
+          </div>
         </form>
       </CardContent>
     </Card>
