@@ -89,7 +89,11 @@ const PlayerDetails = async ({
   if (one_v_one_stats?.wins && one_v_one_stats?.losses) {
     total1v1Games = one_v_one_stats.wins + one_v_one_stats.losses;
   }
-  const playerDefaultPhotoURL = gender === 'female'? "/aoe/anonymous_player_female.webp" : "/aoe/anonymous_player_male.webp";
+  const playerDefaultPhotoURL =
+    gender === "female"
+      ? "/aoe/anonymous_player_female.webp"
+      : "/aoe/anonymous_player_male.webp";
+
   return (
     <main className="container mx-auto px-4 py-8">
       <Link

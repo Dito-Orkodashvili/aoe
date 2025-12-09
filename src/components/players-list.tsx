@@ -85,6 +85,12 @@ export const PlayersList = ({ players }: PlayerListProps) => {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {sortedPlayers.map((player, index) => {
             const favCiv = getCivById(player.fav_civ);
+
+            const playerDefaultPhotoURL =
+              player.gender === "female"
+                ? "/aoe/anonymous_player_female.webp"
+                : "/aoe/anonymous_player_male.webp";
+
             return (
               <Card
                 key={player.id}
@@ -94,10 +100,7 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                   <div className="relative aspect-square overflow-hidden bg-muted">
                     <Avatar className="w-full h-full rounded-none">
                       <AvatarImage
-                        src={
-                          player.picture_url ??
-                          "/aoe/anonymous_player_male.webp"
-                        }
+                        src={player.picture_url ?? playerDefaultPhotoURL}
                         alt={player.nickname}
                         className="object-cover"
                       />
