@@ -38,6 +38,7 @@ import { clsx } from "clsx";
 import { capitalize, mapNameToIcon } from "@/lib/utils";
 import { ImageWithFallback } from "@/components/image-with-fallback";
 import { getCivById } from "@/lib/utils/civilization.utils";
+import { getPlayerCivStats } from "@/lib/supabase/player/get-player-civ-stats";
 
 const civilizationStats: unknown[] = [];
 
@@ -79,7 +80,7 @@ const PlayerDetails = async ({
 
     matchHistory = await getPlayerMatchHistory(aoe_profile_id);
   }
-  console.log(matchHistory);
+
   const { one_v_one_stats } = playerStats || {};
 
   let total1v1Games = 0;
@@ -280,11 +281,14 @@ const PlayerDetails = async ({
           </CardContent>
         </Card>
       </div>
-      <Tabs defaultValue="matches" className="space-y-4 w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="matches">უახლესი ბრძოლები</TabsTrigger>
-          <TabsTrigger value="civilizations">ცივილიზაციები</TabsTrigger>
-          <TabsTrigger value="achievements">მიღწევები</TabsTrigger>
+      <Tabs defaultValue="matches" className="space-y-4">
+        <TabsList className="grid grid-cols-2 max-w-[50rem]">
+          <TabsTrigger value="matches" className="cursor-pointer">
+            უახლესი ბრძოლები
+          </TabsTrigger>
+          <TabsTrigger value="civilizations" className="cursor-pointer">
+            ცივილიზაციები
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="matches">
@@ -389,7 +393,6 @@ const PlayerDetails = async ({
                                         >
                                           {p.alias}
                                         </a>
-                                        {p.civilizationId}
                                         {civ && (
                                           <Image
                                             width={32}
@@ -460,7 +463,6 @@ const PlayerDetails = async ({
                                         >
                                           {p.alias}
                                         </a>
-                                        {p.civilizationId}
                                         {civ && (
                                           <Image
                                             width={32}
@@ -528,41 +530,6 @@ const PlayerDetails = async ({
                 <p className="text-muted-foreground text-center py-8">
                   ცივილიზაციების სტატისტიკა არ მოიძებნა
                 </p>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="achievements">
-          <Card>
-            <CardHeader>
-              <CardTitle>სატურნირო მიღწევები</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {achievements.length > 0 ? (
-                <div className="space-y-4">
-                  {/*{achievements.map((achievement, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-4 p-4 rounded-lg bg-primary/5 border border-primary/10"
-                    >
-                      <Trophy className="w-8 h-8 text-primary flex-shrink-0" />
-                      <div>
-                        <h4 className="font-semibold text-foreground">
-                          {achievement.title}
-                        </h4>
-                        <p className="text-sm text-muted-foreground">
-                          {achievement.description}
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {achievement.date}
-                        </p>
-                      </div>
-                    </div>
-                  ))}*/}
-                </div>
-              ) : (
-                <p className="text-muted-foreground text-center py-8">--</p>
               )}
             </CardContent>
           </Card>

@@ -12,8 +12,14 @@ export function extractMatchInfo(
 ): ExtractedMatchInfo[] {
   return matches
     .map((match) => {
-      const { id, mapname, completiontime, startgametime, matchhistorymember } =
-        match;
+      const {
+        id,
+        mapname,
+        completiontime,
+        startgametime,
+        matchhistorymember,
+        matchtype_id,
+      } = match;
 
       const durationSec = completiontime - startgametime;
       const durationMin = Math.floor(durationSec / 60);
@@ -44,8 +50,10 @@ export function extractMatchInfo(
         completionTime: completiontime,
         duration: durationStr,
         players,
+        matchTypeId: matchtype_id,
       };
     })
+    .filter((m) => m.matchTypeId === 6)
     .sort((a, b) => b.completionTime - a.completionTime);
 }
 
