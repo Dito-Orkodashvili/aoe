@@ -174,6 +174,11 @@ export const PlayerSettingsForm = ({
                   onChange={handleChange}
                   className="pl-10"
                 />
+                {getPlayerSchemaError("name", errors) && (
+                  <FieldError>
+                    {getPlayerSchemaError("name", errors)}
+                  </FieldError>
+                )}
               </div>
             </div>
 
@@ -185,6 +190,11 @@ export const PlayerSettingsForm = ({
                 value={formData.last_name!}
                 onChange={handleChange}
               />
+              {getPlayerSchemaError("last_name", errors) && (
+                <FieldError>
+                  {getPlayerSchemaError("last_name", errors)}
+                </FieldError>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -287,6 +297,11 @@ export const PlayerSettingsForm = ({
                     placeholder="შენი გუნდის სახელი"
                     className="pl-10"
                   />
+                  {getPlayerSchemaError("team", errors) && (
+                    <FieldError>
+                      {getPlayerSchemaError("team", errors)}
+                    </FieldError>
+                  )}
                 </div>
               </div>
             </div>
@@ -328,6 +343,11 @@ export const PlayerSettingsForm = ({
                   value={formData.steam_id!}
                   onChange={handleChange}
                 />
+                {getPlayerSchemaError("steam_id", errors) && (
+                  <FieldError>
+                    {getPlayerSchemaError("steam_id", errors)}
+                  </FieldError>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -342,6 +362,11 @@ export const PlayerSettingsForm = ({
                     placeholder="https://youtube.com/@..."
                     className="pl-10"
                   />
+                  {getPlayerSchemaError("youtube", errors) && (
+                    <FieldError>
+                      {getPlayerSchemaError("youtube", errors)}
+                    </FieldError>
+                  )}
                 </div>
               </div>
 
@@ -357,6 +382,11 @@ export const PlayerSettingsForm = ({
                     placeholder="https://twitch.tv/..."
                     className="pl-10"
                   />
+                  {getPlayerSchemaError("twitch", errors) && (
+                    <FieldError>
+                      {getPlayerSchemaError("twitch", errors)}
+                    </FieldError>
+                  )}
                 </div>
               </div>
             </div>
@@ -374,6 +404,9 @@ export const PlayerSettingsForm = ({
                 className="resize-none"
                 placeholder="გვითხარი მეტი შენ შესახებ..."
               />
+              {getPlayerSchemaError("bio", errors) && (
+                <FieldError>{getPlayerSchemaError("bio", errors)}</FieldError>
+              )}
             </div>
           </div>
 
