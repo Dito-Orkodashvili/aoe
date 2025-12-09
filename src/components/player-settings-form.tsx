@@ -21,7 +21,13 @@ import {
   Users,
   Youtube,
 } from "lucide-react";
-import { ChangeEvent, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  FormEventHandler,
+  useState,
+  useTransition,
+} from "react";
 import { useToast } from "@/hooks/use-toast";
 import { TPlayer } from "@/lib/types/player.types";
 import { CIVILIZATIONS } from "@/lib/utils/civilization.utils";
@@ -33,6 +39,7 @@ import {
   PlayerSchemaErrorsType,
 } from "@/lib/schemas/player.schema";
 import { FieldError } from "@/components/ui/field-error";
+import { useFormStatus } from "react-dom";
 
 interface ProfileSettingsFormProps {
   player?: TPlayer | null;
@@ -52,6 +59,7 @@ export const PlayerSettingsForm = ({
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [errors, setErrors] = useState<PlayerSchemaErrorsType | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const {
     nickname,
@@ -87,35 +95,42 @@ export const PlayerSettingsForm = ({
 
   const [formData, setFormData] = useState(defaultValue);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     const validated = PlayerSchema.safeParse(formData);
+
     const isValid = validated.success;
 
     if (!isValid) {
       setErrors(validated.error.format());
     } else {
       setErrors(null);
-      const result = await savePlayerAction(authedUser.id, {
-        ...formData,
-        playing_since: playing_since ? Number(playing_since) : null,
-        fav_civ: fav_civ ? Number(fav_civ) : null,
-      });
-
-      if (!result.success) {
-        toast({
-          title: "შეცდომა",
-          description: "პროფილის მონაცემები შევსებულია არასწორად.",
-          variant: "destructive",
+      startTransition(async () => {
+        const result = await savePlayerAction(authedUser.id, {
+          ...formData,
+          playing_since: formData.playing_since
+            ? Number(formData.playing_since)
+            : null,
+          fav_civ: formData.fav_civ ? Number(formData.fav_civ) : null,
         });
-        return;
-      }
 
-      setIsEditing(false);
+        if (!result.success) {
+          toast({
+            title: "შეცდომა",
+            description: "პროფილის მონაცემები შევსებულია არასწორად.",
+            variant: "destructive",
+          });
+          return;
+        }
 
-      toast({
-        title: "პროფილი განახლდა",
-        description: "ინფორმაცია წარმატებით განახლდა.",
-        variant: "success",
+        setIsEditing(false);
+
+        toast({
+          title: "პროფილი განახლდა",
+          description: "ინფორმაცია წარმატებით განახლდა.",
+          variant: "success",
+        });
       });
     }
   };
@@ -157,7 +172,7 @@ export const PlayerSettingsForm = ({
         </div>
       </CardHeader>
       <CardContent>
-        <form action={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="nickname" required>
@@ -417,7 +432,9 @@ export const PlayerSettingsForm = ({
               >
                 გაუქმება
               </Button>
-              <Button type="submit">ცვლილებების შენახვა</Button>
+              <Button type="submit">
+                {isPending ? "იგზავნება..." : "ცვლილებების შენახვა"}
+              </Button>
             </div>
           )}
         </form>
