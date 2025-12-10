@@ -15,6 +15,8 @@ import { usePlayersOfficialStats } from "@/hooks/query/use-players-official-stat
 import { useState } from "react";
 import { mergeLobbyPlayersWithStats } from "@/lib/supabase/player/get-players-official-stats";
 import ReactCountryFlag from "react-country-flag";
+import { getCivById } from "@/lib/utils/civilization.utils";
+import Image from "next/image";
 
 interface SpectateMatchInfoProps {
   match: TransformedSpectateMatch;
@@ -63,42 +65,57 @@ export const SpectateMatchInfo = ({ match }: SpectateMatchInfoProps) => {
               <p>Error loading players</p>
             ) : (
               <div className="space-y-2">
-                {mergedPlayers.map((player) => (
-                  <div
-                    key={player.profileid}
-                    className="flex items-center justify-between p-2 rounded-md bg-muted/50"
-                  >
-                    <div className="flex gap-2 items-center">
-                      <a
-                        href={`https://www.ageofempires.com/stats/?profileId=${player.profileid}&game=age2`}
-                        className="font-medium text-sm hover:underline"
-                        target="_blank"
-                      >
-                        {player.name}
-                      </a>
-                      {player.country && (
-                        <p className="text-xs text-muted-foreground">
-                          <ReactCountryFlag
-                            className="text-sm"
-                            countryCode={player.country.toUpperCase()}
-                            aria-label={player.country}
-                            title={player.country}
-                            svg
-                          />
-                        </p>
+                {mergedPlayers.map((player) => {
+                  const civ = getCivById(player.civilization);
+                  return (
+                    <div
+                      key={player.profileid}
+                      className="p-2 rounded-md bg-muted/50"
+                    >
+                      <div className="flex gap-2 items-center justify-between">
+                        <div className="flex gap-2 items-center">
+                          <a
+                            href={`https://www.ageofempires.com/stats/?profileId=${player.profileid}&game=age2`}
+                            className="font-medium text-sm hover:underline"
+                            target="_blank"
+                          >
+                            {player.name}
+                          </a>
+                          {player.country && (
+                            <p className="text-xs text-muted-foreground">
+                              <ReactCountryFlag
+                                className="text-sm"
+                                countryCode={player.country.toUpperCase()}
+                                aria-label={player.country}
+                                title={player.country}
+                                svg
+                              />
+                            </p>
+                          )}
+                        </div>
+                        <Badge variant="secondary" className="text-xs">
+                          {player.one_v_one_stats?.rating ? (
+                            <span className="font-bold">
+                              {player.one_v_one_stats?.rating}
+                            </span>
+                          ) : (
+                            <span className="text-xs">N/A</span>
+                          )}
+                        </Badge>
+                      </div>
+                      {civ && (
+                        <Image
+                          className="mt-2"
+                          src={`/aoe/civs/${civ?.icon}`}
+                          title={civ.name}
+                          width={20}
+                          height={20}
+                          alt={civ.name}
+                        />
                       )}
                     </div>
-                    <Badge variant="secondary" className="text-xs">
-                      {player.one_v_one_stats?.rating ? (
-                        <span className="font-bold">
-                          {player.one_v_one_stats?.rating}
-                        </span>
-                      ) : (
-                        <span className="text-xs">N/A</span>
-                      )}
-                    </Badge>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

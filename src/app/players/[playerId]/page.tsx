@@ -38,11 +38,8 @@ import { clsx } from "clsx";
 import { capitalize, mapNameToIcon } from "@/lib/utils";
 import { ImageWithFallback } from "@/components/image-with-fallback";
 import { getCivById } from "@/lib/utils/civilization.utils";
-import { getPlayerCivStats } from "@/lib/supabase/player/get-player-civ-stats";
 
 const civilizationStats: unknown[] = [];
-
-const achievements: unknown[] = [];
 
 const PlayerDetails = async ({
   params,

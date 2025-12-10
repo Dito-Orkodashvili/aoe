@@ -35,10 +35,11 @@ export function VirtualTable<T>({
   return (
     <div
       ref={parentRef}
-      className="rounded-lg border bg-card overflow-auto w-full"
+      className="rounded-lg border bg-card overflow-auto w-full overflow-x-auto"
       style={{ height }}
     >
       <div
+        className="min-w-[44rem]"
         style={{
           height: rowVirtualizer.getTotalSize() + HEADER_HEIGHT,
           width: "100%",

@@ -6,12 +6,10 @@ import { GameElapsedTime } from "@/components/game-elapsed-time";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLiveMatchesWs } from "@/hooks/use-live-matches-ws";
-import { TPlayer } from "@/lib/types/player.types";
 import { GAME_MODE } from "@/lib/utils/lobby.utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { LobbyMatchInfo } from "@/components/lobby-match-info";
 import { VirtualTable } from "@/components/virtual-table";
 import { SpectateMatchInfo } from "@/components/spectate-match-info";
 
