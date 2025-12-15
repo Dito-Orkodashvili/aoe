@@ -132,7 +132,7 @@ export const ShowmatchCard = ({
         <div className="mt-6 pt-4 border-t border-border">
           <div className="flex items-center gap-2 text-muted-foreground">
             <MapIcon className="w-5 h-5 text-primary" />
-            <div className="flex flex-wrap gap-2 justify-center w-full">
+            <div className="flex flex-wrap gap-2 w-full">
               {maps.map((map, index) => (
                 <Badge key={index} variant="outline" className="px-3 py-1.5">
                   {getMapById(map.map_id)?.name}

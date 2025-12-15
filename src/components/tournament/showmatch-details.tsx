@@ -1,9 +1,7 @@
 import { ShowmatchCard } from "@/components/tournament/showmatch-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
 import { TournamentDetailsType } from "@/lib/types/tournament.types";
-import { Badge } from "@/components/ui/badge";
-import { getMapById } from "@/lib/utils";
 
 interface ShowmatchDetailsProps {
   tournament: TournamentDetailsType;
@@ -26,7 +24,7 @@ export const ShowmatchDetails = ({ tournament }: ShowmatchDetailsProps) => {
   }
 
   return (
-    <div className="space-y-4 max-w-6xl mx-auto">
+    <div className="space-y-4 max-w-6xl mx-auto mb-8 container px-4">
       <ShowmatchCard
         tournamentId={tournament.id}
         stages={tournament_stages}

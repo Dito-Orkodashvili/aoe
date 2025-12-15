@@ -18,7 +18,7 @@ export const TournamentDetailsHeader = ({
           <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg animate-fade-in">
             {tournament.title}
           </h1>
-          <p>{tournament.description}</p>
+          <p className="max-w-xl mx-auto">{tournament.description}</p>
           <div className="flex w-full justify-center">
             <div className="flex flex-wrap gap-4 text-muted-foreground">
               <div className="flex items-center gap-2">

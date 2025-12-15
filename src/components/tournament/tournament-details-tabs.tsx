@@ -21,7 +21,6 @@ import {
   TournamentDetailsType,
 } from "@/lib/types/tournament.types";
 import { TournamentDetailsHeader } from "@/components/tournament/tournament-details-header";
-import { ShowmatchCard } from "@/components/tournament/showmatch-card";
 import { ShowmatchDetails } from "@/components/tournament/showmatch-details";
 
 interface TournamentDetailsTabsProps {

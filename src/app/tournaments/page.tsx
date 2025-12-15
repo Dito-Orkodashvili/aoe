@@ -1,21 +1,26 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, Crown, Trophy } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ArrowRight, Calendar, Crown, Trophy, Users } from "lucide-react";
 import Link from "next/link";
 import { PageHero } from "@/components/sections/hero";
-import { getTournaments } from "@/lib/supabase/tournament/get-tournaments";
 import { TournamentCard } from "@/components/tournament/tournament-card";
+import { Badge } from "@/components/ui/badge";
+import { cn, formatDate } from "@/lib/utils";
+import { getTournamentsFilled } from "@/lib/supabase/tournament/get-tournaments-filled";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default async function Tournaments() {
-  const tournaments = await getTournaments();
+  const tournaments = await getTournamentsFilled();
 
-  const ongoingTournaments = tournaments.filter(
-    (tournament) => tournament.status === "active",
-  );
-
-  const upcomingTournaments = tournaments.filter(
-    (tournament) => tournament.status === "upcoming",
-  );
+  const ongoingTournaments = tournaments
+    .filter((tournament) => ["active", "upcoming"].includes(tournament.status))
+    .sort((a, b) => (a.status === "active" ? -1 : 1));
 
   const pastTournaments = tournaments.filter(
     (tournament) => tournament.status === "completed",
@@ -37,29 +42,128 @@ export default async function Tournaments() {
 
       <section className="py-16 px-4">
         <div className="container mx-auto max-w-6xl">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3">
-              <Calendar className="w-8 h-8 text-primary" />
-              <h2 className="text-4xl font-bold text-foreground">
-                მიმდინარე ტურნირები
-              </h2>
-            </div>
-
-            <Button asChild className="mt-4">
-              <Link href="/tournaments/create">შექმენი ტურნირი</Link>
-            </Button>
+          <div className="flex items-center gap-3 mb-8">
+            <Calendar className="w-8 h-8 text-primary" />
+            <h2 className="text-4xl font-bold text-foreground">
+              მიმდინარე და მომავალი ტურნირები
+            </h2>
           </div>
 
-          <div className="space-y-4">
-            {ongoingTournaments.length > 0 ? (
-              ongoingTournaments.map((tournament) => (
-                <TournamentCard key={tournament.id} tournament={tournament} />
-              ))
-            ) : (
-              <p className="text-center text-muted-foreground my-4">
-                No tournaments to show yet!
-              </p>
-            )}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {ongoingTournaments.map((tournament, index) => {
+              const isActive = tournament.status === "active";
+              const isShowmatch =
+                tournament.stages.length === 1 &&
+                tournament.stages[0].format === "showmatch";
+              const player1 = tournament.participants[0].player;
+              const player2 = tournament.participants[1].player;
+
+              return (
+                <Card
+                  key={index}
+                  className="border-2 hover:border-primary transition-all hover-scale"
+                >
+                  <CardHeader>
+                    <div className="flex justify-between items-start mb-2">
+                      <Badge
+                        variant={isActive ? "destructive" : "secondary"}
+                        className={cn(isActive && "animate-pulse")}
+                      >
+                        {isActive ? "მიმდინარე" : "მომავალი"}
+                      </Badge>
+                      <Trophy className="w-5 h-5 text-secondary" />
+                    </div>
+                    <CardTitle className="text-xl">
+                      {tournament.title}
+                    </CardTitle>
+                    <CardDescription className="space-y-2 text-base">
+                      <div className="flex items-center gap-2 text-foreground/80 text-sm">
+                        <Calendar className="w-4 h-4" />
+                        {formatDate(tournament.start_date)}
+                      </div>
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center gap-2 text-foreground/80">
+                      <Users className="w-4 h-4" />
+                      {tournament.participants.length}
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-sm text-muted-foreground">
+                        მონაწილეები
+                      </p>
+                      <p className="font-semibold flex gap-4 items-center">
+                        <div className="relative">
+                          <Link
+                            href={`/players/${player1.id}`}
+                            className="underline text-secondary"
+                            title={player1.nickname}
+                          >
+                            <Avatar className="w-10 h-10 md:w-18 md:h-18 rounded-full object-cover border-1 border-primary/20">
+                              <AvatarImage
+                                src={
+                                  player1.picture_url ??
+                                  `/aoe/anonymous_player_${player1.gender}.webp`
+                                }
+                                alt={player1.nickname}
+                                className="object-cover"
+                              />
+                              <AvatarFallback className="rounded-none text-4xl">
+                                {player1.nickname
+                                  ?.split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
+                          </Link>
+                        </div>
+                        <span className="text-xs text-primary">VS</span>
+                        <Link
+                          href={`/players/${player2.id}`}
+                          className="underline text-secondary"
+                          title={player2.nickname}
+                        >
+                          <Avatar className="w-10 h-10 md:w-18 md:h-18 rounded-full object-cover border-1 border-primary/20">
+                            <AvatarImage
+                              src={
+                                player2.picture_url ??
+                                `/aoe/anonymous_player_${player2.gender}.webp`
+                              }
+                              alt={player2.nickname}
+                              className="object-cover"
+                            />
+                            <AvatarFallback className="rounded-none text-4xl">
+                              {player2.nickname
+                                ?.split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
+                          </Avatar>
+                        </Link>
+                      </p>
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-sm text-muted-foreground">ფორმატი</p>
+                      <p className="font-semibold">
+                        {isShowmatch ? "შოუმატჩი" : "???"}
+                      </p>
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-sm text-muted-foreground">
+                        საპრიზო ფონდი
+                      </p>
+                      <p className="text-2xl font-bold text-secondary">
+                        {tournament.prize_pool}$
+                      </p>
+                    </div>
+                    <Button className="w-full gap-2" disabled={!isActive}>
+                      {isActive ? "დეტალები" : "მალე დაიწყება"}
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
