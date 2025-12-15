@@ -56,7 +56,7 @@ export function LoginForm({
             <div className="flex flex-col gap-6">
               {error && <p className="text-sm text-destructive-500">{error}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Logging in..." : "Continue with Google"}
+                {isLoading ? "იტვირთება..." : "გააგრძელე Google-ით"}
               </Button>
             </div>
           </form>

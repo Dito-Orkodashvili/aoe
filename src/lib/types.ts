@@ -1,4 +1,4 @@
-import { TPlayer } from "./types/player.types";
+import { PlayerType } from "./types/player.types";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "@/lib/supabase/types";
 
@@ -50,9 +50,7 @@ export interface LeaderboardStat {
   highestrating: number;
 }
 
-export interface PlayerWithStats extends TPlayer {
+export interface PlayerWithStats extends PlayerType {
   one_v_one_stats?: LeaderboardStat | null;
   team_game_stats?: LeaderboardStat | null;
 }
-
-export type TSupabase = SupabaseClient<Database>;

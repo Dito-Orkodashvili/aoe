@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
-import { TPlayer } from "@/lib/types/player.types";
+import { PlayerType } from "@/lib/types/player.types";
 
-export async function getPlayers(): Promise<TPlayer[]> {
+export async function getPlayers(): Promise<PlayerType[]> {
   const supabase = await createClient();
 
   const { data, error } = await supabase.from("players").select();

@@ -1,5 +1,5 @@
 import { PersonalStatResponse, PlayerWithStats } from "@/lib/types";
-import { TPlayer } from "@/lib/types/player.types";
+import { PlayerType } from "@/lib/types/player.types";
 
 export async function getPlayerOfficialStats(
   profileIds: number[],
@@ -14,7 +14,7 @@ export async function getPlayerOfficialStats(
 }
 
 export function mergePlayerWithStats(
-  player: TPlayer,
+  player: PlayerType,
   stats: PersonalStatResponse,
 ): PlayerWithStats {
   if (!player?.aoe_profile_id) return player;

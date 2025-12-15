@@ -6,7 +6,7 @@ import {
   TransformedLobbySlot,
 } from "@/lib/types/lobby.types";
 import { addLobbyListener, wsSend } from "@/lib/ws/aoe2lobby-ws-manager";
-import { TPlayer } from "@/lib/types/player.types";
+import { PlayerType } from "@/lib/types/player.types";
 
 const now = () => Date.now();
 

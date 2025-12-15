@@ -15,7 +15,7 @@ import {
   Trophy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ReactElement, useEffect, useMemo, useState } from "react";
+import { ReactElement, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/table";
 import { PlayerWithStats } from "@/lib/types";
 import { clsx } from "clsx";
-import { TPlayer } from "@/lib/types/player.types";
+import { PlayerType } from "@/lib/types/player.types";
 import Link from "next/link";
 import Image from "next/image";
 import { getCivById } from "@/lib/utils/civilization.utils";
@@ -35,7 +35,7 @@ interface PlayerListProps {
   players: PlayerWithStats[];
 }
 
-const leagueIcons: Record<TPlayer["league"], ReactElement> = {
+const leagueIcons: Record<PlayerType["league"], ReactElement> = {
   bronze: <Trophy size={28} className="text-amber-700" />,
   silver: <Trophy size={28} className="text-zinc-300" />,
   gold: <Trophy size={28} className="text-amber-400" />,

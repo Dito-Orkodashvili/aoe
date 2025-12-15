@@ -1,13 +1,8 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DoorOpen, Play } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ReactElement, Suspense } from "react";
-import { TournamentInfo } from "@/components/tournament-info";
-import { PrizePoolInfo } from "@/components/prize-pool-info";
-import { ParticipantsInfo } from "@/components/participants-info";
-import { Badge } from "@/components/ui/badge";
+import { ReactElement } from "react";
 
 interface LobbyTabsProps {
   activeTab: "live" | "lobby";

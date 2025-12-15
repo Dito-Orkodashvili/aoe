@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from "react";
-import { TPlayer } from "@/lib/types/player.types";
 import { LeaderboardStat } from "@/lib/types";
 
 export interface LiveGamesResponse {

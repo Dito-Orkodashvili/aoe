@@ -15,7 +15,7 @@ import {
 import { Calendar, Globe, Twitch, User, Users, Youtube } from "lucide-react";
 import { ChangeEvent, FormEvent, useState, useTransition } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { TPlayer } from "@/lib/types/player.types";
+import { PlayerType } from "@/lib/types/player.types";
 import { CIVILIZATIONS } from "@/lib/utils/civilization.utils";
 import { savePlayerAction } from "@/app/profile/actions";
 import { User as AuthedUser } from "@supabase/auth-js";
@@ -27,11 +27,20 @@ import {
 import { FieldError } from "@/components/ui/field-error";
 
 interface ProfileSettingsFormProps {
-  player?: TPlayer | null;
+  player?: PlayerType | null;
   authedUser: AuthedUser;
 }
 
-const REGIONS = ["თბილის", "რუსთავი", "მუხრანი"];
+const REGIONS = [
+  "თბილის",
+  "რუსთავი",
+  "მუხრანი",
+  "ზუგდიდი",
+  "ლუქსემბურგი",
+  "აბუ დაბი",
+  "ქუთაისი",
+];
+
 const PLAYING_SINCE_YEARS = Array.from(
   { length: new Date().getFullYear() - 1998 + 1 },
   (_, i) => (new Date().getFullYear() - i).toString(),

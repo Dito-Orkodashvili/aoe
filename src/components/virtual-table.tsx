@@ -2,7 +2,6 @@
 
 import { ReactNode, useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { Swords } from "lucide-react";
 
 interface VirtualTableProps<T> {
   data: T[];

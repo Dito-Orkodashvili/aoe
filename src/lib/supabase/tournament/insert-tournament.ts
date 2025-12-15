@@ -1,32 +1,41 @@
 "use server";
 
-import { TPlayer } from "@/lib/types/player.types";
-import { TSupabase } from "@/lib/types";
-import { TMap } from "@/lib/types/map.types";
-import { TournamentSchemaType } from "@/lib/schemas/tournament.schema";
+import { TournamentBasicInfoType } from "@/lib/schemas/tournament/basic-info.schema";
+import { SupabaseType } from "@/lib/types/supabase.types";
 
-export async function insertTournament(
-  supabase: TSupabase,
-  data: TournamentSchemaType,
-  slug: string,
-) {
+interface InsertTournamentParams {
+  supabase: SupabaseType;
+  tournamentInfo: TournamentBasicInfoType;
+  slug: string;
+  created_by: string;
+}
+
+export async function insertTournament({
+  supabase,
+  tournamentInfo,
+  slug,
+  created_by,
+}: InsertTournamentParams) {
   const { data: tournament, error } = await supabase
     .from("tournaments")
     .insert({
-      name: data.name,
-      description: data.description,
-      type: data.type,
-      format: data.format,
-      max_participants: data.max_participants,
-      prize_pool: data.prize_pool,
-      visibility: data.visibility,
+      title: tournamentInfo.title,
       slug,
-      registration_starts_at: data.registration_starts_at ?? null,
-      registration_ends_at: data.registration_ends_at ?? null,
-      start_date: data.start_date ?? null,
-      end_date: data.end_date ?? null,
-      config: {},
-      status: "upcoming",
+      description: tournamentInfo.description,
+      cover_image_url: tournamentInfo.cover_image_url ?? null,
+      organizer: tournamentInfo.organizer ?? null,
+      status: "draft" as const,
+      visibility: tournamentInfo.visibility,
+      team_size: tournamentInfo.team_size,
+      default_best_of: tournamentInfo.default_best_of,
+      prize_pool: tournamentInfo.prize_pool,
+      max_participants: tournamentInfo.max_participants,
+      start_date: tournamentInfo.start_date ?? null,
+      end_date: tournamentInfo.end_date ?? null,
+      registration_starts_at: tournamentInfo.registration_starts_at ?? null,
+      registration_ends_at: tournamentInfo.registration_ends_at ?? null,
+      is_registration_open: false,
+      created_by,
     })
     .select("id")
     .single();
@@ -34,62 +43,4 @@ export async function insertTournament(
   if (error || !tournament) throw new Error("DB_TOURNAMENT_INSERT");
 
   return tournament;
-}
-
-export async function insertParticipants(
-  supabase: TSupabase,
-  tournamentId: string,
-  participants: TPlayer[],
-) {
-  if (participants.length < 2) return;
-
-  const rows = participants.map((p) => ({
-    tournament_id: tournamentId,
-    player_id: p.id,
-  }));
-
-  const { error } = await supabase.from("tournament_participants").insert(rows);
-
-  if (error) throw new Error("DB_PARTICIPANTS_INSERT");
-}
-
-export async function insertMaps(
-  supabase: TSupabase,
-  tournamentId: string,
-  maps: TMap[],
-) {
-  if (maps.length === 0) return;
-
-  const rows = maps.map((m, index) => ({
-    tournament_id: tournamentId,
-    map_id: m.id,
-    map_order: index + 1,
-  }));
-
-  const { error } = await supabase.from("tournament_maps").insert(rows);
-
-  if (error) throw new Error("DB_MAPS_INSERT");
-}
-
-export async function insertMatch(
-  supabase: TSupabase,
-  tournamentId: string,
-  data: TournamentSchemaType,
-  participants: TPlayer[],
-) {
-  if (data.max_participants !== 2 || participants.length !== 2) return;
-
-  const [p1, p2] = participants;
-
-  const { error } = await supabase.from("matches").insert({
-    tournament_id: tournamentId,
-    player1_id: p1.id,
-    player2_id: p2.id,
-    best_of: data.best_of || 21,
-    round: "showmatch",
-    player1_score: 0,
-    player2_score: 0,
-  });
-
-  if (error) throw new Error("DB_SHOWMATCH_INSERT");
 }

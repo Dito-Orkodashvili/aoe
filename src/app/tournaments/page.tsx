@@ -4,13 +4,13 @@ import { Calendar, Crown, Trophy } from "lucide-react";
 import Link from "next/link";
 import { PageHero } from "@/components/sections/hero";
 import { getTournaments } from "@/lib/supabase/tournament/get-tournaments";
-import { TournamentCard } from "@/components/tournament-card";
+import { TournamentCard } from "@/components/tournament/tournament-card";
 
 export default async function Tournaments() {
   const tournaments = await getTournaments();
 
   const ongoingTournaments = tournaments.filter(
-    (tournament) => tournament.status === "ongoing",
+    (tournament) => tournament.status === "active",
   );
 
   const upcomingTournaments = tournaments.filter(

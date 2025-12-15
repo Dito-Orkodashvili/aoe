@@ -132,7 +132,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5">

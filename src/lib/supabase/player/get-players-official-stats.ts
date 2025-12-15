@@ -1,12 +1,12 @@
 import { PersonalStatResponse, PlayerWithStats } from "@/lib/types";
-import { TPlayer } from "@/lib/types/player.types";
+import { PlayerType } from "@/lib/types/player.types";
 import {
   LobbyPlayerWithStats,
   TransformedLobbySlot,
 } from "@/lib/types/lobby.types";
 
 export async function getPlayersOfficialStats(
-  players: TPlayer[],
+  players: PlayerType[],
 ): Promise<PersonalStatResponse> {
   const profileIds = players
     .filter((p) => p.aoe_profile_id)
@@ -21,7 +21,7 @@ export async function getPlayersOfficialStats(
 }
 
 export function mergePlayersWithStats(
-  players: TPlayer[],
+  players: PlayerType[],
   stats: PersonalStatResponse,
 ): PlayerWithStats[] {
   return players.map((player) => {

@@ -1,59 +1,105 @@
 import { createClient } from "@/lib/supabase/server";
+import { ActionErrorCode } from "@/lib/utils/error.constants";
+import { ActionResultType } from "@/lib/types/action.types";
+import { TournamentDetailsType } from "@/lib/types/tournament.types";
 
-async function fetchTournamentRaw(slug: string) {
+export async function getTournamentBySlug(
+  slug: string,
+): Promise<ActionResultType<TournamentDetailsType>> {
   const supabase = await createClient();
 
-  return supabase
+  const { data, error } = await supabase
     .from("tournaments")
     .select(
       `
-                *,
-                tournament_participants (
-                  *,
-                  player:players!player_id (*)
-                ),
-                tournament_maps (
-                  *,
-                  map:maps!map_id (*)
-                ),
-                matches (
-                  *,
-                  player1:players!player1_id (*),
-                  player2:players!player2_id (*),
-                  map:maps!map_id (*),
-                  match_games (
-                    *,
-                    map:maps!map_id (*),
-                    winner:players!winner_id (*)
-                  )
-                )
-              `,
+      id,
+      title,
+      slug,
+      description,
+      organizer,
+      status,
+      visibility,
+      team_size,
+      default_best_of,
+      prize_pool,
+      max_participants,
+      start_date,
+      end_date,
+      registration_starts_at,
+      registration_ends_at,
+      is_registration_open,
+      cover_image_url,
+      config,
+      created_at,
+      created_by,
+      updated_at,
+  
+      tournament_stages (
+        id,
+        tournament_id,
+        stage_number,
+        format,
+        status,
+        config,
+        created_at,
+        updated_at,
+        
+        tournament_matches (
+          id,
+          best_of,
+          score_p1,
+          score_p2,
+          status
+        )
+      ),
+  
+      tournament_participants (
+        id,
+        tournament_id,
+        player_id,
+        team_id,
+        seed,
+        joined_at,
+        
+        player:players (
+          id,
+          nickname,
+          name,
+          last_name,
+          fav_civ,
+          picture_url,
+          gender,
+          tournament_elo
+        )
+      ),
+  
+      tournament_maps (
+        id,
+        tournament_id,
+        map_id,
+        map_order,
+        is_enabled,
+        created_at
+      )
+  `,
     )
     .eq("slug", slug)
     .single();
-}
 
-type TournamentRawResult = Awaited<ReturnType<typeof fetchTournamentRaw>>;
-type TournamentData = TournamentRawResult["data"];
+  if (error) {
+    return {
+      ok: false,
+      error: {
+        code:
+          error.code === "PGRST116"
+            ? ActionErrorCode.NOT_FOUND
+            : ActionErrorCode.DB_ERROR,
+      },
+    };
+  }
 
-function transformTournament(data: TournamentData) {
   return {
-    ...data,
-    participants: data?.tournament_participants ?? [],
-    maps: data?.tournament_maps ?? [],
-    matches: data?.matches ?? [],
+    ok: true,
+    data,
   };
-}
-
-export type TTournamentInfo = ReturnType<typeof transformTournament>;
-
-export async function getTournamentDetails(
-  slug: string,
-): Promise<TTournamentInfo> {
-  const { data, error } = await fetchTournamentRaw(slug);
-
-  if (error) throw error;
-  if (!data) throw new Error("Tournament not found");
-
-  return transformTournament(data);
 }

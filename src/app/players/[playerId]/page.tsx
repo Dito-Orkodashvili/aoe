@@ -35,7 +35,7 @@ import {
   timeAgo,
 } from "@/lib/supabase/match-history/extract-match-info";
 import { clsx } from "clsx";
-import { capitalize, mapNameToIcon } from "@/lib/utils";
+import { capitalize } from "@/lib/utils";
 import { ImageWithFallback } from "@/components/image-with-fallback";
 import { getCivById } from "@/lib/utils/civilization.utils";
 
@@ -191,8 +191,8 @@ const PlayerDetails = async ({
         </Card>
       </div>
 
-      <Card className="mb-4">
-        <CardHeader className="pb-3">
+      <Card className="mb-4 gap-4">
+        <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <User className="w-5 h-5 text-primary" />
             {player.nickname}-ის შესახებ
@@ -304,7 +304,7 @@ const PlayerDetails = async ({
                     const team1Players = teams[0];
                     const team2Players = teams[1];
 
-                    const resolvedMapName = mapNameToIcon(match.mapName);
+                    const resolvedMapName = "";
                     return (
                       <div
                         key={index}
@@ -317,7 +317,8 @@ const PlayerDetails = async ({
                           <ImageWithFallback
                             src={`/aoe/maps/${resolvedMapName}.png`}
                             fallbackSrc={`/aoe/maps/unknown.png`}
-                            alt={resolvedMapName}
+                            alt={match.mapName}
+                            title={match.mapName}
                             width={64}
                             height={64}
                             className="rounded-lg object-cover"

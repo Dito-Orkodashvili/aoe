@@ -1,6 +1,6 @@
-import { TCivilization } from "@/lib/types/civilization.types";
+import { CivilizationType } from "@/lib/types/civilization.types";
 
-export const CIVILIZATIONS: TCivilization[] = [
+export const CIVILIZATIONS: CivilizationType[] = [
   { id: 0, name: "Armenians", icon: "armenians.png" },
   { id: 1, name: "Aztecs", icon: "aztecs.png" },
   { id: 2, name: "Bengalis", icon: "bengalis.png" },
@@ -58,7 +58,9 @@ export const CIVILIZATIONS: TCivilization[] = [
   { id: 54, name: "Puru", icon: "puru.png" },
 ] as const;
 
-export const getCivById = (id?: number | null): TCivilization | undefined => {
+export const getCivById = (
+  id?: number | null,
+): CivilizationType | undefined => {
   if (!id) return;
 
   return CIVILIZATIONS.find((c) => c.id === id);
