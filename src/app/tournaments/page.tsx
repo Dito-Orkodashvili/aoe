@@ -92,7 +92,7 @@ export default async function Tournaments() {
                       <p className="text-sm text-muted-foreground">
                         მონაწილეები
                       </p>
-                      <p className="font-semibold flex gap-4 items-center">
+                      <div className="font-semibold flex gap-4 items-center">
                         <div className="relative">
                           <Link
                             href={`/players/${player1.id}`}
@@ -117,7 +117,7 @@ export default async function Tournaments() {
                             </Avatar>
                           </Link>
                         </div>
-                        <span className="text-xs text-primary">VS</span>
+                        <span className="text-md text-primary">VS</span>
                         <Link
                           href={`/players/${player2.id}`}
                           className="underline text-secondary"
@@ -140,7 +140,7 @@ export default async function Tournaments() {
                             </AvatarFallback>
                           </Avatar>
                         </Link>
-                      </p>
+                      </div>
                     </div>
                     <div className="space-y-2">
                       <p className="text-sm text-muted-foreground">ფორმატი</p>
