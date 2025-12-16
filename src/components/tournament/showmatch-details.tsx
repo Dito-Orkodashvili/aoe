@@ -37,7 +37,7 @@ export const ShowmatchDetails = ({ tournament }: ShowmatchDetailsProps) => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-lg">
             <Settings className="w-5 h-5 text-muted-foreground" />
-            მატჩის პარამეტრები
+            მატჩის აღწერა
           </CardTitle>
         </CardHeader>
         <CardContent>

@@ -14,6 +14,8 @@ import { Badge } from "@/components/ui/badge";
 import { cn, formatDate } from "@/lib/utils";
 import { getTournamentsFilled } from "@/lib/supabase/tournament/get-tournaments-filled";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { TwitchLink } from "@/components/twitch-link";
+import { YoutubeLink } from "@/components/youtube-link";
 
 export default async function Tournaments() {
   const tournaments = await getTournamentsFilled();
@@ -40,7 +42,7 @@ export default async function Tournaments() {
         </div>
       </PageHero>
 
-      <section className="py-16 px-4">
+      <section className="py-8 px-4 mt-8">
         <div className="container mx-auto max-w-6xl">
           <div className="flex items-center gap-3 mb-8">
             <Calendar className="w-8 h-8 text-primary" />
@@ -84,14 +86,7 @@ export default async function Tournaments() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="flex items-center gap-2 text-foreground/80">
-                      <Users className="w-4 h-4" />
-                      {tournament.participants.length}
-                    </div>
                     <div className="space-y-2">
-                      <p className="text-sm text-muted-foreground">
-                        მონაწილეები
-                      </p>
                       <div className="font-semibold flex gap-4 items-center">
                         <div className="relative">
                           <Link
@@ -99,7 +94,7 @@ export default async function Tournaments() {
                             className="underline text-secondary"
                             title={player1.nickname}
                           >
-                            <Avatar className="w-10 h-10 md:w-18 md:h-18 rounded-full object-cover border-1 border-primary/20">
+                            <Avatar className="w-14 h-14 md:w-22 md:h-22 rounded-full object-cover border-1 border-primary/20">
                               <AvatarImage
                                 src={
                                   player1.picture_url ??
@@ -123,7 +118,7 @@ export default async function Tournaments() {
                           className="underline text-secondary"
                           title={player2.nickname}
                         >
-                          <Avatar className="w-10 h-10 md:w-18 md:h-18 rounded-full object-cover border-1 border-primary/20">
+                          <Avatar className="w-14 h-14 md:w-22 md:h-22 rounded-full object-cover border-1 border-primary/20">
                             <AvatarImage
                               src={
                                 player2.picture_url ??
@@ -142,6 +137,7 @@ export default async function Tournaments() {
                         </Link>
                       </div>
                     </div>
+
                     <div className="space-y-2">
                       <p className="text-sm text-muted-foreground">ფორმატი</p>
                       <p className="font-semibold">
@@ -156,15 +152,19 @@ export default async function Tournaments() {
                         {tournament.prize_pool}$
                       </p>
                     </div>
+                    <div className="flex items-center gap-4 text-foreground/80">
+                      <TwitchLink href="https://www.twitch.tv/team_georgia" />
+                      <YoutubeLink href="https://www.youtube.com/@teamgeorgia-aoe2" />
+                    </div>
                     {isActive ? (
-                      <Button asChild className="w-full gap-2">
+                      <Button asChild className="w-full gap-2 mt-2">
                         <Link href={`/tournaments/${tournament.slug}`}>
                           დეტალები
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       </Button>
                     ) : (
-                      <Button className="w-full gap-2" disabled>
+                      <Button className="w-full gap-2 mt-2" disabled>
                         მალე დაიწყება
                         <ArrowRight className="w-4 h-4" />
                       </Button>
@@ -178,13 +178,11 @@ export default async function Tournaments() {
       </section>
 
       {/* Past Tournaments */}
-      <section className="py-16 px-4 bg-muted/50">
+      <section className="py-8 px-4 bg-muted/50 mb-8">
         <div className="container mx-auto max-w-6xl">
           <div className="flex items-center gap-3 mb-8">
             <Crown className="w-8 h-8 text-accent" />
-            <h2 className="text-4xl font-bold text-foreground">
-              Past Champions
-            </h2>
+            <h2 className="text-4xl font-bold text-foreground">დასრულებული</h2>
           </div>
 
           <div className="space-y-4">
@@ -202,7 +200,7 @@ export default async function Tournaments() {
       </section>
 
       {/* Tournament Rules */}
-      <section className="py-16 px-4">
+      {/* <section className="py-16 px-4">
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
             Tournament Information
@@ -247,7 +245,7 @@ export default async function Tournaments() {
             </Card>
           </div>
         </div>
-      </section>
+      </section>*/}
     </>
   );
 }

@@ -38,6 +38,8 @@ import { clsx } from "clsx";
 import { capitalize } from "@/lib/utils";
 import { ImageWithFallback } from "@/components/image-with-fallback";
 import { getCivById } from "@/lib/utils/civilization.utils";
+import { TwitchLink } from "@/components/twitch-link";
+import { YoutubeLink } from "@/components/youtube-link";
 
 const civilizationStats: unknown[] = [];
 
@@ -137,28 +139,8 @@ const PlayerDetails = async ({
                 </div>
                 {(youtube || twitch || aoe_profile_id) && (
                   <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                    {youtube && (
-                      <a
-                        href={youtube}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 transition-colors text-sm"
-                      >
-                        <Youtube className="w-4 h-4 text-red-500" />
-                        <span className="text-foreground">იუთუბი</span>
-                      </a>
-                    )}
-                    {twitch && (
-                      <a
-                        href={twitch}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 transition-colors text-sm"
-                      >
-                        <Twitch className="w-4 h-4 text-purple-500" />
-                        <span className="text-foreground">ტვიტჩი</span>
-                      </a>
-                    )}
+                    {youtube && <YoutubeLink href={youtube} />}
+                    {twitch && <TwitchLink href={twitch} />}
                     {aoe_profile_id && (
                       <>
                         <a
