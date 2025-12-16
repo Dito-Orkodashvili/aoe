@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import {
+  TournamentMatchType,
   TournamentParticipantsType,
   TournamentStagesType,
   TournamentType,
@@ -8,7 +9,7 @@ import { PlayerType } from "@/lib/types/player.types";
 
 type TournamentFilled = TournamentType & {
   participants: (TournamentParticipantsType & { player: PlayerType })[];
-  stages: TournamentStagesType[];
+  stages: (TournamentStagesType & { matches: TournamentMatchType[] })[];
 };
 
 export async function getTournamentsFilled(): Promise<TournamentFilled[]> {
@@ -20,7 +21,10 @@ export async function getTournamentsFilled(): Promise<TournamentFilled[]> {
         *,
         player:players (*)
       ),
-      stages:tournament_stages (*)
+      stages:tournament_stages (
+        *,
+        matches:tournament_matches (*)
+      )
     `);
   if (error) throw error;
 

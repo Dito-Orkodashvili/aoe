@@ -6,7 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowRight, Calendar, Crown, Trophy, Users } from "lucide-react";
+import {
+  ArrowRight,
+  BookCheck,
+  Calendar,
+  Crown,
+  Trophy,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
 import { PageHero } from "@/components/sections/hero";
 import { TournamentCard } from "@/components/tournament/tournament-card";
@@ -42,11 +49,11 @@ export default async function Tournaments() {
         </div>
       </PageHero>
 
-      <section className="py-8 px-4 mt-8">
+      <section className="py-4 md:py-8 px-4 mt-8">
         <div className="container mx-auto max-w-6xl">
           <div className="flex items-center gap-3 mb-8">
             <Calendar className="w-8 h-8 text-primary" />
-            <h2 className="text-4xl font-bold text-foreground">
+            <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-foreground">
               მიმდინარე და მომავალი ტურნირები
             </h2>
           </div>
@@ -63,38 +70,44 @@ export default async function Tournaments() {
               return (
                 <Card
                   key={index}
-                  className="border-2 hover:border-primary transition-all hover-scale"
+                  className="border-2 hover:border-primary transition-all hover-scale pt-4"
                 >
                   <CardHeader>
-                    <div className="flex justify-between items-start mb-2">
+                    <div className="flex justify-between items-center mb-2">
                       <Badge
                         variant={isActive ? "destructive" : "secondary"}
                         className={cn(isActive && "animate-pulse")}
                       >
                         {isActive ? "მიმდინარე" : "მომავალი"}
                       </Badge>
-                      <Trophy className="w-5 h-5 text-secondary" />
+                      <div className="flex items-center gap-2">
+                        <Trophy className="w-5 h-5 text-secondary" />
+                        <span className="text-2xl font-bold text-secondary">
+                          {tournament.prize_pool}$
+                        </span>
+                      </div>
                     </div>
-                    <CardTitle className="text-xl">
-                      {tournament.title}
-                    </CardTitle>
-                    <CardDescription className="space-y-2 text-base">
-                      <div className="flex items-center gap-2 text-foreground/80 text-sm">
-                        <Calendar className="w-4 h-4" />
+                    <div className="border-t border-border" />
+                    <div>
+                      <div className="text-xl leading-none font-semibold mb-1">
+                        {tournament.title}
+                      </div>
+                      <div className="text-muted-foreground text-sm flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
                         {formatDate(tournament.start_date)}
                       </div>
-                    </CardDescription>
+                    </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <div className="font-semibold flex gap-4 items-center">
+                      <div className="font-semibold flex gap-4 items-center justify-center my-2">
                         <div className="relative">
                           <Link
                             href={`/players/${player1.id}`}
                             className="underline text-secondary"
                             title={player1.nickname}
                           >
-                            <Avatar className="w-14 h-14 md:w-22 md:h-22 rounded-full object-cover border-1 border-primary/20">
+                            <Avatar className="w-22 h-22 md:w-26 md:h-26 rounded-full object-cover border-1 border-primary/20">
                               <AvatarImage
                                 src={
                                   player1.picture_url ??
@@ -112,13 +125,20 @@ export default async function Tournaments() {
                             </Avatar>
                           </Link>
                         </div>
-                        <span className="text-md text-primary">VS</span>
+                        <div className="flex flex-col justify-center">
+                          <span className="text-md text-primary text-center">
+                            VS
+                          </span>
+                          <span>
+                            BO{tournament.stages[0].matches[0].best_of}
+                          </span>
+                        </div>
                         <Link
                           href={`/players/${player2.id}`}
                           className="underline text-secondary"
                           title={player2.nickname}
                         >
-                          <Avatar className="w-14 h-14 md:w-22 md:h-22 rounded-full object-cover border-1 border-primary/20">
+                          <Avatar className="w-22 h-22 md:w-26 md:h-26 rounded-full object-cover border-1 border-primary/20">
                             <AvatarImage
                               src={
                                 player2.picture_url ??
@@ -137,25 +157,17 @@ export default async function Tournaments() {
                         </Link>
                       </div>
                     </div>
-
-                    <div className="space-y-2">
-                      <p className="text-sm text-muted-foreground">ფორმატი</p>
-                      <p className="font-semibold">
-                        {isShowmatch ? "შოუმატჩი" : "???"}
-                      </p>
-                    </div>
-                    <div className="space-y-2">
-                      <p className="text-sm text-muted-foreground">
-                        საპრიზო ფონდი
-                      </p>
-                      <p className="text-2xl font-bold text-secondary">
-                        {tournament.prize_pool}$
-                      </p>
-                    </div>
                     <div className="flex items-center gap-4 text-foreground/80">
-                      <TwitchLink href="https://www.twitch.tv/team_georgia" />
-                      <YoutubeLink href="https://www.youtube.com/@teamgeorgia-aoe2" />
+                      <TwitchLink
+                        href="https://www.twitch.tv/team_georgia"
+                        className="flex-1"
+                      />
+                      <YoutubeLink
+                        href="https://www.youtube.com/@teamgeorgia-aoe2"
+                        className="flex-1"
+                      />
                     </div>
+                    <div className="my-2 border-t border-border" />
                     {isActive ? (
                       <Button asChild className="w-full gap-2 mt-2">
                         <Link href={`/tournaments/${tournament.slug}`}>
@@ -178,21 +190,23 @@ export default async function Tournaments() {
       </section>
 
       {/* Past Tournaments */}
-      <section className="py-8 px-4 bg-muted/50 mb-8">
+      <section className="py-8 px-4 bg-muted/50 my-8">
         <div className="container mx-auto max-w-6xl">
           <div className="flex items-center gap-3 mb-8">
-            <Crown className="w-8 h-8 text-accent" />
-            <h2 className="text-4xl font-bold text-foreground">დასრულებული</h2>
+            <BookCheck className="w-8 h-8 text-primary" />
+            <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-foreground">
+              დასრულებული ტურნირები
+            </h2>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 min-h-[20rem]">
             {pastTournaments.length > 0 ? (
               pastTournaments.map((tournament) => (
                 <TournamentCard key={tournament.id} tournament={tournament} />
               ))
             ) : (
-              <p className="text-center text-muted-foreground my-4">
-                No tournaments to show yet!
+              <p className="text-center text-muted-foreground py-16">
+                ჯერ ჯერობით არც ერთი ტურნირი არ დასრულებულა
               </p>
             )}
           </div>
