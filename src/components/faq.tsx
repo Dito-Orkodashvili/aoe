@@ -20,8 +20,52 @@ interface FAQItem {
 const faqItems: FAQItem[] = [
   {
     id: "how-to-install",
-    question: "როგორ დავაინსტალირო თამაში?",
-    answer: "",
+    question: "როგორ დავაინსტალირო (ჩავიწერო) თამაში?",
+    answer: (
+      <ol className="list-decimal flex flex-col gap-2">
+        <li>
+          თამაშის ჩასაწერად დაგჭირდებათ {" "}
+          <a
+            href="https://store.steampowered.com/"
+            target="_blank"
+            className="underline text-blue-400"
+          >
+          Steam
+          </a>{" "}
+          -ის ანგარიში.
+        </li>
+        <li> 
+          დააყენეთ {" "}
+          <a
+            href="https://store.steampowered.com/about/"
+            target="_blank"
+            className="underline text-blue-400"
+          >
+          Steam
+          </a>{" "}
+          -ის პროგრამა და შექმენით ანგარიში (თუ ეს ანგარიში უკვე გაქვთ, შედით ამ ანგარიშზე).
+        </li>
+        <li>იყიდეთ {" "}
+          <a
+            href="https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/"
+            target="_blank"
+            className="underline text-blue-400"
+          >
+          Age of Empires II DE
+          </a>{" "}
+          .
+        </li>
+        <li>
+          გახსენით Steam-ის პროგრამა თქვენს კომპიუტერში.
+        </li>
+        <li>
+          მოძებნეთ Age of Empires II Definitive Edition. დააჭირეთ მას და დააჭირეთ "Install game"-ს.
+        </li>
+        <li>
+          ისიამოვნეთ თამაშით!
+        </li>
+      </ol>
+    ),
   },
   {
     id: "find-profile-id",
@@ -57,7 +101,7 @@ const faqItems: FAQItem[] = [
       <div>
         ჩვენს ოფიციალურ{" "}
         <a
-          href="https://discord.gg/VUXdpQZU"
+          href="https://discord.gg/vcd8bGmcFN"
           target="_blank"
           rel="noopener noreferrer"
           className="underline text-blue-400"
@@ -145,7 +189,7 @@ export const FAQ = () => {
       <div className="mt-12 p-6 bg-muted/30 rounded-lg border border-border">
         <h2 className="text-lg font-semibold mb-2">კიდევ გაქვს კითხვები?</h2>
         <a
-          href="https://discord.gg/VUXdpQZU"
+          href="https://discord.gg/vcd8bGmcFN"
           target="_blank"
           rel="noopener noreferrer"
           className="underline text-blue-400"
