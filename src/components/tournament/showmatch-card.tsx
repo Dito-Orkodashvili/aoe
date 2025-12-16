@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { TournamentDetailsType } from "@/lib/types/tournament.types";
 import { getCivById, getMapById } from "@/lib/utils";
 import { ShowmatchStartButton } from "@/components/tournament/showmatch-start-button";
+import { GlowingVs } from "@/components/tournament/glowing-vs";
 
 interface ShowmatchCardProps {
   tournamentId: string;
@@ -82,10 +83,8 @@ export const ShowmatchCard = ({
           </div>
 
           <div className="flex flex-col items-center gap-2">
-            <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-muted/50 border border-border flex items-center justify-center">
-              <span className="text-lg md:text-xl font-bold text-muted-foreground">
-                VS
-              </span>
+            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-muted/50 border border-border flex items-center justify-center">
+              <GlowingVs />
             </div>
             {tournamentStatus === "draft" && (
               <ShowmatchStartButton tournamentId={tournamentId} />

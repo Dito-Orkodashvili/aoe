@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Heart, MessageCircle, Twitch, Youtube } from "lucide-react";
+import { FaDiscord } from "react-icons/fa";
 
 export const Footer = () => {
   return (
@@ -102,7 +103,7 @@ export const Footer = () => {
                 className="w-9 h-9 rounded-full bg-foreground/5 hover:bg-foreground/10 flex items-center justify-center transition-colors"
                 aria-label="Discord"
               >
-                <MessageCircle className="h-4 w-4" />
+                <FaDiscord className="h-4 w-4" />
               </a>
               <a
                 href="https://www.youtube.com/@teamgeorgia-aoe2"
