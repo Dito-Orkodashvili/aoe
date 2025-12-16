@@ -129,7 +129,7 @@ export default async function Tournaments() {
                           <span className="text-md text-primary text-center">
                             VS
                           </span>
-                          <span>
+                          <span className="text-sm text-secondary">
                             BO{tournament.stages[0].matches[0].best_of}
                           </span>
                         </div>
@@ -157,14 +157,14 @@ export default async function Tournaments() {
                         </Link>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4 text-foreground/80">
+                    <div className="flex items-center gap-4 text-foreground/80 pt-4">
                       <TwitchLink
                         href="https://www.twitch.tv/team_georgia"
-                        className="flex-1"
+                        className="flex-1 flex justify-center"
                       />
                       <YoutubeLink
                         href="https://www.youtube.com/@teamgeorgia-aoe2"
-                        className="flex-1"
+                        className="flex-1 flex justify-center"
                       />
                     </div>
                     <div className="my-2 border-t border-border" />
