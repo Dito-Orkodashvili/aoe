@@ -1,24 +1,11 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ArrowRight,
-  BookCheck,
-  Calendar,
-  Crown,
-  Trophy,
-  Users,
-} from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ArrowRight, BookCheck, Calendar, Trophy } from "lucide-react";
 import Link from "next/link";
 import { PageHero } from "@/components/sections/hero";
 import { TournamentCard } from "@/components/tournament/tournament-card";
 import { Badge } from "@/components/ui/badge";
-import { cn, formatDate } from "@/lib/utils";
+import { cn, formatDateTime } from "@/lib/utils";
 import { getTournamentsFilled } from "@/lib/supabase/tournament/get-tournaments-filled";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TwitchLink } from "@/components/twitch-link";
@@ -94,7 +81,7 @@ export default async function Tournaments() {
                       </div>
                       <div className="text-muted-foreground text-sm flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
-                        {formatDate(tournament.start_date)}
+                        {formatDateTime(tournament.start_date)}
                       </div>
                     </div>
                   </CardHeader>
