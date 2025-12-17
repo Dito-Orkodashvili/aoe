@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useState } from "react";
+import ReactCountryFlag from "react-country-flag";
 
 export function LoginForm({
   className,
@@ -46,15 +47,24 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Welcome!</CardTitle>
-          <CardDescription>Sign in to your account to continue</CardDescription>
+          <CardTitle className="text-2xl">
+            იყოს დღეი მარჯვეი!{" "}
+            <ReactCountryFlag
+              className="text-md"
+              countryCode="ge"
+              aria-label="Georgia"
+              title="Georgia"
+              svg
+            />
+          </CardTitle>
+          <CardDescription>გაიარე ავტორიზაცია და შემოგვიერთდი!</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSocialLogin}>
             <div className="flex flex-col gap-6">
               {error && <p className="text-sm text-destructive-500">{error}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "იტვირთება..." : "გააგრძელე Google-ით"}
+                {isLoading ? "იტვირთება..." : "Google-ით ავტორიზაცია"}
               </Button>
             </div>
           </form>
