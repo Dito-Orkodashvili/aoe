@@ -7,7 +7,6 @@ import { TournamentDetailsType } from "@/lib/types/tournament.types";
 import { getMapById } from "@/lib/utils";
 import { ShowmatchStartButton } from "@/components/tournament/showmatch-start-button";
 import { GlowingVs } from "@/components/tournament/glowing-vs";
-import { useState } from "react";
 import { ShowmatchCardPlayer } from "@/components/tournament/showmatch-card-player";
 
 interface ShowmatchCardProps {

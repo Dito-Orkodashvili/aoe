@@ -110,6 +110,7 @@ export const ShowmatchCardPlayer = ({
       <div className="flex gap-4 justify-center items-center  mt-3">
         {canUpdateScore && (
           <Button
+            className="rounded-full size-6"
             size="icon"
             onClick={() => updateScore(-1)}
             disabled={isPending || !canUpdateScore}
@@ -127,6 +128,7 @@ export const ShowmatchCardPlayer = ({
         </p>
         {canUpdateScore && (
           <Button
+            className="rounded-full size-6"
             size="icon"
             onClick={() => updateScore(1)}
             disabled={isPending || !canUpdateScore}
