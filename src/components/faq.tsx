@@ -24,46 +24,47 @@ const faqItems: FAQItem[] = [
     answer: (
       <ol className="list-decimal flex flex-col gap-2">
         <li>
-          თამაშის ჩასაწერად დაგჭირდებათ {" "}
+          თამაშის ჩასაწერად დაგჭირდება{"  "}
           <a
-            href="https://store.steampowered.com/"
+            href="https://store.steampowered.com/login/?redir=&redir_ssl=1"
             target="_blank"
             className="underline text-blue-400"
           >
-          Steam
-          </a>{" "}
+            Steam
+          </a>
           -ის ანგარიში.
         </li>
-        <li> 
-          დააყენეთ {" "}
+        <li>
+          ანგარიშის შექმნის შემდეგ გადმოწერე და დააინსტალირე{" "}
           <a
-            href="https://store.steampowered.com/about/"
+            href="https://store.steampowered.com/about/?snr=1_60_4__global-header"
             target="_blank"
             className="underline text-blue-400"
           >
-          Steam
-          </a>{" "}
-          -ის პროგრამა და შექმენით ანგარიში (თუ ეს ანგარიში უკვე გაქვთ, შედით ამ ანგარიშზე).
+            Steam
+          </a>
+          , გახსენი და გაიარე ავტორიზაცია პირველ საფეხურზე შექმნილი ანგარიშით.
         </li>
-        <li>იყიდეთ {" "}
+        <li>
+          იყიდე{" "}
           <a
             href="https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/"
             target="_blank"
             className="underline text-blue-400"
           >
-          Age of Empires II DE
-          </a>{" "}
+            Age of Empires II: Definitive Edition
+          </a>
           .
         </li>
         <li>
-          გახსენით Steam-ის პროგრამა თქვენს კომპიუტერში.
+          Steam-ის პროგრამაში გადადი &#34;LIBRARY&#34; ტაბზე და მენიუში აირჩიე
+          Age of Empires II: Definitive Edition
         </li>
         <li>
-          მოძებნეთ Age of Empires II Definitive Edition. დააჭირეთ მას და დააჭირეთ "Install game"-ს.
+          დააჭირე მწვანე ღილაკს &#34;Install game&#34; და დაელოდე თამაშის
+          გადმოწერას და ინსტალაციას.
         </li>
-        <li>
-          ისიამოვნეთ თამაშით!
-        </li>
+        <li>ისიამოვნეთ თამაშით!</li>
       </ol>
     ),
   },

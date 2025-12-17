@@ -27,9 +27,7 @@ export function LoginForm({
 
     const isProd = process.env.NODE_ENV === "production";
 
-    const callbackUrl = isProd
-      ? "https://aoe-nu.vercel.app/"
-      : "http://localhost:3000";
+    const callbackUrl = isProd ? "https://aoe.ge/" : "http://localhost:3000";
 
     try {
       await supabase.auth.signInWithOAuth({

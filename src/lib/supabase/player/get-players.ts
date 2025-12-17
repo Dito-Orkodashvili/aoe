@@ -5,7 +5,10 @@ export async function getPlayers(): Promise<PlayerType[]> {
   const supabase = await createClient();
 
   const { data, error } = await supabase.from("players").select();
-  if (error) throw error;
+  if (error) {
+    console.error(error);
+    return [];
+  }
 
   return data;
 }

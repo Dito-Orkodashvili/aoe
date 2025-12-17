@@ -11,8 +11,13 @@ import {
 } from "@/components/ui/card";
 import { Hero } from "@/components/sections/hero";
 import { FaDiscord, FaTwitch, FaYoutube } from "react-icons/fa";
+import { getTournamentsCount } from "@/lib/supabase/player/get-tournaments-count";
+import { getPlayersCount } from "@/lib/supabase/player/get-players-count";
 
 export default async function Home() {
+  const playersCount = await getPlayersCount();
+  const tournamentsCount = await getTournamentsCount();
+
   return (
     <>
       <Hero>
@@ -87,7 +92,11 @@ export default async function Home() {
             <Card className="border-2 hover:border-secondary transition-all hover-scale">
               <CardHeader>
                 <Trophy className="w-12 h-12 text-secondary mb-4" />
-                <CardTitle>სისტემატიური ტურნირები</CardTitle>
+                <CardTitle>
+                  <Link href="/tournaments" className="hover:underline">
+                    სისტემატიური ტურნირები
+                  </Link>
+                </CardTitle>
                 <CardDescription>
                   მიიღე მონაწილეობა ყოველკვირეულ ტურნირებში და იბრძოლე
                   ღირსებისთვის
@@ -113,11 +122,13 @@ export default async function Home() {
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div className="space-y-2">
-              <p className="text-5xl font-bold text-primary">500+</p>
+              <p className="text-5xl font-bold text-primary">{playersCount}+</p>
               <p className="text-xl text-muted-foreground">აქტიური წევრი</p>
             </div>
             <div className="space-y-2">
-              <p className="text-5xl font-bold text-secondary">100+</p>
+              <p className="text-5xl font-bold text-secondary">
+                {tournamentsCount}+
+              </p>
               <p className="text-xl text-muted-foreground">
                 ჩატარებული ტურნირი
               </p>
