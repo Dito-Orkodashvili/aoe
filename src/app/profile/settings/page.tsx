@@ -1,18 +1,18 @@
 import { PlayerSettingsForm } from "@/components/player-settings-form";
-import { getUser } from "@/lib/supabase/user/get-user";
-import { getAuthedUserPlayer } from "@/lib/supabase/player/get-authed-user-player";
+import { getAuthedUser } from "@/lib/supabase/user/get-authed-user";
+import { getPlayerByUserId } from "@/lib/supabase/player/get-player-by-user-id";
 import { redirect } from "next/navigation";
 import { Settings } from "lucide-react";
 import { PageHero } from "@/components/sections/hero";
 
 const ProfileSettings = async () => {
-  const authedUser = await getUser();
+  const authedUser = await getAuthedUser();
 
   if (!authedUser) {
     redirect("/auth/login");
   }
 
-  const player = await getAuthedUserPlayer(authedUser.id);
+  const player = await getPlayerByUserId(authedUser.id);
 
   return (
     <>

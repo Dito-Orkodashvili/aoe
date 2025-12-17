@@ -20,7 +20,7 @@ import {
   Youtube,
 } from "lucide-react";
 import Link from "next/link";
-import { getPlayerDetails } from "@/lib/supabase/player/get-player-details";
+import { getPlayerById } from "@/lib/supabase/player/get-player-by-id";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   getPlayerOfficialStats,
@@ -50,7 +50,7 @@ const PlayerDetails = async ({
 }) => {
   const { playerId } = await params;
 
-  const player = await getPlayerDetails(playerId);
+  const player = await getPlayerById(playerId);
   const {
     aoe_profile_id,
     fav_civ,

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Macondo, Noto_Sans_Georgian } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Navigation } from "@/components/navigation";
-import { getUser } from "@/lib/supabase/user/get-user";
+import { getAuthedUser } from "@/lib/supabase/user/get-authed-user";
 import { Footer } from "@/components/footer";
 import "./globals.css";
 
@@ -45,7 +45,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const authedUser = await getUser();
+  const authedUser = await getAuthedUser();
 
   return (
     <html

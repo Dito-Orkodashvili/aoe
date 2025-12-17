@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Hero } from "@/components/sections/hero";
 import { FaDiscord, FaTwitch, FaYoutube } from "react-icons/fa";
-import { getTournamentsCount } from "@/lib/supabase/player/get-tournaments-count";
+import { getTournamentsCount } from "@/lib/supabase/tournament/get-tournaments-count";
 import { getPlayersCount } from "@/lib/supabase/player/get-players-count";
 
 export default async function Home() {

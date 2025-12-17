@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getTournamentBySlug } from "@/lib/supabase/tournament/get-tournament-details";
+import { getTournamentBySlug } from "@/lib/supabase/tournament/get-tournament-by-slug-filled";
 import { TournamentDetailsTabs } from "@/components/tournament/tournament-details-tabs";
 import { isAdmin } from "@/lib/supabase/auth/is-admin";
 

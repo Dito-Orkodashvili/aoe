@@ -1,6 +1,6 @@
 import { createClient } from "../server";
 
-export async function getUser() {
+export async function getAuthedUser() {
   const supabase = await createClient();
 
   const {
