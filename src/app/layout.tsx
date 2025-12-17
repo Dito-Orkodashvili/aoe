@@ -19,13 +19,15 @@ const notoSerif = Noto_Sans_Georgian({
   display: "swap",
 });
 
+const isProd = process.env.NODE_ENV !== "production";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aoe-nu.vercel.app"),
+  metadataBase: new URL(isProd ? "https://aoe.ge/" : "https://dev.aoe.ge/"),
   title: "AOE II ქართული ქომუნითი",
   openGraph: {
     title: "AOE II ქართული ქომუნითი",
     description: "Georgian Age of Empires II community website.",
-    url: "https://aoe-nu.vercel.app/",
+    url: isProd ? "https://aoe.ge/" : "https://dev.aoe.ge/",
     siteName: "AOE II Georgia",
     images: [
       {
