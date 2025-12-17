@@ -1,7 +1,7 @@
 "use client";
 
 import { TournamentSidebar } from "@/components/tournament/tournament-sidebar";
-import { DollarSign, MapPin } from "lucide-react";
+import { DollarSign } from "lucide-react";
 import { TournamentActionBar } from "@/components/tournament/tournament-action-bar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TournamentInfo } from "@/components/tournament/tournament-info";
@@ -25,10 +25,12 @@ import { ShowmatchDetails } from "@/components/tournament/showmatch-details";
 
 interface TournamentDetailsTabsProps {
   tournament: TournamentDetailsType;
+  isAdmin: boolean;
 }
 
 export const TournamentDetailsTabs = ({
   tournament,
+  isAdmin,
 }: TournamentDetailsTabsProps) => {
   const [activeTab, setActiveTab] =
     useState<TournamentDetailsTabType>("settings");
@@ -49,7 +51,7 @@ export const TournamentDetailsTabs = ({
       <main className="flex-1 overflow-y-auto">
         <TournamentDetailsHeader tournament={tournament} />
         {isShowmatch ? (
-          <ShowmatchDetails tournament={tournament} />
+          <ShowmatchDetails tournament={tournament} isAdmin={isAdmin} />
         ) : (
           <>
             <TournamentActionBar status="draft" />

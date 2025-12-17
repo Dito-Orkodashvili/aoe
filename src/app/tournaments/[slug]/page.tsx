@@ -1,30 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Calculator,
-  Calendar,
-  CircleDollarSign,
-  Info,
-  Swords,
-  Target,
-  Trophy,
-  Users,
-} from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PrizePoolInfo } from "@/components/tournament/prize-pool-info";
-import { TournamentInfo } from "@/components/tournament/tournament-info";
-import { ParticipantsInfo } from "@/components/tournament/participants-info";
 import { notFound } from "next/navigation";
 import { getTournamentBySlug } from "@/lib/supabase/tournament/get-tournament-details";
-import { formatDate } from "@/lib/utils";
-import { MatchCard } from "@/components/tournament/match-card";
-import { Badge } from "@/components/ui/badge";
-import { PageHero } from "@/components/sections/hero";
-import { TournamentStatus } from "@/components/tournament/tournament-status";
-import { TournamentActionBar } from "@/components/tournament/tournament-action-bar";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { TournamentSidebar } from "@/components/tournament/tournament-sidebar";
-import { TournamentDetailsHeader } from "@/components/tournament/tournament-details-header";
 import { TournamentDetailsTabs } from "@/components/tournament/tournament-details-tabs";
+import { isAdmin } from "@/lib/supabase/auth/is-admin";
 
 const TournamentDetails = async ({
   params,
@@ -38,11 +15,13 @@ const TournamentDetails = async ({
     notFound();
   }
 
+  const admin = await isAdmin();
+
   const tournament = res.data;
 
   return (
     <>
-      <TournamentDetailsTabs tournament={tournament} />
+      <TournamentDetailsTabs tournament={tournament} isAdmin={admin} />
 
       {/* Tournament Stats */}
       {/*<section className="py-12 px-4 bg-muted/50">

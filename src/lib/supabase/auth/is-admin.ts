@@ -1,5 +1,19 @@
-import { TProfile } from "@/lib/types/profile.types";
+import { createClient } from "@/lib/supabase/server";
 
-export function isAdmin(profile: TProfile | null): boolean {
+export async function isAdmin() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return false;
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
   return profile?.role === "admin";
 }

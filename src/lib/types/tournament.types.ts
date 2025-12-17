@@ -7,7 +7,7 @@ export type TournamentParticipantsType = Tables<"tournament_participants">;
 export type TournamentMapsType = Tables<"tournament_maps">;
 export type TournamentMatchType = Tables<"tournament_matches">;
 
-type TournamentPlayer = Pick<
+export type TournamentPlayerType = Pick<
   PlayerType,
   | "id"
   | "nickname"
@@ -29,7 +29,7 @@ export type TournamentDetailsType = TournamentType & {
     tournament_matches?: TournamentMatch[];
   })[];
   tournament_participants: (TournamentParticipantsType & {
-    player: TournamentPlayer;
+    player: TournamentPlayerType;
   })[];
   tournament_maps: TournamentMapsType[];
 };

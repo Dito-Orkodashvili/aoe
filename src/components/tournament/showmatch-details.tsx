@@ -5,9 +5,13 @@ import { TournamentDetailsType } from "@/lib/types/tournament.types";
 
 interface ShowmatchDetailsProps {
   tournament: TournamentDetailsType;
+  isAdmin: boolean;
 }
 
-export const ShowmatchDetails = ({ tournament }: ShowmatchDetailsProps) => {
+export const ShowmatchDetails = ({
+  tournament,
+  isAdmin,
+}: ShowmatchDetailsProps) => {
   const {
     tournament_stages,
     tournament_participants,
@@ -31,6 +35,7 @@ export const ShowmatchDetails = ({ tournament }: ShowmatchDetailsProps) => {
         participants={tournament_participants}
         maps={tournament_maps}
         tournamentStatus={status}
+        isAdmin={isAdmin}
       />
 
       <Card className="border-dashed border-muted-foreground/30">
