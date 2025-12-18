@@ -8,7 +8,7 @@ export default async function CreateTournamentLayout({
   children: ReactNode;
 }) {
   if (!(await isAdmin())) {
-    redirect("/403");
+    redirect("/forbidden");
   }
 
   return <>{children}</>;
