@@ -5,6 +5,7 @@ import {
   MatchHistoryStat,
 } from "@/lib/types/match-history.types";
 import { formatDistanceToNow } from "date-fns";
+import { AoeMatch, MatchPlayer, MatchTeam } from "@/lib/aoe2companion.types";
 
 export function extractMatchInfo(
   matches: MatchHistoryStat[],
@@ -57,15 +58,16 @@ export function extractMatchInfo(
     .sort((a, b) => b.completionTime - a.completionTime);
 }
 
-export const didPlayerWin = (
+export function didPlayerWin(
+  match: AoeMatch,
   profileId: string | null,
-  players: ExtractedPlayerInfo[],
-) => {
-  const player = players.find((p) => p.profileId.toString() === profileId);
-  if (!player) return false;
+): boolean {
+  if (!profileId) return false;
 
-  return player.outcome === "win";
-};
+  return match.teams
+    .flatMap((t) => t.players)
+    .some((p) => p.profileId === Number(profileId) && p.won);
+}
 
 export function timeAgo(unixSeconds: number): string {
   return formatDistanceToNow(unixSeconds * 1000, {
@@ -73,12 +75,12 @@ export function timeAgo(unixSeconds: number): string {
   });
 }
 
-export const groupPlayersByTeam = (players: ExtractedPlayerInfo[]) => {
-  const teams: Record<number, typeof players> = {};
+export const groupPlayersByTeam = (players: MatchTeam[]) => {
+  const teams: Record<number, MatchPlayer[]> = {};
 
   for (const p of players) {
     if (!teams[p.teamId]) teams[p.teamId] = [];
-    teams[p.teamId].push(p);
+    teams[p.teamId] = [...teams[p.teamId], ...p.players];
   }
 
   return Object.values(teams);

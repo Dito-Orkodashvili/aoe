@@ -2,18 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowLeft,
-  Calendar,
   ChartNoAxesCombined,
-  Clock,
-  Crown,
-  Download,
   ExternalLink,
   Flag,
   Flame,
   Gamepad2,
   Globe,
   Mountain,
-  Skull,
   Trophy,
   User,
 } from "lucide-react";
@@ -25,37 +20,12 @@ import {
   mergePlayerWithStats,
 } from "@/lib/supabase/player/get-player-official-stats";
 import Image from "next/image";
-import { getPlayerMatchHistory } from "@/lib/supabase/match-history/get-recent-match-history";
-import { ExtractedMatchInfo } from "@/lib/types/match-history.types";
-import {
-  didPlayerWin,
-  groupPlayersByTeam,
-  timeAgo,
-} from "@/lib/supabase/match-history/extract-match-info";
-import { clsx } from "clsx";
-import { capitalize } from "@/lib/utils";
-import { ImageWithFallback } from "@/components/image-with-fallback";
 import { getCivById } from "@/lib/utils/civilization.utils";
 import { TwitchLink } from "@/components/twitch-link";
 import { YoutubeLink } from "@/components/youtube-link";
-import { getPlayerCivStats } from "@/lib/supabase/player/get-player-civ-stats";
-import {
-  CivStats,
-  CivStatsByLeaderboard,
-  MapStats,
-} from "@/lib/aoe2companion.types";
-import { Progress } from "@/components/ui/progress";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-
-const civilizationStats: unknown[] = [];
+import { RecentMatchesList } from "@/components/player/recent-matches-list";
+import { CivStatsList } from "@/components/player/civ-stats-list";
+import { MapStatsList } from "@/components/player/map-stats-list";
 
 const PlayerDetails = async ({
   params,
@@ -83,9 +53,6 @@ const PlayerDetails = async ({
   const resolvedFavCiv = getCivById(fav_civ);
 
   let playerStats = null;
-  let matchHistory: ExtractedMatchInfo[] = [];
-  let playerCivStats: CivStats[] = [];
-  let playerMapStats: MapStats[] = [];
 
   if (aoe_profile_id) {
     const playerOfficialStats = await getPlayerOfficialStats([
@@ -93,16 +60,6 @@ const PlayerDetails = async ({
     ]);
 
     playerStats = mergePlayerWithStats(player, playerOfficialStats);
-
-    matchHistory = await getPlayerMatchHistory(aoe_profile_id);
-    const playerCivStatsResponse = await getPlayerCivStats(aoe_profile_id);
-
-    const rm1v1Stats = playerCivStatsResponse?.stats.find(
-      ({ leaderboardId }) => leaderboardId === "rm_1v1",
-    );
-
-    playerCivStats = rm1v1Stats?.civ ?? [];
-    playerMapStats = rm1v1Stats?.map ?? [];
   }
 
   const { one_v_one_stats } = playerStats || {};
@@ -304,210 +261,7 @@ const PlayerDetails = async ({
               <CardTitle>უახლესი ბრძლების ისტორია</CardTitle>
             </CardHeader>
             <CardContent>
-              {matchHistory.length > 0 ? (
-                <div className="space-y-4">
-                  {matchHistory.map((match, index) => {
-                    const didWin = didPlayerWin(aoe_profile_id, match.players);
-
-                    const teams = groupPlayersByTeam(match.players);
-                    const team1Players = teams[0];
-                    const team2Players = teams[1];
-
-                    const resolvedMapName = "";
-                    return (
-                      <div
-                        key={index}
-                        className={clsx(
-                          `rounded-xl border-2 overflow-hidden`,
-                          didWin ? "border-green-800" : "border-red-900",
-                        )}
-                      >
-                        <div className="flex items-center gap-4 p-4 border-b border-border/50">
-                          <ImageWithFallback
-                            src={`/aoe/maps/${resolvedMapName}.png`}
-                            fallbackSrc={`/aoe/maps/unknown.png`}
-                            alt={match.mapName}
-                            title={match.mapName}
-                            width={64}
-                            height={64}
-                            className="rounded-lg object-cover"
-                          />
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-semibold text-foreground">
-                                {capitalize(resolvedMapName)}
-                              </span>
-
-                              {didWin ? (
-                                <Crown className="text-green-600 w-6 h-6" />
-                              ) : (
-                                <Skull className="text-red-500 w-6 h-6" />
-                              )}
-                            </div>
-                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                              <span className="flex items-center gap-1">
-                                <Calendar className="w-3 h-3" />
-                                {timeAgo(match.completionTime)}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <Clock className="w-3 h-3" />
-                                {match.duration}
-                              </span>
-                            </div>
-                          </div>
-                          <a
-                            href={`https://aoe.ms/replay/?gameId=${match.id}&profileId=${aoe_profile_id}`}
-                            className="self-start flex gap-2 items-center text-sm text-blue-400 underline"
-                          >
-                            <Download className="text-green-600" width={16} />{" "}
-                            ჩანაწერი
-                          </a>
-                        </div>
-
-                        <div className="grid md:grid-cols-2 gap-4 p-4">
-                          <div className="space-y-2">
-                            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                              Team 1
-                            </p>
-                            {team1Players?.map((p, pIndex) => {
-                              const didWin = didPlayerWin(
-                                p.profileId.toString(),
-                                match.players,
-                              );
-
-                              const civ = getCivById(p.civilizationId);
-
-                              return (
-                                <div
-                                  key={pIndex}
-                                  className={clsx(
-                                    "flex items-center justify-between bg-background/50 rounded-lg px-3 py-2",
-                                    didWin
-                                      ? "border border-green-800/50"
-                                      : "border border-red-900/50",
-                                  )}
-                                >
-                                  <div className="flex items-center gap-2">
-                                    {didWin ? (
-                                      <Crown className="text-green-600 w-4 h-4" />
-                                    ) : (
-                                      <Skull className="text-red-500 w-4 h-4" />
-                                    )}
-                                    <div className="flex gap-2">
-                                      <div className="flex gap-2 items-center">
-                                        <a
-                                          href={`https://www.ageofempires.com/stats/?profileId=${p.profileId}&game=age2&matchType=3`}
-                                          className="font-medium text-foreground hover:text-primary transition-colors text-sm"
-                                        >
-                                          {p.alias}
-                                        </a>
-                                        {civ && (
-                                          <Image
-                                            width={32}
-                                            height={32}
-                                            src={`/aoe/civs/${civ.icon}`}
-                                            title={civ.name}
-                                            alt={civ.name}
-                                          />
-                                        )}
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="text-right">
-                                    <p className="text-sm font-medium text-foreground">
-                                      {p.oldRating}
-                                    </p>
-                                    <p
-                                      className={`text-xs font-medium ${p.ratingChange >= 0 ? "text-green-500" : "text-red-500"}`}
-                                    >
-                                      {p.ratingChange >= 0 && "+"}
-                                      {p.ratingChange}
-                                    </p>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-
-                          <div className="flex items-center justify-center md:hidden">
-                            <span className="text-lg font-bold text-muted-foreground">
-                              VS
-                            </span>
-                          </div>
-
-                          <div className="space-y-2">
-                            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                              Team 2
-                            </p>
-                            {team2Players?.map((p, pIndex) => {
-                              const didWin = didPlayerWin(
-                                p.profileId.toString(),
-                                match.players,
-                              );
-
-                              const civ = getCivById(p.civilizationId);
-
-                              return (
-                                <div
-                                  key={pIndex}
-                                  className={clsx(
-                                    "flex items-center justify-between bg-background/50 rounded-lg px-3 py-2",
-                                    didWin
-                                      ? "border border-green-800/50"
-                                      : "border border-red-900/50",
-                                  )}
-                                >
-                                  <div className="flex items-center gap-2">
-                                    {didWin ? (
-                                      <Crown className="text-green-600 w-4 h-4" />
-                                    ) : (
-                                      <Skull className="text-red-500 w-4 h-4" />
-                                    )}
-                                    <div className="flex gap-2">
-                                      <div className="flex gap-2 items-center">
-                                        <a
-                                          href={`https://www.ageofempires.com/stats/?profileId=${p.profileId}&game=age2&matchType=3`}
-                                          className="font-medium text-foreground hover:text-primary transition-colors text-sm"
-                                        >
-                                          {p.alias}
-                                        </a>
-                                        {civ && (
-                                          <Image
-                                            width={32}
-                                            height={32}
-                                            src={`/aoe/civs/${civ.icon}`}
-                                            title={civ.name}
-                                            alt={civ.name}
-                                          />
-                                        )}
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="text-right">
-                                    <p className="text-sm font-medium text-foreground">
-                                      {p.oldRating}
-                                    </p>
-                                    <p
-                                      className={`text-xs font-medium ${p.ratingChange >= 0 ? "text-green-500" : "text-red-500"}`}
-                                    >
-                                      {p.ratingChange >= 0 && "+"}
-                                      {p.ratingChange}
-                                    </p>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <p className="text-muted-foreground text-center py-8">
-                  უახლესი ბრძლები არ მოიძებნა
-                </p>
-              )}
+              <RecentMatchesList profileId={aoe_profile_id} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -518,60 +272,7 @@ const PlayerDetails = async ({
               <CardTitle>ცივილიზაციების სტატისტიკა</CardTitle>
             </CardHeader>
             <CardContent>
-              {playerCivStats.length > 0 ? (
-                <div className="space-y-6">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>ცივილიზაცია</TableHead>
-                        <TableHead>ბრძოლა</TableHead>
-                        <TableHead>გამარჯვება</TableHead>
-                        <TableHead className="w-40">გამარჯვების %</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {playerCivStats.map((civ, index) => {
-                        const winRate = Math.floor(
-                          (civ.wins / civ.games) * 100,
-                        );
-                        return (
-                          <TableRow key={index}>
-                            <TableCell className="flex gap-4">
-                              <Image
-                                src={civ.civImageUrl}
-                                alt={civ.civName}
-                                width={32}
-                                height={32}
-                              />
-                              <Badge variant="outline">{civ.civName}</Badge>
-                            </TableCell>
-                            <TableCell className="font-medium">
-                              {civ.games}
-                            </TableCell>
-                            <TableCell className="font-medium">
-                              {civ.wins}
-                            </TableCell>
-                            <TableCell className="font-medium">
-                              <div key={index} className="space-y-2">
-                                <div className="flex justify-between items-center">
-                                  <span className="text-sm text-muted-foreground">
-                                    {winRate}%
-                                  </span>
-                                </div>
-                                <Progress value={winRate} className="h-2" />
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </div>
-              ) : (
-                <p className="text-muted-foreground text-center py-8">
-                  ცივილიზაციების სტატისტიკა არ მოიძებნა
-                </p>
-              )}
+              <CivStatsList profileId={aoe_profile_id} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -581,60 +282,7 @@ const PlayerDetails = async ({
               <CardTitle>რუკების სტატისტიკა</CardTitle>
             </CardHeader>
             <CardContent>
-              {playerMapStats.length > 0 ? (
-                <div className="space-y-6">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>ცივილიზაცია</TableHead>
-                        <TableHead>ბრძოლა</TableHead>
-                        <TableHead>გამარჯვება</TableHead>
-                        <TableHead className="w-40">გამარჯვების %</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {playerMapStats.map((map, index) => {
-                        const winRate = Math.floor(
-                          (map.wins / map.games) * 100,
-                        );
-                        return (
-                          <TableRow key={index}>
-                            <TableCell className="flex gap-4">
-                              <Image
-                                src={map.mapImageUrl}
-                                alt={map.mapName}
-                                width={32}
-                                height={32}
-                              />
-                              <Badge variant="outline">{map.mapName}</Badge>
-                            </TableCell>
-                            <TableCell className="font-medium">
-                              {map.games}
-                            </TableCell>
-                            <TableCell className="font-medium">
-                              {map.wins}
-                            </TableCell>
-                            <TableCell className="font-medium">
-                              <div key={index} className="space-y-2">
-                                <div className="flex justify-between items-center">
-                                  <span className="text-sm text-muted-foreground">
-                                    {winRate}%
-                                  </span>
-                                </div>
-                                <Progress value={winRate} className="h-2" />
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </div>
-              ) : (
-                <p className="text-muted-foreground text-center py-8">
-                  რუკების სტატისტიკა არ მოიძებნა
-                </p>
-              )}
+              <MapStatsList profileId={aoe_profile_id} />
             </CardContent>
           </Card>
         </TabsContent>

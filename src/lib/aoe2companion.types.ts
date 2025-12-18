@@ -46,7 +46,7 @@ export type LinkedProfile = {
   sharedHistory: unknown | null;
 };
 
-export type AoeCompanionCivStatsResponse = {
+export type AoeCompanionStatsResponse = {
   params: {
     extend: string;
   };
@@ -105,4 +105,126 @@ export type MapStats = {
   games: number;
   wins: number;
   losses: number;
+};
+
+export type AoeCompanionMatchesResponse = {
+  page: number;
+  perPage: number;
+  total: number | null;
+  matches: AoeMatch[];
+};
+
+export type AoeMatch = {
+  matchId: number;
+
+  started: string;
+  finished: string;
+
+  leaderboard: string;
+  leaderboardId: string;
+  leaderboardName: string;
+  internalLeaderboardId: number;
+
+  name: string;
+  server: string | null;
+  privacy: "public" | "private";
+
+  mod: boolean;
+  patch: number;
+  pup: boolean;
+
+  map: string;
+  mapName: string;
+  mapImageUrl: string;
+
+  difficulty: string;
+  difficultyName: string;
+
+  startingAge: string;
+  startingAgeName: string;
+  endingAge: string;
+  endingAgeName: string;
+
+  gameMode: string;
+  gameModeName: string;
+
+  lockSpeed: boolean;
+  lockTeams: boolean;
+
+  mapSize: string;
+  mapSizeName: string;
+
+  population: number;
+  hideCivs: boolean;
+  recordGame: boolean;
+
+  regicideMode: boolean;
+  empireWarsMode: boolean;
+  suddenDeathMode: boolean;
+  antiquityMode: boolean;
+  turboMode: boolean;
+
+  fullTechTree: boolean;
+  allowCheats: boolean;
+
+  gameVariant: string;
+
+  resources: string;
+  resourcesName: string;
+
+  sharedExploration: boolean;
+
+  speed: string;
+  speedName: string;
+  speedFactor: number;
+
+  civilizationSet: string;
+  civilizationSetName: string;
+
+  teamPositions: boolean;
+  teamTogether: boolean;
+  treatyLength: number;
+
+  victory: string;
+  victoryName: string;
+
+  revealMap: string;
+  revealMapName: string;
+
+  scenario: string | null;
+  password: boolean;
+  modDataset: string | null;
+
+  teams: MatchTeam[];
+};
+
+export type MatchTeam = {
+  teamId: number;
+  players: MatchPlayer[];
+};
+
+export type MatchPlayer = {
+  profileId: number;
+  name: string;
+
+  rating: number;
+  ratingDiff: number;
+
+  civ: string;
+  civName: string;
+  civImageUrl: string;
+
+  color: number;
+  colorHex: string;
+  slot: number;
+
+  status: "player" | string;
+  team: number;
+
+  replay: boolean;
+  won: boolean;
+
+  country: string;
+  shared: boolean;
+  verified: boolean;
 };
