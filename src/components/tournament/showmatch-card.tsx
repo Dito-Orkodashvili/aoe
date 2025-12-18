@@ -67,7 +67,7 @@ export const ShowmatchCard = ({
             <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-muted/50 border border-border flex items-center justify-center">
               <GlowingVs />
             </div>
-            {tournamentStatus === "draft" && (
+            {match.status === "pending" && (
               <ShowmatchStartButton tournamentId={tournamentId} />
             )}
           </div>
