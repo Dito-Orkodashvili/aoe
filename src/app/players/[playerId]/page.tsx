@@ -15,9 +15,7 @@ import {
   Mountain,
   Skull,
   Trophy,
-  Twitch,
   User,
-  Youtube,
 } from "lucide-react";
 import Link from "next/link";
 import { getPlayerById } from "@/lib/supabase/player/get-player-by-id";
@@ -40,6 +38,22 @@ import { ImageWithFallback } from "@/components/image-with-fallback";
 import { getCivById } from "@/lib/utils/civilization.utils";
 import { TwitchLink } from "@/components/twitch-link";
 import { YoutubeLink } from "@/components/youtube-link";
+import { getPlayerCivStats } from "@/lib/supabase/player/get-player-civ-stats";
+import {
+  CivStats,
+  CivStatsByLeaderboard,
+  MapStats,
+} from "@/lib/aoe2companion.types";
+import { Progress } from "@/components/ui/progress";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 const civilizationStats: unknown[] = [];
 
@@ -70,6 +84,8 @@ const PlayerDetails = async ({
 
   let playerStats = null;
   let matchHistory: ExtractedMatchInfo[] = [];
+  let playerCivStats: CivStats[] = [];
+  let playerMapStats: MapStats[] = [];
 
   if (aoe_profile_id) {
     const playerOfficialStats = await getPlayerOfficialStats([
@@ -79,6 +95,14 @@ const PlayerDetails = async ({
     playerStats = mergePlayerWithStats(player, playerOfficialStats);
 
     matchHistory = await getPlayerMatchHistory(aoe_profile_id);
+    const playerCivStatsResponse = await getPlayerCivStats(aoe_profile_id);
+
+    const rm1v1Stats = playerCivStatsResponse?.stats.find(
+      ({ leaderboardId }) => leaderboardId === "rm_1v1",
+    );
+
+    playerCivStats = rm1v1Stats?.civ ?? [];
+    playerMapStats = rm1v1Stats?.map ?? [];
   }
 
   const { one_v_one_stats } = playerStats || {};
@@ -262,12 +286,15 @@ const PlayerDetails = async ({
         </Card>
       </div>
       <Tabs defaultValue="matches" className="space-y-4">
-        <TabsList className="grid grid-cols-2 max-w-[50rem]">
+        <TabsList className="grid grid-cols-3">
           <TabsTrigger value="matches" className="cursor-pointer">
             უახლესი ბრძოლები
           </TabsTrigger>
           <TabsTrigger value="civilizations" className="cursor-pointer">
             ცივილიზაციები
+          </TabsTrigger>
+          <TabsTrigger value="maps" className="cursor-pointer">
+            რუკები
           </TabsTrigger>
         </TabsList>
 
@@ -491,25 +518,121 @@ const PlayerDetails = async ({
               <CardTitle>ცივილიზაციების სტატისტიკა</CardTitle>
             </CardHeader>
             <CardContent>
-              {civilizationStats.length > 0 ? (
+              {playerCivStats.length > 0 ? (
                 <div className="space-y-6">
-                  {/*{civilizationStats.map((civ, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium text-foreground">
-                          {civ.name}
-                        </span>
-                        <span className="text-sm text-muted-foreground">
-                          {civ.games} games • {civ.winRate}% win rate
-                        </span>
-                      </div>
-                      <Progress value={civ.winRate} className="h-2" />
-                    </div>
-                  ))}*/}
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>ცივილიზაცია</TableHead>
+                        <TableHead>ბრძოლა</TableHead>
+                        <TableHead>გამარჯვება</TableHead>
+                        <TableHead className="w-40">გამარჯვების %</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {playerCivStats.map((civ, index) => {
+                        const winRate = Math.floor(
+                          (civ.wins / civ.games) * 100,
+                        );
+                        return (
+                          <TableRow key={index}>
+                            <TableCell className="flex gap-4">
+                              <Image
+                                src={civ.civImageUrl}
+                                alt={civ.civName}
+                                width={32}
+                                height={32}
+                              />
+                              <Badge variant="outline">{civ.civName}</Badge>
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              {civ.games}
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              {civ.wins}
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              <div key={index} className="space-y-2">
+                                <div className="flex justify-between items-center">
+                                  <span className="text-sm text-muted-foreground">
+                                    {winRate}%
+                                  </span>
+                                </div>
+                                <Progress value={winRate} className="h-2" />
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
                 </div>
               ) : (
                 <p className="text-muted-foreground text-center py-8">
                   ცივილიზაციების სტატისტიკა არ მოიძებნა
+                </p>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="maps">
+          <Card>
+            <CardHeader>
+              <CardTitle>რუკების სტატისტიკა</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {playerMapStats.length > 0 ? (
+                <div className="space-y-6">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>ცივილიზაცია</TableHead>
+                        <TableHead>ბრძოლა</TableHead>
+                        <TableHead>გამარჯვება</TableHead>
+                        <TableHead className="w-40">გამარჯვების %</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {playerMapStats.map((map, index) => {
+                        const winRate = Math.floor(
+                          (map.wins / map.games) * 100,
+                        );
+                        return (
+                          <TableRow key={index}>
+                            <TableCell className="flex gap-4">
+                              <Image
+                                src={map.mapImageUrl}
+                                alt={map.mapName}
+                                width={32}
+                                height={32}
+                              />
+                              <Badge variant="outline">{map.mapName}</Badge>
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              {map.games}
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              {map.wins}
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              <div key={index} className="space-y-2">
+                                <div className="flex justify-between items-center">
+                                  <span className="text-sm text-muted-foreground">
+                                    {winRate}%
+                                  </span>
+                                </div>
+                                <Progress value={winRate} className="h-2" />
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </div>
+              ) : (
+                <p className="text-muted-foreground text-center py-8">
+                  რუკების სტატისტიკა არ მოიძებნა
                 </p>
               )}
             </CardContent>
