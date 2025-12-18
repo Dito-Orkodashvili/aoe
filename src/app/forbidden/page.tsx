@@ -52,7 +52,7 @@ const Forbidden = () => {
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg" className="gap-2">
-            <Link href="/profile">
+            <Link href="/auth/login">
               <LogIn className="w-4 h-4" />
               ავტორიზაცია
             </Link>
