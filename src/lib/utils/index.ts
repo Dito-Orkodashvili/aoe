@@ -17,7 +17,8 @@ export function slugify(str: string) {
   return str
     .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
+    .normalize("NFC")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
     .replace(/^-+|-+$/g, "");
 }
 
