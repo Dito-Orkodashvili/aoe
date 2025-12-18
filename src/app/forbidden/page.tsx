@@ -46,7 +46,7 @@ const Forbidden = () => {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button asChild size="lg" className="gap-2">
-            <Link href="/">
+            <Link href="/public">
               <Home className="w-4 h-4" />
               სახლში დაბრუნება
             </Link>
