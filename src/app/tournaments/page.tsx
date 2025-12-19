@@ -5,7 +5,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/sections/hero";
 import { TournamentCard } from "@/components/tournament/tournament-card";
 import { Badge } from "@/components/ui/badge";
-import { cn, formatDateTime } from "@/lib/utils";
+import { cn, formatDateTime, sortTournaments } from "@/lib/utils";
 import { getTournamentsFilled } from "@/lib/supabase/tournament/get-tournaments-filled";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TwitchLink } from "@/components/twitch-link";
@@ -14,9 +14,11 @@ import { YoutubeLink } from "@/components/youtube-link";
 export default async function Tournaments() {
   const tournaments = await getTournamentsFilled();
 
-  const ongoingTournaments = tournaments
-    .filter((tournament) => ["active", "upcoming"].includes(tournament.status))
-    .sort((a, b) => (a.status === "active" ? -1 : 1));
+  const ongoingTournaments = tournaments.filter((tournament) =>
+    ["active", "upcoming"].includes(tournament.status),
+  );
+
+  const sortedOngoingTournaments = sortTournaments(ongoingTournaments);
 
   const pastTournaments = tournaments.filter(
     (tournament) => tournament.status === "completed",
@@ -46,7 +48,7 @@ export default async function Tournaments() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ongoingTournaments.map((tournament, index) => {
+            {sortedOngoingTournaments.map((tournament, index) => {
               const isActive = tournament.status === "active";
               const isShowmatch =
                 tournament.stages.length === 1 &&
@@ -76,12 +78,12 @@ export default async function Tournaments() {
                     </div>
                     <div className="border-t border-border" />
                     <div>
-                      <div className="text-xl leading-none font-semibold mb-1">
+                      <p className="text-xl font-semibold mb-1">
                         {tournament.title}
-                      </div>
+                      </p>
                       <div className="text-muted-foreground text-sm flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
-                        {formatDateTime(tournament.start_date)}
+                        {formatDateTime(tournament.start_date) ?? "Unknown"}
                       </div>
                     </div>
                   </CardHeader>
@@ -144,7 +146,9 @@ export default async function Tournaments() {
                         </Link>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4 text-foreground/80 pt-4">
+                  </CardContent>
+                  <div className="mt-auto px-4">
+                    <div className="flex items-center gap-4 text-foreground/80 mb-4">
                       <TwitchLink
                         href="https://www.twitch.tv/team_georgia"
                         className="flex-1 flex justify-center"
@@ -168,7 +172,7 @@ export default async function Tournaments() {
                         <ArrowRight className="w-4 h-4" />
                       </Button>
                     )}
-                  </CardContent>
+                  </div>
                 </Card>
               );
             })}
