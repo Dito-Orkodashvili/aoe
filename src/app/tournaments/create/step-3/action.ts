@@ -18,7 +18,17 @@ export async function addParticipantsAction(
 
   const { data: stage, error: stageError } = await supabase
     .from("tournament_stages")
-    .select("id, format, config, status")
+    .select(
+      `
+        id,
+        format,
+        config,
+        status,
+        tournaments (
+          default_best_of
+        )
+      `,
+    )
     .eq("tournament_id", tournamentId)
     .eq("stage_number", 1)
     .single();
@@ -83,14 +93,14 @@ export async function addParticipantsAction(
     return { ok: true };
   }
 
-  // if (participants.length < 2 || participants.length % 2 !== 0) {
-  //   return {
-  //     ok: false,
-  //     error: {
-  //       code: ActionErrorCode.SHOWMATCH_REQUIRES_EVEN_COMPETITORS,
-  //     },
-  //   };
-  // }
+  if (participants.length < 2 || participants.length % 2 !== 0) {
+    return {
+      ok: false,
+      error: {
+        code: ActionErrorCode.SHOWMATCH_REQUIRES_EVEN_COMPETITORS,
+      },
+    };
+  }
 
   // Guard: do not create match twice
   const { data: existingMatch } = await supabase
@@ -118,18 +128,20 @@ export async function addParticipantsAction(
 
   const [compA, compB] = competitors;
 
+  const bestOf = stage.tournaments?.default_best_of ?? 5;
+
   const { error: matchError } = await supabase
     .from("tournament_matches")
     .insert({
       stage_id: stage.id,
       participant1_id: compA[0].id,
       participant2_id: compB[0].id,
-      best_of: 21,
+      best_of: bestOf,
       status: "pending",
       match_number: 1,
       round: 1,
     });
-  console.log(matchError);
+
   if (matchError) {
     return {
       ok: false,

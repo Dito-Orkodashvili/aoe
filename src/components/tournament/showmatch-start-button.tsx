@@ -1,16 +1,22 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { startTransition } from "react";
+import { ButtonHTMLAttributes, startTransition } from "react";
 import { startShowmatch } from "@/app/tournaments/[slug]/actions";
 import { Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+interface ShowmatchStartButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
+  tournamentId: string;
+}
 
 export const ShowmatchStartButton = ({
   tournamentId,
-}: {
-  tournamentId: string;
-}) => {
+  className,
+  ...rest
+}: ShowmatchStartButtonProps) => {
   const router = useRouter();
 
   const onStart = () => {
@@ -26,7 +32,12 @@ export const ShowmatchStartButton = ({
   };
 
   return (
-    <Button onClick={onStart} size="sm" className="mt-2">
+    <Button
+      onClick={onStart}
+      size="sm"
+      className={cn("mt-2", className)}
+      {...rest}
+    >
       <Play className="w-4 h-4 mr-2" />
       დაწყება
     </Button>

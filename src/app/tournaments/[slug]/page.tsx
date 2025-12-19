@@ -8,7 +8,9 @@ const TournamentDetails = async ({
 }: {
   params: Promise<{ slug: string }>;
 }) => {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const slug = decodeURIComponent(rawSlug).normalize("NFC");
+
   const res = await getTournamentBySlug(slug);
 
   if (!res.ok || !res.data) {

@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { ActionResultType } from "@/lib/types/action.types";
-import { ActionErrorCode } from "@/lib/utils";
+import { ActionErrorCode, ERROR_MESSAGES } from "@/lib/utils";
 import { isAdmin } from "@/lib/supabase/auth/is-admin";
 
 export async function searchPlayers(query: string) {
@@ -38,7 +38,13 @@ export async function updateShowmatchScore({
   const supabase = await createClient();
 
   if (!(await isAdmin())) {
-    return { ok: false, error: { code: ActionErrorCode.FORBIDDEN } };
+    return {
+      ok: false,
+      error: {
+        code: ActionErrorCode.FORBIDDEN,
+        message: ERROR_MESSAGES[ActionErrorCode.FORBIDDEN],
+      },
+    };
   }
 
   const { data: match, error } = await supabase
@@ -48,13 +54,22 @@ export async function updateShowmatchScore({
     .single();
 
   if (error || !match) {
-    return { ok: false, error: { code: ActionErrorCode.MATCH_NOT_FOUND } };
+    return {
+      ok: false,
+      error: {
+        code: ActionErrorCode.MATCH_NOT_FOUND,
+        message: ERROR_MESSAGES[ActionErrorCode.MATCH_NOT_FOUND],
+      },
+    };
   }
 
   if (match.status !== "in_progress") {
     return {
       ok: false,
-      error: { code: ActionErrorCode.MATCH_NOT_IN_PROGRESS },
+      error: {
+        code: ActionErrorCode.MATCH_NOT_IN_PROGRESS,
+        message: ERROR_MESSAGES[ActionErrorCode.MATCH_NOT_IN_PROGRESS],
+      },
     };
   }
 
@@ -65,7 +80,10 @@ export async function updateShowmatchScore({
   if (next < 0) {
     return {
       ok: false,
-      error: { code: ActionErrorCode.SCORE_CANNOT_BE_NEGATIVE },
+      error: {
+        code: ActionErrorCode.SCORE_CANNOT_BE_NEGATIVE,
+        message: ERROR_MESSAGES[ActionErrorCode.SCORE_CANNOT_BE_NEGATIVE],
+      },
     };
   }
 
@@ -74,7 +92,10 @@ export async function updateShowmatchScore({
   if (next > maxScore) {
     return {
       ok: false,
-      error: { code: ActionErrorCode.SCORE_EXCEEDS_BEST_OF },
+      error: {
+        code: ActionErrorCode.SCORE_EXCEEDS_BEST_OF,
+        message: ERROR_MESSAGES[ActionErrorCode.SCORE_EXCEEDS_BEST_OF],
+      },
     };
   }
 
@@ -86,7 +107,10 @@ export async function updateShowmatchScore({
   if (updateError) {
     return {
       ok: false,
-      error: { code: ActionErrorCode.DB_ERROR },
+      error: {
+        code: ActionErrorCode.DB_ERROR,
+        message: ERROR_MESSAGES[ActionErrorCode.DB_ERROR],
+      },
     };
   }
 

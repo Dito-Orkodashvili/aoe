@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { startTransition, useState } from "react";
 import { updateShowmatchScore } from "@/app/tournaments/actions";
 import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
 
 interface ShowmatchCardPlayerProps {
   player: TournamentPlayerType;
@@ -32,6 +33,7 @@ export const ShowmatchCardPlayer = ({
 }: ShowmatchCardPlayerProps) => {
   const [score, setScore] = useState(initialScore);
   const [isPending, setIsPending] = useState(false);
+  const { toast } = useToast();
 
   const updateScore = (delta: 1 | -1) => {
     const optimistic = score + delta;
@@ -53,7 +55,11 @@ export const ShowmatchCardPlayer = ({
 
       if (!res.ok) {
         setScore(score);
-        console.error(res.error);
+        toast({
+          title: "შეცდომა",
+          description: res.error.message,
+          variant: "destructive",
+        });
       }
     });
   };

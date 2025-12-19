@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Forbidden = () => {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-background flex justify-center p-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-destructive/5 via-background to-secondary/5" />
       <div className="absolute top-1/3 left-1/3 w-80 h-80 bg-destructive/10 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-1/3 right-1/3 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse delay-700" />

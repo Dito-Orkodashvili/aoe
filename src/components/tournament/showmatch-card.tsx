@@ -8,6 +8,7 @@ import { getMapById } from "@/lib/utils";
 import { ShowmatchStartButton } from "@/components/tournament/showmatch-start-button";
 import { GlowingVs } from "@/components/tournament/glowing-vs";
 import { ShowmatchCardPlayer } from "@/components/tournament/showmatch-card-player";
+import Image from "next/image";
 
 interface ShowmatchCardProps {
   tournamentId: string;
@@ -23,7 +24,6 @@ export const ShowmatchCard = ({
   stages,
   participants,
   maps,
-  tournamentStatus,
   isAdmin,
 }: ShowmatchCardProps) => {
   const matches = stages[0]!.tournament_matches;
@@ -68,7 +68,10 @@ export const ShowmatchCard = ({
               <GlowingVs />
             </div>
             {match.status === "pending" && (
-              <ShowmatchStartButton tournamentId={tournamentId} />
+              <ShowmatchStartButton
+                tournamentId={tournamentId}
+                disabled={!isAdmin}
+              />
             )}
           </div>
 
@@ -88,14 +91,27 @@ export const ShowmatchCard = ({
           />
         </div>
         <div className="mt-6 pt-4 border-t border-border">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <MapIcon className="w-5 h-5 text-primary" />
-            <div className="flex flex-wrap gap-2 w-full">
-              {maps.map((map, index) => (
-                <Badge key={index} variant="outline" className="px-3 py-1.5">
-                  {getMapById(map.map_id)?.name}
-                </Badge>
-              ))}
+          <div className="flex items-center">
+            <div className="flex flex-wrap gap-4 w-full">
+              {maps.map((map, index) => {
+                const mapInfo = getMapById(map.map_id);
+                return (
+                  <Badge
+                    key={index}
+                    variant="outline"
+                    className="px-3 py-1.5 flex gap-2"
+                  >
+                    <Image
+                      src={`/aoe/maps/${mapInfo?.icon}`}
+                      alt={mapInfo?.name ?? ""}
+                      width={40}
+                      height={40}
+                    />
+
+                    {mapInfo?.name}
+                  </Badge>
+                );
+              })}
             </div>
           </div>
         </div>
