@@ -60,7 +60,7 @@ export function extractMatchInfo(
 
 export function didPlayerWin(
   match: AoeMatch,
-  profileId: string | null,
+  profileId: string | number | null,
 ): boolean {
   if (!profileId) return false;
 

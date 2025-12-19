@@ -65,6 +65,7 @@ export const ShowmatchCardPlayer = ({
   };
 
   const isP1 = side === "p1";
+  const shouldShowScoreUpdateBtns = canUpdateScore && status === "in_progress";
 
   return (
     <div className="flex-1 text-center">
@@ -114,12 +115,12 @@ export const ShowmatchCardPlayer = ({
       )}
 
       <div className="flex gap-4 justify-center items-center  mt-3">
-        {canUpdateScore && (
+        {shouldShowScoreUpdateBtns && (
           <Button
             className="rounded-full size-6"
             size="icon"
             onClick={() => updateScore(-1)}
-            disabled={isPending || !canUpdateScore}
+            disabled={isPending}
           >
             <Minus />
           </Button>
@@ -132,12 +133,12 @@ export const ShowmatchCardPlayer = ({
         >
           {score}
         </p>
-        {canUpdateScore && (
+        {shouldShowScoreUpdateBtns && (
           <Button
             className="rounded-full size-6"
             size="icon"
             onClick={() => updateScore(1)}
-            disabled={isPending || !canUpdateScore}
+            disabled={isPending}
           >
             <Plus />
           </Button>

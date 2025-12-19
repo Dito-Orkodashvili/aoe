@@ -112,7 +112,7 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                     Team 1
                   </p>
                   {team1Players?.map((p, pIndex) => {
-                    const didWin = didPlayerWin(match, profileId);
+                    const didWin = didPlayerWin(match, p.profileId);
 
                     return (
                       <div
@@ -175,7 +175,7 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                     Team 2
                   </p>
                   {team2Players?.map((p, pIndex) => {
-                    const didWin = didPlayerWin(match, profileId);
+                    const didWin = didPlayerWin(match, p.profileId);
 
                     return (
                       <div

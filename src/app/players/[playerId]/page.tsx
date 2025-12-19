@@ -134,7 +134,7 @@ const PlayerDetails = async ({
                           <span className="text-foreground">AoE პროფილი</span>
                         </a>
                         <a
-                          href={`https://www.aoe2insights.com/user/${aoe_profile_id}/`}
+                          href={`https://www.aoe2insights.com/user/relic/${aoe_profile_id}/`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 border border-primary/20 transition-colors text-sm"
