@@ -72,7 +72,7 @@ export const ShowmatchCardPlayer = ({
       <div className="relative inline-block">
         <div
           className={cn(
-            "w-30 h-30 md:w-34 md:h-34 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 border-2 transition-all flex items-center justify-center mx-auto mb-3",
+            "w-28 h-28 md:w-44 md:h-44 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 border-2 transition-all flex items-center justify-center mx-auto mb-3",
             isP1 ? "border-primary/30" : "border-secondary/30",
             isP1 ? "hover:border-secondary/30" : "hover:border-primary/30",
           )}
