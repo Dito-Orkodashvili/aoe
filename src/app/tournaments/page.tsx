@@ -159,19 +159,12 @@ export default async function Tournaments() {
                       />
                     </div>
                     <div className="my-2 border-t border-border" />
-                    {isActive ? (
-                      <Button asChild className="w-full gap-2 mt-2">
-                        <Link href={`/tournaments/${tournament.slug}`}>
-                          დეტალები
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
-                      </Button>
-                    ) : (
-                      <Button className="w-full gap-2 mt-2" disabled>
-                        მალე დაიწყება
+                    <Button asChild className="w-full gap-2 mt-2">
+                      <Link href={`/tournaments/${tournament.slug}`}>
+                        დეტალები
                         <ArrowRight className="w-4 h-4" />
-                      </Button>
-                    )}
+                      </Link>
+                    </Button>
                   </div>
                 </Card>
               );
