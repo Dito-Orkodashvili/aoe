@@ -12,7 +12,7 @@ const Leaderboard = () => {
             გლობალური <span className="text-amber-400">ლიდერბორდი</span>
           </h1>
           <p className="text-lg text-gray-200 max-w-2xl mx-auto animate-fade-in">
-            თვალია დევნე მსოფლიოს საუკეთესო მებრძოლებს
+            თვალი ადევნე მსოფლიოს საუკეთესო მებრძოლებს
           </p>
         </div>
       </PageHero>
