@@ -20,7 +20,7 @@ export const CountriesFilter = ({
 }: CountriesFilterProps) => {
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className="w-full sm:w-[200px] h-12 bg-card border-border/50">
+      <SelectTrigger className="w-full sm:w-[300px] h-12 bg-card border-border/50">
         <Filter className="w-4 h-4 mr-2 text-muted-foreground" />
         <SelectValue placeholder="ქვეყნით ფილტრაცია" />
       </SelectTrigger>

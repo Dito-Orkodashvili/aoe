@@ -26,7 +26,7 @@ export default async function Home() {
             src="/aoe/monaspa.png"
             alt="Monaspa"
             width={80}
-            height={88}
+            height={85}
             className="animate-fade-in"
           />
         </div>

@@ -71,7 +71,7 @@ export const LeaderboardTable = () => {
               className="pl-10 bg-card border-border/50 focus:border-amber-500/50 h-12"
             />
           </div>
-          <div className="flex-1 max-w-sm">
+          <div className="flex-1 max-w-md">
             <CountriesFilter value={country} onValueChange={setCountry} />
           </div>
         </div>
