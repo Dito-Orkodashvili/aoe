@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "backend.cdn.aoe2companion.com",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.akamai.steamstatic.com",
+      },
     ],
   },
 };

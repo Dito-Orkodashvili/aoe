@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { AoeCompanionMatchesResponse } from "@/lib/aoe2companion.types";
+import { AoeCompanionMatchesResponse } from "@/lib/aoe2companion/stats.types";
 
 export const usePlayerRecentMatches = (profileId: string | null) => {
   const url = `https://data.aoe2companion.com/api/matches?profile_ids=${profileId}&with_profile_ids=&search=&leaderboard_ids=&language=en&use_enums=true&page=1`;

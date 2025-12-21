@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { AoeCompanionStatsResponse } from "@/lib/aoe2companion.types";
+import { AoeCompanionStatsResponse } from "@/lib/aoe2companion/stats.types";
 
 export const usePlayerCivAndMapStats = (profileId: string | null) => {
   const url = `https://data.aoe2companion.com/api/profiles/${profileId}?language=en&extend=stats&page=1`;

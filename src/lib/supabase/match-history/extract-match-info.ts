@@ -5,7 +5,11 @@ import {
   MatchHistoryStat,
 } from "@/lib/types/match-history.types";
 import { formatDistanceToNow } from "date-fns";
-import { AoeMatch, MatchPlayer, MatchTeam } from "@/lib/aoe2companion.types";
+import {
+  AoeMatch,
+  MatchPlayer,
+  MatchTeam,
+} from "@/lib/aoe2companion/stats.types";
 
 export function extractMatchInfo(
   matches: MatchHistoryStat[],

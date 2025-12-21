@@ -1,5 +1,4 @@
 import { format, formatDistanceToNow, isValid } from "date-fns";
-import { MatchTeam } from "@/lib/aoe2companion.types";
 
 function parseDate(date: string | null | undefined) {
   if (!date) return null;

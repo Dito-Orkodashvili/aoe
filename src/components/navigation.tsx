@@ -72,6 +72,12 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
               ბრძოლის ველი
             </Link>
             <Link
+              href="/leaderboard"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ლიდერბორდი
+            </Link>
+            <Link
               href="/faq"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
@@ -170,6 +176,13 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                     onClick={() => setOpen(false)}
                   >
                     ბრძოლის ველი
+                  </Link>
+                  <Link
+                    href="/leaderboard"
+                    className="text-muted-foreground hover:text-foreground transition-colors text-lg"
+                    onClick={() => setOpen(false)}
+                  >
+                    ლიდერბორდი
                   </Link>
                   <Link
                     href="/faq"
