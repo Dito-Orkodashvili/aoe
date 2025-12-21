@@ -19,6 +19,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import ReactCountryFlag from "react-country-flag";
 import { CountriesFilter } from "@/components/leaderboard/countries-filter";
 import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const getStreakBadge = (streak: number) => {
   if (streak > 0)
@@ -109,13 +110,20 @@ export const LeaderboardTable = () => {
                           </div>
                         </TableCell>
                         <TableCell className="flex gap-3 items-center">
-                          <Image
-                            src={player.avatarSmallUrl}
-                            alt={player.name}
-                            width={24}
-                            height={24}
-                            className="rounded-full"
-                          />
+                          <Avatar className="w-8 h-8 rounded-full object-cover border-1 border-primary/20">
+                            <AvatarImage
+                              src={player.avatarSmallUrl}
+                              alt={player.name}
+                              className="object-cover"
+                            />
+                            <AvatarFallback className="rounded-none text-4xl">
+                              {player.name
+                                ?.split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
+                          </Avatar>
+
                           <a
                             href={`https://www.aoe2insights.com/user/relic/${player.profileId}/`}
                             target="_blank"
