@@ -51,7 +51,7 @@ export default async function Home() {
             </p>
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center pt-4 animate-fade-in">
+        <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center pt-4 animate-fade-in">
           <Link href="/players">
             <Button
               size="lg"

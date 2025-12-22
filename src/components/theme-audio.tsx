@@ -42,7 +42,6 @@ export const ThemeAudio = () => {
           <VolumeX className="w-5 h-5 text-primary transition-colors" />
         )}
       </button>
-      ;
     </>
   );
 };
