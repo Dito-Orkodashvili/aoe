@@ -174,7 +174,7 @@ export default async function Tournaments() {
       </section>
 
       {/* Past Tournaments */}
-      <section className="py-8 px-4 bg-muted/50 my-8">
+      <section className="py-8 px-4 bg-muted/50 mt-8">
         <div className="container mx-auto max-w-6xl">
           <div className="flex items-center gap-3 mb-8">
             <BookCheck className="w-8 h-8 text-primary" />

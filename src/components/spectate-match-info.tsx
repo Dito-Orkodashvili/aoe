@@ -64,7 +64,7 @@ export const SpectateMatchInfo = ({ match }: SpectateMatchInfoProps) => {
             ) : isError ? (
               <p>Error loading players</p>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-1">
                 {mergedPlayers.map((player) => {
                   const civ = getCivById(player.civilization);
                   return (
@@ -103,15 +103,11 @@ export const SpectateMatchInfo = ({ match }: SpectateMatchInfoProps) => {
                           )}
                         </Badge>
                       </div>
+
                       {civ && (
-                        <Image
-                          className="mt-2"
-                          src={`/aoe/civs/${civ?.icon}`}
-                          title={civ.name}
-                          width={20}
-                          height={20}
-                          alt={civ.name}
-                        />
+                        <span className="text-xs text-foreground">
+                          {civ.name}
+                        </span>
                       )}
                     </div>
                   );
