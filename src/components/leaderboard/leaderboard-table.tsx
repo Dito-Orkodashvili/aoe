@@ -116,7 +116,7 @@ export const LeaderboardTable = () => {
                               alt={player.name}
                               className="object-cover"
                             />
-                            <AvatarFallback className="rounded-none text-4xl">
+                            <AvatarFallback className="rounded-none text-md">
                               {player.name
                                 ?.split(" ")
                                 .map((n) => n[0])
