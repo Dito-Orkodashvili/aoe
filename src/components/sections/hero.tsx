@@ -15,7 +15,7 @@ export function PageHero({ children }: { children: React.ReactNode }) {
 
 export function Hero({ children }: { children: ReactNode }) {
   return (
-    <section className="relative overflow-hidden py-8 sm:py-14 lg:py-28 px-4 min-h-[50vh] lg:min-h-[70vh] flex items-center bg-hero bg-[url(/aoe/aoe_hero_bg.jpeg)] bg-cover bg-center">
+    <section className="relative overflow-hidden py-8 sm:py-14 lg:py-20 px-4 min-h-[50vh] lg:min-h-[70vh] flex items-center bg-hero bg-[url(/aoe/aoe_hero_bg.jpeg)] bg-cover bg-center">
       <div className="absolute inset-0 bg-black/60" />
       <ThemeAudio />
       <div className="container mx-auto max-w-6xl relative z-10">

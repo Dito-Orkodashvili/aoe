@@ -33,10 +33,49 @@ export default async function Home() {
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground animate-fade-in">
           ქართული AoE II ქომუნითი
         </h1>
-        <p className="text-l md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in">
+        <p className="text-l md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in mb-8">
           შემოგვიერთდი და გაიგე ნამდვილი RTS-ის გემო!
         </p>
-        <div className="md:pt-8 lg:pt-12 animate-fade-in">
+        <div className="max-w-[44rem] mx-auto animate-fade-in">
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 text-left">
+            <p className="text-sm text-gray-400 uppercase tracking-wider mb-2 font-medium text-center">
+              რა არის Age of Empires II?
+            </p>
+            <p className="text-gray-300 text-sm md:text-base leading-relaxed text-center">
+              Age of Empires II არის ლეგენდარული სტრატეგიული თამაში სადაც შენ
+              აშენებ ეკონომიკას, აგროვებ რესურსებს, ქმნი არმიას, და იბრძვი
+              სხვისი მიწების დასაპყრობად. 40+ ცივილიზაცია (მათ შორის
+              ქართველებიც) და კონკურენტული გარემო. Age of Empires II ინარჩუნებს
+              საუკეთესო სტრატეგიული თამაშის ტიტულს მისი გამოსვლიდან 25 წლის
+              შემდეგაც კი.
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center pt-4 animate-fade-in">
+          <Link href="/players">
+            <Button
+              size="lg"
+              className="w-[14rem] gap-2 px-8 py-6 bg-primary hover:bg-primary text-white shadow-[0_0_30px_hsl(var(--primary)_/_0.3)] hover:shadow-[0_0_40px_hsl(var(--primary)_/_0.5)] transition-all duration-300"
+            >
+              <Users className="w-5 h-5" />
+              მეომრები
+            </Button>
+          </Link>
+          <Link href="/tournaments">
+            <Button
+              size="lg"
+              variant="secondary"
+              className="w-[14rem] gap-2 px-8 py-6 bg-secondary hover:bg-secondary text-white shadow-[0_0_30px_rgba(251,191,36,0.3)] hover:shadow-[0_0_40px_rgba(251,191,36,0.5)] transition-all duration-300"
+            >
+              <Trophy className="w-5 h-5" />
+              ტურნირები
+            </Button>
+          </Link>
+        </div>
+        <div className="md:pt-6 lg:pt-8 animate-fade-in">
+          <p className="text-sm text-gray-400 uppercase tracking-widest mb-4">
+            გვიყურე ლაივში
+          </p>
           <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center">
             <a
               href="https://discord.gg/VUXdpQZU"

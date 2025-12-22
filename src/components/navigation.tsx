@@ -47,12 +47,14 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
             className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
           >
             <Swords className="w-6 h-6" />
-            <span className="font-bold text-lg">ქართული AoE II</span>
+            <span className="font-bold text-lg whitespace-nowrap">
+              ქართული AoE II
+            </span>
             <Heart className="inline h-5 w-5 text-red-500 animate-pulse" />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-6">
             <Link
               href="/players"
               className="text-muted-foreground hover:text-foreground transition-colors"
@@ -132,7 +134,7 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
               ) : (
                 <Link href="/auth/login">
                   <Button variant="default" className="w-full">
-                    Log In
+                    ავტორიზაცია
                   </Button>
                 </Link>
               )}
@@ -140,7 +142,7 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
           </div>
 
           {/* Mobile Navigation */}
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-2">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild aria-label="Open Menu" aria-controls="menu">
                 <Button variant="ghost" size="icon">
