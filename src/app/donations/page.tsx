@@ -46,11 +46,11 @@ const Donations = () => {
 
   return (
     <>
-      <Script
+      {/* <Script
         src="https://www.paypal.com/sdk/js?client-id=BAA5sh0WbRoPmJWCW_rpXxeGjg-ooXL6oJb27UTayj6Eq1haydNHlCfnNZD0IGUiJG1nUKti7YgGUXoNjI&components=hosted-buttons&disable-funding=venmo&currency=EUR"
         crossOrigin="anonymous"
         async
-      />
+      />*/}
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center space-y-4">
@@ -75,7 +75,8 @@ const Donations = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-2">
+                coming soon
+                {/*<div className="space-y-2">
                   <Label htmlFor="name">Your Name</Label>
                   <Input
                     id="name"
@@ -96,7 +97,7 @@ const Donations = () => {
                 >
                   <DollarSign className="mr-2 h-4 w-4" />
                   Donate Now
-                </Button>
+                </Button>*/}
               </CardContent>
             </Card>
 
