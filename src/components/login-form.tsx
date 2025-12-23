@@ -10,25 +10,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useState } from "react";
+import { ComponentPropsWithoutRef, FormEvent, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 
 export function LoginForm({
   className,
   ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+}: ComponentPropsWithoutRef<"div">) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSocialLogin = async (e: React.FormEvent) => {
+  const handleSocialLogin = async (e: FormEvent) => {
     e.preventDefault();
     const supabase = createClient();
     setIsLoading(true);
     setError(null);
 
-    const isProd = process.env.NODE_ENV === "production";
+    const isProd = process.env.VERCEL_ENV === "production";
+    const isPreview = process.env.VERCEL_ENV === "preview";
 
-    const callbackUrl = isProd ? "https://aoe.ge/" : "http://localhost:3000";
+    const callbackUrl = isProd
+      ? "https://aoe.ge/"
+      : isPreview
+        ? "https://dev.aoe.ge/"
+        : "http://localhost:3000";
 
     try {
       await supabase.auth.signInWithOAuth({

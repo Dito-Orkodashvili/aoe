@@ -36,10 +36,6 @@ export default async function Home() {
         <p className="text-l md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in mb-8">
           შემოგვიერთდი და გაიგე ნამდვილი RTS-ის გემო!
         </p>
-        {process.env.VERCEL_ENV === "development" && <div>DEVELOPMENT</div>}
-        {process.env.VERCEL_ENV === "production" && <div>PRODUCTION</div>}
-        {process.env.VERCEL_ENV === "test" && <div>test</div>}
-        {process.env.VERCEL_ENV && <div>{process.env.VERCEL_ENV}</div>}
         <div className="max-w-[44rem] mx-auto animate-fade-in">
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 text-left">
             <p className="text-sm text-gray-400 uppercase tracking-wider mb-2 font-medium text-center">
