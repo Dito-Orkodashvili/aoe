@@ -26,19 +26,9 @@ export function LoginForm({
     setIsLoading(true);
     setError(null);
 
-    const isProd = process.env.NEXT_PUBLIC_APP_ENV === "production";
-    const isPreview = process.env.NEXT_PUBLIC_APP_ENV === "preview";
-
-    const callbackUrl = isProd
-      ? "https://aoe.ge/"
-      : isPreview
-        ? "https://dev.aoe.ge/"
-        : "http://localhost:3000";
-
     try {
       await supabase.auth.signInWithOAuth({
         provider: "google",
-        options: { redirectTo: callbackUrl },
       });
 
       if (error) throw error;
