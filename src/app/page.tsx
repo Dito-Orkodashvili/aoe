@@ -17,7 +17,7 @@ import { getPlayersCount } from "@/lib/supabase/player/get-players-count";
 export default async function Home() {
   const playersCount = await getPlayersCount();
   const tournamentsCount = await getTournamentsCount();
-  console.log(process.env.NODE_ENV);
+  console.log("env", process.env.NODE_ENV);
   return (
     <>
       <Hero>
