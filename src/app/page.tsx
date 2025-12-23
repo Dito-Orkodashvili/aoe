@@ -17,7 +17,7 @@ import { getPlayersCount } from "@/lib/supabase/player/get-players-count";
 export default async function Home() {
   const playersCount = await getPlayersCount();
   const tournamentsCount = await getTournamentsCount();
-
+  console.log(process.env.NODE_ENV);
   return (
     <>
       <Hero>
@@ -42,12 +42,11 @@ export default async function Home() {
               რა არის Age of Empires II?
             </p>
             <p className="text-gray-300 text-sm md:text-base leading-relaxed text-center">
-              Age of Empires II არის ლეგენდარული სტრატეგიული თამაში სადაც შენ
-              აშენებ ეკონომიკას, აგროვებ რესურსებს, ქმნი არმიას, და იბრძვი
-              სხვისი მიწების დასაპყრობად. 40+ ცივილიზაცია (მათ შორის
-              ქართველებიც) და კონკურენტული გარემო. Age of Empires II ინარჩუნებს
-              საუკეთესო სტრატეგიული თამაშის ტიტულს მისი გამოსვლიდან 25 წლის
-              შემდეგაც კი.
+              Age of Empires II არის ლეგენდარული სტრატეგია. ეს არის თამაში სადაც
+              მთავარია აზროვნება, დაგეგმვა და ადაფტაცია, სადაც გონებრივი უნარები
+              უფრო მნიშვნელოვანია, ვიდრე სისწრაფე. ჭადრაკის მსგავსად, თითოეულ
+              გადაწყვეტილებას აქვს დიდი მნიშვნელობა და ჭკვიანურ სტრატეგიას
+              ყოველთვის მოაქვს გამარჯვება.
             </p>
           </div>
         </div>
@@ -112,6 +111,15 @@ export default async function Home() {
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-12 text-foreground">
             რატომ უნდა შემოგვიერთდე?
           </h2>
+          <Card className="border-2 hover:border-primary transition-all hover-scale mb-6 px-6">
+            <p className="text-gray-300 text-sm md:text-base leading-relaxed text-center">
+              <b>Age of Empires II</b> 27 წლის შემდეგაც კი რჩება სტრატეგიული
+              ჟანრის მწვერვალზე. გაუმჯობესებული ინტერფეისი და მექანიკა, 40-ზე
+              მეტი ისტორიული ცივილიზაცია — მათ შორის ქართველები — თამაშს
+              უნიკალურ სიღრმესა და მრავალფეროვნებას სძენს.
+            </p>
+          </Card>
+
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="border-2 hover:border-primary transition-all hover-scale">
               <CardHeader>
