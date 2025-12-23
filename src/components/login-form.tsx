@@ -26,17 +26,14 @@ export function LoginForm({
     setIsLoading(true);
     setError(null);
 
-    const isProd = process.env.VERCEL_ENV === "production";
-    const isPreview = process.env.VERCEL_ENV === "preview";
+    const isProd = process.env.NEXT_PUBLIC_APP_ENV === "production";
+    const isPreview = process.env.NEXT_PUBLIC_APP_ENV === "preview";
 
     const callbackUrl = isProd
       ? "https://aoe.ge/"
       : isPreview
         ? "https://dev.aoe.ge/"
         : "http://localhost:3000";
-
-    console.log(callbackUrl);
-    console.log(process.env.VERCEL_ENV);
 
     try {
       await supabase.auth.signInWithOAuth({
