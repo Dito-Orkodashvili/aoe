@@ -35,6 +35,9 @@ export function LoginForm({
         ? "https://dev.aoe.ge/"
         : "http://localhost:3000";
 
+    console.log(callbackUrl);
+    console.log(process.env.VERCEL_ENV);
+
     try {
       await supabase.auth.signInWithOAuth({
         provider: "google",
