@@ -5,6 +5,7 @@ import { Navigation } from "@/components/navigation";
 import { getAuthedUser } from "@/lib/supabase/user/get-authed-user";
 import { Footer } from "@/components/footer";
 import "./globals.css";
+import { ThemeAudio } from "@/components/theme-audio";
 
 const macondoCursive = Macondo({
   subsets: ["latin"],
@@ -57,6 +58,8 @@ export default async function RootLayout({
     >
       <body className="font-main">
         <div className="min-h-screen bg-background">
+          <ThemeAudio />
+
           <Providers>
             <Navigation authedUser={authedUser} />
             {children}
