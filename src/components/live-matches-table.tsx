@@ -29,12 +29,6 @@ export const LiveMatchesTable = () => {
     ),
   );
 
-  console.log(
-    matches.find((match) =>
-      Boolean(match.players.find((p) => p.profileid === 677003)),
-    ),
-  );
-
   return (
     <div className="w-full">
       <Card className="p-2 mb-4">
@@ -80,12 +74,12 @@ export const LiveMatchesTable = () => {
         height={600}
         header={
           <div className="flex items-center px-4 py-3 text-sm font-medium text-muted-foreground bg-card">
-            <div className="w-[100px]">Players</div>
-            <div className="flex-1">Mode</div>
-            <div className="flex-1">Time Elapsed</div>
-            <div className="flex-1">Map</div>
-            <div className="w-[100px]">Status</div>
-            <div className="w-[120px] text-right">Spectate</div>
+            <div className="w-[100px]">მოთამაშე</div>
+            <div className="flex-1">ტიპი</div>
+            <div className="flex-1">გასული დრო</div>
+            <div className="flex-1">რუკა</div>
+            <div className="w-[100px]">სტატუსი</div>
+            <div className="w-[120px] text-right">ყურება</div>
           </div>
         }
         renderRow={(match) => (

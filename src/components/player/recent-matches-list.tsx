@@ -70,7 +70,7 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                   title={match.mapName}
                   width={64}
                   height={64}
-                  className="rounded-lg object-cover"
+                  className="rounded-lg object-cover w-12 h-12 md:w-16 md:h-16"
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
@@ -84,17 +84,19 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                       <Skull className="text-red-500 w-6 h-6" />
                     )}
                   </div>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    {match.finished && (
+                  <div className="flex justify-center text-sm text-muted-foreground flex-col">
+                    {match.finished ? (
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3 shrink-0 hidden md:block" />
                         {timeAgoFromISO(match.finished)}
                       </span>
+                    ) : (
+                      <span>არ დამთავრებულა/დაიქრაშა</span>
                     )}
                     {matchDurationSeconds && (
                       <span className="hidden items-center gap-1 md:flex">
                         <Clock className="w-3 h-3" />
-                        {formatDuration(matchDurationSeconds)}
+                        ხანგრძლივობა: {formatDuration(matchDurationSeconds)} წთ.
                       </span>
                     )}
                   </div>
@@ -153,12 +155,14 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                           <p className="text-sm font-medium text-foreground">
                             {p.rating}
                           </p>
-                          <p
-                            className={`text-xs font-medium ${p.ratingDiff >= 0 ? "text-green-500" : "text-red-500"}`}
-                          >
-                            {p.ratingDiff >= 0 && "+"}
-                            {p.ratingDiff}
-                          </p>
+                          {p.ratingDiff && (
+                            <p
+                              className={`text-xs font-medium ${p.ratingDiff >= 0 ? "text-green-500" : "text-red-500"}`}
+                            >
+                              {p.ratingDiff >= 0 && "+"}
+                              {p.ratingDiff}
+                            </p>
+                          )}
                         </div>
                       </div>
                     );
@@ -216,12 +220,14 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                           <p className="text-sm font-medium text-foreground">
                             {p.rating}
                           </p>
-                          <p
-                            className={`text-xs font-medium ${p.ratingDiff >= 0 ? "text-green-500" : "text-red-500"}`}
-                          >
-                            {p.ratingDiff >= 0 && "+"}
-                            {p.ratingDiff}
-                          </p>
+                          {p.ratingDiff && (
+                            <p
+                              className={`text-xs font-medium ${p.ratingDiff >= 0 ? "text-green-500" : "text-red-500"}`}
+                            >
+                              {p.ratingDiff >= 0 && "+"}
+                              {p.ratingDiff}
+                            </p>
+                          )}
                         </div>
                       </div>
                     );

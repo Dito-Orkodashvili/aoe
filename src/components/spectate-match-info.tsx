@@ -16,7 +16,6 @@ import { useState } from "react";
 import { mergeLobbyPlayersWithStats } from "@/lib/supabase/player/get-players-official-stats";
 import ReactCountryFlag from "react-country-flag";
 import { getCivById } from "@/lib/utils/civilization.utils";
-import Image from "next/image";
 
 interface SpectateMatchInfoProps {
   match: TransformedSpectateMatch;
@@ -56,9 +55,7 @@ export const SpectateMatchInfo = ({ match }: SpectateMatchInfoProps) => {
       <PopoverPortal>
         <PopoverContent className="w-80" align="start" style={{ zIndex: 9999 }}>
           <div className="space-y-3 bg-background p-4 rounded-md">
-            <h4 className="font-semibold text-sm border-b pb-2">
-              Players in Match
-            </h4>
+            <h4 className="font-semibold text-sm border-b pb-2">მეომრები</h4>
             {isLoading ? (
               <p className="text-center">Loading...</p>
             ) : isError ? (
@@ -74,13 +71,6 @@ export const SpectateMatchInfo = ({ match }: SpectateMatchInfoProps) => {
                     >
                       <div className="flex gap-2 items-center justify-between">
                         <div className="flex gap-2 items-center">
-                          <a
-                            href={`https://www.ageofempires.com/stats/?profileId=${player.profileid}&game=age2`}
-                            className="font-medium text-sm hover:underline"
-                            target="_blank"
-                          >
-                            {player.name}
-                          </a>
                           {player.country && (
                             <p className="text-xs text-muted-foreground">
                               <ReactCountryFlag
@@ -91,6 +81,18 @@ export const SpectateMatchInfo = ({ match }: SpectateMatchInfoProps) => {
                                 svg
                               />
                             </p>
+                          )}
+                          <a
+                            href={`https://www.ageofempires.com/stats/?profileId=${player.profileid}&game=age2`}
+                            className="font-medium text-sm hover:underline"
+                            target="_blank"
+                          >
+                            {player.name}
+                          </a>
+                          {civ && (
+                            <span className="text-xs text-foreground">
+                              ({civ.name})
+                            </span>
                           )}
                         </div>
                         <Badge variant="secondary" className="text-xs">
@@ -103,12 +105,6 @@ export const SpectateMatchInfo = ({ match }: SpectateMatchInfoProps) => {
                           )}
                         </Badge>
                       </div>
-
-                      {civ && (
-                        <span className="text-xs text-foreground">
-                          {civ.name}
-                        </span>
-                      )}
                     </div>
                   );
                 })}

@@ -1,4 +1,5 @@
 import { format, formatDistanceToNow, isValid } from "date-fns";
+import { ka } from "date-fns/locale";
 
 function parseDate(date: string | null | undefined) {
   if (!date) return null;
@@ -37,6 +38,7 @@ export function timeAgoFromISO(isoDate: string | null | undefined): string {
 
   return formatDistanceToNow(date, {
     addSuffix: true,
+    locale: ka,
   });
 }
 
