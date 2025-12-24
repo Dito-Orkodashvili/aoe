@@ -29,6 +29,12 @@ export const LiveMatchesTable = () => {
     ),
   );
 
+  console.log(
+    matches.find((match) =>
+      Boolean(match.players.find((p) => p.profileid === 677003)),
+    ),
+  );
+
   return (
     <div className="w-full">
       <Card className="p-2 mb-4">

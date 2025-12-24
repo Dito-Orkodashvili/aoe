@@ -54,7 +54,6 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
             match.finished,
           );
 
-          const resolvedMapName = "";
           return (
             <div
               key={index}
@@ -76,7 +75,7 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-semibold text-foreground">
-                      {capitalize(resolvedMapName)}
+                      {match.mapName}
                     </span>
 
                     {didWin ? (
@@ -86,12 +85,14 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                     )}
                   </div>
                   <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
-                      {timeAgoFromISO(match.finished)}
-                    </span>
-                    {matchDurationSeconds && (
+                    {match.finished && (
                       <span className="flex items-center gap-1">
+                        <Calendar className="w-3 h-3 shrink-0 hidden md:block" />
+                        {timeAgoFromISO(match.finished)}
+                      </span>
+                    )}
+                    {matchDurationSeconds && (
+                      <span className="hidden items-center gap-1 md:flex">
                         <Clock className="w-3 h-3" />
                         {formatDuration(matchDurationSeconds)}
                       </span>
@@ -100,16 +101,16 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                 </div>
                 <a
                   href={`https://aoe.ms/replay/?gameId=${match.matchId}&profileId=${profileId}`}
-                  className="self-start flex gap-2 items-center text-sm text-blue-400 underline"
+                  className="hidden md:flex self-start gap-2 items-center text-sm text-blue-400 underline"
                 >
                   <Download className="text-green-600" width={16} /> ჩანაწერი
                 </a>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4 p-4">
+              <div className="grid md:grid-cols-2 gap-2 md:gap-4 p-4">
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                    Team 1
+                  <p className="hidden md:block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                    გუნდი 1
                   </p>
                   {team1Players?.map((p, pIndex) => {
                     const didWin = didPlayerWin(match, p.profileId);
@@ -171,8 +172,8 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                    Team 2
+                  <p className="hidden md:block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                    გუნდი 2
                   </p>
                   {team2Players?.map((p, pIndex) => {
                     const didWin = didPlayerWin(match, p.profileId);

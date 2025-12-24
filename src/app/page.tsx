@@ -111,7 +111,7 @@ export default async function Home() {
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-12 text-foreground">
             რატომ უნდა შემოგვიერთდე?
           </h2>
-          <Card className="border-2 hover:border-primary transition-all hover-scale mb-6 px-6">
+          <Card className="border-2 hover:border-primary transition-all hover-scale mb-8 px-6">
             <p className="text-gray-300 text-sm md:text-base leading-relaxed text-center">
               <b>Age of Empires II</b> გამოსვლიდან 27 წლის შემდეგაც კი რჩება
               სტრატეგიული ჟანრის მწვერვალზე. გაუმჯობესებული ინტერფეისი და

@@ -33,7 +33,9 @@ export function useLiveMatchesWs() {
           matchId: id,
           players,
           ...match,
-          isGeorgianParticipating: players.some((p) => p.country === "ge"),
+          isGeorgianParticipating: players.some(
+            (p) => p.country && p.country.toLowerCase() === "ge",
+          ),
           lastUpdated: now(),
         };
       });
@@ -51,7 +53,9 @@ export function useLiveMatchesWs() {
           ...prev,
           ...match,
           players,
-          isGeorgianParticipating: players.some((p) => p.country === "ge"),
+          isGeorgianParticipating: players.some(
+            (p) => p.country && p.country.toLowerCase() === "ge",
+          ),
           lastUpdated: now(),
         };
       });
@@ -72,7 +76,7 @@ export function useLiveMatchesWs() {
           );
 
           match.isGeorgianParticipating = match.players.some(
-            (p) => p.country === "ge",
+            (p) => p.country && p.country.toLowerCase() === "ge",
           );
 
           if (match.players.length !== before) {
