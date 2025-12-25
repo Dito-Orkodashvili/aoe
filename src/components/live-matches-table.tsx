@@ -100,7 +100,7 @@ export const LiveMatchesTable = () => {
             <div className="w-[120px] text-right">
               <Button
                 size="sm"
-                variant="outline"
+                variant="secondary"
                 asChild
                 disabled={match.observable}
               >

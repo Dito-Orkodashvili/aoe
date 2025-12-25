@@ -105,6 +105,13 @@ export const SpectateMatchInfo = ({ match }: SpectateMatchInfoProps) => {
                           )}
                         </Badge>
                       </div>
+                      <a
+                        href={player.steam_profile}
+                        target="_blank"
+                        className="hidden"
+                      >
+                        {player.steam_profile}
+                      </a>
                     </div>
                   );
                 })}
