@@ -110,7 +110,7 @@ export default async function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center">
             <a
-              href="https://discord.gg/VUXdpQZU"
+              href="https://discord.gg/vcd8bGmcFN"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-[#5865f2] border border-white/10 hover:border-[#5865f2] rounded-full text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-sm"
@@ -239,7 +239,7 @@ export default async function Home() {
               </p>
               <Button asChild size="lg" className="gap-2">
                 <a
-                  href="https://discord.gg/VUXdpQZU"
+                  href="https://discord.gg/vcd8bGmcFN"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
