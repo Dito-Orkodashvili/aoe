@@ -38,7 +38,7 @@ export default async function Home() {
           შემოგვიერთდი და გაიგე ნამდვილი RTS-ის გემო!
         </p>
         <div className="max-w-[52rem] mx-auto animate-fade-in">
-          <div className="bg-background/20 backdrop-blur-sm border border-border rounded-xl p-5 text-left">
+          <div className="bg-background/60 backdrop-blur-sm border border-border rounded-xl p-5 text-left">
             <div className="text-gray-300 text-sm md:text-base leading-relaxed text-left">
               <p className="mb-2">
                 თუ არასდროს გიცდია ერთი სვლით რამდენიმე სვლის წინასწარ გათვლა,
