@@ -39,13 +39,11 @@ export default async function Home() {
         </p>
         <div className="max-w-[52rem] mx-auto animate-fade-in">
           <div className="bg-background/20 backdrop-blur-sm border border-border rounded-xl p-5 text-left">
-            <p className="text-sm uppercase tracking-wider mb-2 font-medium text-center">
-              რა არის{" "}
-              <span className="text-secondary font-bold">
-                Age of Empires II?
-              </span>
-            </p>
             <div className="text-gray-300 text-sm md:text-base leading-relaxed text-left">
+              <p className="mb-2">
+                თუ არასდროს გიცდია ერთი სვლით რამდენიმე სვლის წინასწარ გათვლა,
+                მაშინ ეს თამაში შენთვის არ არის!
+              </p>
               <p className="mb-2">
                 ეს არის ლეგენდარული სტრატეგიული თამაში, რომელშიც მთავარია
                 დაგეგმვა, ადაპტაცია და ზუსტი მანევრირება მტრის გასანადგურებლად.
@@ -54,8 +52,8 @@ export default async function Home() {
                 <span className="text-secondary font-bold">
                   Age Of Empires II
                 </span>{" "}
-                თამაშია მათთვის, ვისაც სჯერა, რომ აზროვნება და გონებრივი უნარები
-                უფრო მნიშვნელოვანია, ვიდრე მექანიკური სისწრაფე.
+                თამაშია მათთვის, ვისთვისაც აზროვნება და გონებრივი უნარები უფრო
+                მნიშვნელოვანია, ვიდრე მექანიკური სისწრაფე.
               </p>
               <p className="mb-2">
                 აქ შეგიძლია მართო 50-ზე მეტი შუა საუკუნეების ცივილიზაცია, მათ
@@ -76,6 +74,10 @@ export default async function Home() {
               <p className="mb-2">
                 როგორც ცხოვრებაში — აქაც მხოლოდ ჭკვიანურ სტრატეგიას მოაქვს
                 გამარჯვება.
+              </p>
+              <p className="mb-2">
+                თუ მიგაჩნია, რომ ლოგიკა და სწრაფი აზროვნება შენი ძლიერი მხარეა,
+                მაშინ მოსინჯე ძალები ყველაზე რთულ სტრატეგიულ თამაშში!
               </p>
             </div>
           </div>
