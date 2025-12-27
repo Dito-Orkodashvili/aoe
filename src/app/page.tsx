@@ -52,7 +52,7 @@ export default async function Home() {
                 <span className="text-secondary font-bold">
                   Age Of Empires II
                 </span>{" "}
-                თამაშია მათთვის, ვისთვისაც აზროვნება და გონებრივი უნარები უფრო
+                არის მათთვის, ვისთვისაც აზროვნება და გონებრივი უნარები უფრო
                 მნიშვნელოვანია, ვიდრე მექანიკური სისწრაფე.
               </p>
               <p className="mb-2">
