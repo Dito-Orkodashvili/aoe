@@ -104,7 +104,7 @@ const PlayerDetails = async ({
                 <h1 className="text-3xl md:text-4xl font-bold text-foreground font-medieval">
                   {nickname}
                 </h1>
-                <p className="text-xl text-muted-foreground mb-4">
+                <p className="text-sm text-muted-foreground mb-4">
                   {name} {last_name}
                 </p>
 

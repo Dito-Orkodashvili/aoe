@@ -48,19 +48,6 @@
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
-
-    --animate-background: background-move ease infinite;
-
-    @keyframes background-move {
-        0%,
-        100% {
-            background-position: 0 50%;
-        }
-
-        50% {
-            background-position: 100% 50%;
-        }
-    }
 }
 
 @keyframes accordion-down {

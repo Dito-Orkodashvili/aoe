@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      build_orders: {
+        Row: {
+          author_id: string
+          civs: number[] | null
+          created_at: string | null
+          description: string | null
+          difficulty: string | null
+          feudal_click_pop: number | null
+          id: string
+          map_type: string | null
+          maps: number[] | null
+          opening_type: string | null
+          patch_version: string | null
+          slug: string
+          steps: Json
+          strategy_type: string | null
+          title: string
+          updated_at: string | null
+          youtube_url: string | null
+        }
+        Insert: {
+          author_id: string
+          civs?: number[] | null
+          created_at?: string | null
+          description?: string | null
+          difficulty?: string | null
+          feudal_click_pop?: number | null
+          id?: string
+          map_type?: string | null
+          maps?: number[] | null
+          opening_type?: string | null
+          patch_version?: string | null
+          slug: string
+          steps: Json
+          strategy_type?: string | null
+          title: string
+          updated_at?: string | null
+          youtube_url?: string | null
+        }
+        Update: {
+          author_id?: string
+          civs?: number[] | null
+          created_at?: string | null
+          description?: string | null
+          difficulty?: string | null
+          feudal_click_pop?: number | null
+          id?: string
+          map_type?: string | null
+          maps?: number[] | null
+          opening_type?: string | null
+          patch_version?: string | null
+          slug?: string
+          steps?: Json
+          strategy_type?: string | null
+          title?: string
+          updated_at?: string | null
+          youtube_url?: string | null
+        }
+        Relationships: []
+      }
       donations: {
         Row: {
           amount: number

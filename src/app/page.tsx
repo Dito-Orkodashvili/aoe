@@ -13,6 +13,7 @@ import { Hero } from "@/components/sections/hero";
 import { FaDiscord, FaTwitch, FaYoutube } from "react-icons/fa";
 import { getTournamentsCount } from "@/lib/supabase/tournament/get-tournaments-count";
 import { getPlayersCount } from "@/lib/supabase/player/get-players-count";
+import ReactCountryFlag from "react-country-flag";
 
 export default async function Home() {
   const playersCount = await getPlayersCount();
@@ -36,20 +37,50 @@ export default async function Home() {
         <p className="text-l md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in mb-8">
           შემოგვიერთდი და გაიგე ნამდვილი RTS-ის გემო!
         </p>
-        <div className="max-w-[44rem] mx-auto animate-fade-in">
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 text-left">
-            <p className="text-sm text-gray-400 uppercase tracking-wider mb-2 font-medium text-center">
-              რა არის Age of Empires II?
+        <div className="max-w-[52rem] mx-auto animate-fade-in">
+          <div className="bg-background/20 backdrop-blur-sm border border-border rounded-xl p-5 text-left">
+            <p className="text-sm uppercase tracking-wider mb-2 font-medium text-center">
+              რა არის{" "}
+              <span className="text-secondary font-bold">
+                Age of Empires II?
+              </span>
             </p>
-            <p className="text-gray-300 text-sm md:text-base leading-relaxed text-center">
-              Age of Empires II არის ლეგენდარული სტრატეგია. ეს არის თამაში სადაც
-              მთავარია აზროვნება, დაგეგმვა და ადაფტაცია, სადაც გონებრივი უნარები
-              უფრო მნიშვნელოვანია, ვიდრე სისწრაფე. ჭადრაკის მსგავსად, თითოეულ
-              გადაწყვეტილებას აქვს დიდი მნიშვნელობა და ჭკვიანურ სტრატეგიას
-              ყოველთვის მოაქვს გამარჯვება.
-            </p>
+            <div className="text-gray-300 text-sm md:text-base leading-relaxed text-left">
+              <p className="mb-2">
+                ეს არის ლეგენდარული სტრატეგიული თამაში, რომელშიც მთავარია
+                დაგეგმვა, ადაპტაცია და ზუსტი მანევრირება მტრის გასანადგურებლად.
+              </p>
+              <p className="mb-2">
+                <span className="text-secondary font-bold">
+                  Age Of Empires II
+                </span>{" "}
+                თამაშია მათთვის, ვისაც სჯერა, რომ აზროვნება და გონებრივი უნარები
+                უფრო მნიშვნელოვანია, ვიდრე მექანიკური სისწრაფე.
+              </p>
+              <p className="mb-2">
+                აქ შეგიძლია მართო 50-ზე მეტი შუა საუკუნეების ცივილიზაცია, მათ
+                შორის{" "}
+                <span className="text-secondary font-bold whitespace-nowrap">
+                  საქართველოც{" "}
+                  <ReactCountryFlag
+                    className="text-sm"
+                    countryCode="ge"
+                    aria-label="საქართველო"
+                    svg
+                  />
+                </span>
+              </p>
+              <p className="mb-2">
+                როგორც ჭადრაკში — აქაც არ არსებობს უმნიშვნელო გადაწყვეტილებები!
+              </p>
+              <p className="mb-2">
+                როგორც ცხოვრებაში — აქაც მხოლოდ ჭკვიანურ სტრატეგიას მოაქვს
+                გამარჯვება.
+              </p>
+            </div>
           </div>
         </div>
+
         <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center pt-4 animate-fade-in">
           <Link href="/players">
             <Button
@@ -113,10 +144,13 @@ export default async function Home() {
           </h2>
           <Card className="border-2 hover:border-primary transition-all hover-scale mb-8 px-6">
             <p className="text-gray-300 text-sm md:text-base leading-relaxed text-center">
-              <b>Age of Empires II</b> გამოსვლიდან 27 წლის შემდეგაც კი რჩება
-              სტრატეგიული ჟანრის მწვერვალზე. გაუმჯობესებული ინტერფეისი და
-              მექანიკა, 40-ზე მეტი ისტორიული ცივილიზაცია — მათ შორის ქართველები
-              — თამაშს უნიკალურ სიღრმესა და მრავალფეროვნებას სძენს.
+              <span className="text-secondary font-bold">
+                Age of Empires II
+              </span>{" "}
+              გამოსვლიდან 27 წლის შემდეგაც კი რჩება სტრატეგიული ჟანრის
+              მწვერვალზე. გაუმჯობესებული ინტერფეისი და მექანიკა, 50-ზე მეტი
+              ისტორიული ცივილიზაცია — მათ შორის ქართველები — თამაშს უნიკალურ
+              სიღრმესა და მრავალფეროვნებას სძენს.
             </p>
           </Card>
 
