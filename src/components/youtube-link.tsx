@@ -16,7 +16,7 @@ export const YoutubeLink = ({ className, ...rest }: YoutubeLinkProps) => {
       {...rest}
     >
       <Youtube className="w-4 h-4 text-red-500" />
-      <span className="text-foreground">იუთუბი</span>
+      <span className="text-foreground">Youtube</span>
     </a>
   );
 };

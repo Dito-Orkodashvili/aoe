@@ -125,7 +125,7 @@ export default async function Home() {
               className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-red-600/90 border border-white/10 hover:border-red-500 rounded-full text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-sm"
             >
               <FaYoutube className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span className="font-medium">იუთუბი</span>
+              <span className="font-medium">Youtube</span>
             </a>
             <a
               href="https://www.twitch.tv/team_georgia"
@@ -134,7 +134,7 @@ export default async function Home() {
               className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-purple-600/90 border border-white/10 hover:border-purple-500 rounded-full text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-sm"
             >
               <FaTwitch className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span className="font-medium">ტვიტჩი</span>
+              <span className="font-medium">Twitch</span>
             </a>
           </div>
         </div>
