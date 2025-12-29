@@ -128,7 +128,7 @@ export default async function Home() {
               <span className="font-medium">Youtube</span>
             </a>
             <a
-              href="https://www.twitch.tv/team_georgia"
+              href="https://www.twitch.tv/teamgeorgia_aoe"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-purple-600/90 border border-white/10 hover:border-purple-500 rounded-full text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-sm"

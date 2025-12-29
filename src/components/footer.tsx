@@ -55,7 +55,7 @@ export const Footer = () => {
                 Youtube
               </a>
               <a
-                href="https://www.twitch.tv/team_georgia"
+                href="https://www.twitch.tv/teamgeorgia_aoe"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
@@ -115,7 +115,7 @@ export const Footer = () => {
                 <Youtube className="h-4 w-4" />
               </a>
               <a
-                href="https://www.twitch.tv/team_georgia"
+                href="https://www.twitch.tv/teamgeorgia_aoe"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-foreground/5 hover:bg-foreground/10 flex items-center justify-center transition-colors"

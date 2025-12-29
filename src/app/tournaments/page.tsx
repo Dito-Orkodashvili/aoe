@@ -150,7 +150,7 @@ export default async function Tournaments() {
                   <div className="mt-auto px-4">
                     <div className="flex items-center gap-4 text-foreground/80 mb-4">
                       <TwitchLink
-                        href="https://www.twitch.tv/team_georgia"
+                        href="https://www.twitch.tv/teamgeorgia_aoe"
                         className="flex-1 flex justify-center"
                       />
                       <YoutubeLink
