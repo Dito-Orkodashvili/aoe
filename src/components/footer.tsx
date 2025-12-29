@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Heart, MessageCircle, Twitch, Youtube } from "lucide-react";
+import { Heart, Twitch, Youtube } from "lucide-react";
 import { FaDiscord } from "react-icons/fa";
 
 export const Footer = () => {
@@ -39,28 +39,28 @@ export const Footer = () => {
             </h4>
             <nav className="flex flex-col gap-2">
               <a
-                href="https://discord.gg/VUXdpQZU"
+                href="https://discord.gg/sgCBeedxDu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                დისქორდი
+                Discord
               </a>
               <a
-                href="https://youtube.com/"
+                href="https://www.youtube.com/@teamgeorgia-aoe2/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                იუთუბი
+                Youtube
               </a>
               <a
-                href="https://twitch.tv/"
+                href="https://www.twitch.tv/team_georgia"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
-                ტვიტჩი
+                Twitch
               </a>
             </nav>
           </div>
@@ -97,7 +97,7 @@ export const Footer = () => {
             </h4>
             <div className="flex gap-3">
               <a
-                href="https://discord.gg/VUXdpQZU"
+                href="https://discord.gg/sgCBeedxDu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-foreground/5 hover:bg-foreground/10 flex items-center justify-center transition-colors"

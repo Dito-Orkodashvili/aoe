@@ -110,13 +110,13 @@ export default async function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center">
             <a
-              href="https://discord.gg/vcd8bGmcFN"
+              href="https://discord.gg/sgCBeedxDu"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-[#5865f2] border border-white/10 hover:border-[#5865f2] rounded-full text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-sm"
             >
               <FaDiscord className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span className="font-medium">დისქორდი</span>
+              <span className="font-medium">Discord</span>
             </a>
             <a
               href="https://www.youtube.com/@teamgeorgia-aoe2"
@@ -152,7 +152,9 @@ export default async function Home() {
               გამოსვლიდან 27 წლის შემდეგაც კი რჩება სტრატეგიული ჟანრის
               მწვერვალზე. გაუმჯობესებული ინტერფეისი და მექანიკა, 50-ზე მეტი
               ისტორიული ცივილიზაცია — მათ შორის ქართველები — თამაშს უნიკალურ
-              სიღრმესა და მრავალფეროვნებას სძენს.
+              სიღრმესა და მრავალფეროვნებას სძენს. შეგიძლიათ, შემოგვიერთდეთ და
+              ერთად ვითამაშოთ როგორც გუნდური, ასევე ინდივიდუალური (1 vs 1)
+              მატჩები.
             </p>
           </Card>
 
@@ -239,7 +241,7 @@ export default async function Home() {
               </p>
               <Button asChild size="lg" className="gap-2">
                 <a
-                  href="https://discord.gg/vcd8bGmcFN"
+                  href="https://discord.gg/sgCBeedxDu"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

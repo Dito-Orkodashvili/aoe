@@ -16,7 +16,7 @@ export const TwitchLink = ({ className, ...rest }: TwitchLinkProps) => {
       {...rest}
     >
       <Twitch className="w-4 h-4 text-purple-500" />
-      <span className="text-foreground">ტვიტჩი</span>
+      <span className="text-foreground">Twitch</span>
     </a>
   );
 };

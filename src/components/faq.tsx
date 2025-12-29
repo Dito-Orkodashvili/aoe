@@ -102,7 +102,7 @@ const faqItems: FAQItem[] = [
       <div>
         ჩვენს ოფიციალურ{" "}
         <a
-          href="https://discord.gg/vcd8bGmcFN"
+          href="https://discord.gg/sgCBeedxDu"
           target="_blank"
           rel="noopener noreferrer"
           className="underline text-blue-400"
@@ -190,7 +190,7 @@ export const FAQ = () => {
       <div className="mt-12 p-6 bg-muted/30 rounded-lg border border-border">
         <h2 className="text-lg font-semibold mb-2">კიდევ გაქვს კითხვები?</h2>
         <a
-          href="https://discord.gg/vcd8bGmcFN"
+          href="https://discord.gg/sgCBeedxDu"
           target="_blank"
           rel="noopener noreferrer"
           className="underline text-blue-400"
