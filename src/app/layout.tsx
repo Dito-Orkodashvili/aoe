@@ -8,6 +8,7 @@ import "./globals.css";
 import { ThemeAudio } from "@/components/theme-audio";
 import { Snowfall } from "@/components/christmas-decorations";
 import { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 
 const macondoCursive = Macondo({
   subsets: ["latin"],
@@ -60,6 +61,7 @@ export default async function RootLayout({
     >
       <body className="font-main">
         <div className="min-h-screen bg-background">
+          <Analytics />
           <ThemeAudio />
           <Snowfall />
 
