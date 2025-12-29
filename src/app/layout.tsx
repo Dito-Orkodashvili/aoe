@@ -6,6 +6,8 @@ import { getAuthedUser } from "@/lib/supabase/user/get-authed-user";
 import { Footer } from "@/components/footer";
 import "./globals.css";
 import { ThemeAudio } from "@/components/theme-audio";
+import { Snowfall } from "@/components/christmas-decorations";
+import { ReactNode } from "react";
 
 const macondoCursive = Macondo({
   subsets: ["latin"],
@@ -46,7 +48,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   const authedUser = await getAuthedUser();
 
@@ -59,6 +61,7 @@ export default async function RootLayout({
       <body className="font-main">
         <div className="min-h-screen bg-background">
           <ThemeAudio />
+          <Snowfall />
 
           <Providers>
             <Navigation authedUser={authedUser} />

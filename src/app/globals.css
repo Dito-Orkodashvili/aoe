@@ -50,6 +50,20 @@
     --radius-sm: calc(var(--radius) - 4px);
 }
 
+/* Christmas animations */
+@keyframes fall {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+    }
+}
+
+.animate-fall {
+    animation: fall 20s linear forwards;
+}
+
 @keyframes accordion-down {
     from {
         height: 0;
