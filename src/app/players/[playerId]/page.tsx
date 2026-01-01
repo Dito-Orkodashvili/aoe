@@ -26,6 +26,7 @@ import { YoutubeLink } from "@/components/youtube-link";
 import { RecentMatchesList } from "@/components/player/recent-matches-list";
 import { CivStatsList } from "@/components/player/civ-stats-list";
 import { MapStatsList } from "@/components/player/map-stats-list";
+import { SetupCard } from "@/components/player/setup-card";
 
 const PlayerDetails = async ({
   params,
@@ -242,6 +243,7 @@ const PlayerDetails = async ({
           </CardContent>
         </Card>
       </div>
+      <SetupCard />
       <Tabs defaultValue="matches" className="space-y-4">
         <TabsList className="grid grid-cols-3">
           <TabsTrigger value="matches" className="cursor-pointer">

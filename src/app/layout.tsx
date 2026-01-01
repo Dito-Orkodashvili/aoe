@@ -23,16 +23,36 @@ const notoSerif = Noto_Sans_Georgian({
   display: "swap",
 });
 
-const isProd = process.env.NODE_ENV !== "production";
+const isProd = process.env.NODE_ENV === "production";
 
 export const metadata: Metadata = {
   metadataBase: new URL(isProd ? "https://aoe.ge/" : "https://dev.aoe.ge/"),
-  title: "AOE II ქართული ქომუნითი",
+  title: {
+    default: "aoe.ge — ქართული Age of Empires II ქომუნითი",
+    template: "%s — aoe.ge",
+  },
+  description:
+    "aoe.ge — ქართული Age of Empires II ქომუნითი — ტურნირები, სტრიმები, მოთამაშეები და თამაშის შესახებ ყველანაირი ინფორმაცია ერთ სივრცეში.",
+  applicationName: "aoe.ge",
+  keywords: [
+    "Age of Empires II",
+    "Age of Empires II: Definitive Edition",
+    "AoE II",
+    "Age of Empires Georgia",
+    "ქართული AoE",
+    "AoE II ტურნირები",
+    "RTS თამაშები",
+    "Age of Empires esports",
+  ],
+  authors: [{ name: "aoe.ge" }],
   openGraph: {
-    title: "AOE II ქართული ქომუნითი",
-    description: "Georgian Age of Empires II community website.",
+    type: "website",
+    locale: "ka_GE",
     url: isProd ? "https://aoe.ge/" : "https://dev.aoe.ge/",
-    siteName: "AOE II Georgia",
+    siteName: "aoe.ge",
+    title: "aoe.ge — ქართული Age of Empires II კომუნითი",
+    description:
+      "ქართული Age of Empires II ქომუნითი — ტურნირები, სტრიმები, მოთამაშეები და თამაშის შესახებ ყველანაირი ინფორმაცია ერთ სივრცეში.",
     images: [
       {
         url: "/og/aoe2.png",
@@ -41,8 +61,26 @@ export const metadata: Metadata = {
         alt: "AOE2 Georgia Hero Image",
       },
     ],
-    locale: "en_US",
-    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "aoe.ge — ქართული Age of Empires II ქომუნითი",
+    description:
+      "ქართული Age of Empires II ქომუნითი — ტურნირები, სტრიმები, მოთამაშეები და თამაშის შესახებ ყველანაირი ინფორმაცია ერთ სივრცეში.",
+    images: ["/og/aoe2.png"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+
+  alternates: {
+    canonical: isProd ? "https://aoe.ge/" : "https://dev.aoe.ge/",
   },
 };
 
@@ -55,7 +93,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang="ka"
       suppressHydrationWarning
       className={`${macondoCursive.variable} ${notoSerif.variable} antialiased`}
     >
