@@ -26,6 +26,7 @@ export default async function Home() {
           <Image
             src="/aoe/monaspa.png"
             alt="Monaspa"
+            title="Monaspa"
             width={80}
             height={85}
             className="animate-fade-in"
@@ -63,6 +64,8 @@ export default async function Home() {
                   <ReactCountryFlag
                     className="text-sm"
                     countryCode="ge"
+                    alt="GE"
+                    title="Georgia"
                     aria-label="საქართველო"
                     svg
                   />
