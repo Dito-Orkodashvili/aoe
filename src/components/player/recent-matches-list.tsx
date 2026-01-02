@@ -7,6 +7,7 @@ import {
 import { usePlayerRecentMatches } from "@/hooks/query/use-player-recent-matches";
 import {
   capitalize,
+  cn,
   formatDuration,
   getDurationSeconds,
   timeAgoFromISO,
@@ -45,6 +46,7 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
       <div className="space-y-4">
         {recentMatches.map((match, index) => {
           const didWin = didPlayerWin(match, profileId);
+          const finished = Boolean(match.finished);
 
           const teams = groupPlayersByTeam(match.teams);
           const team1Players = teams[0];
@@ -57,9 +59,9 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
           return (
             <div
               key={index}
-              className={clsx(
-                `rounded-xl border-2 overflow-hidden`,
-                didWin ? "border-green-800" : "border-red-900",
+              className={cn(
+                `rounded-xl border-2 overflow-hidden border-border`,
+                finished && (didWin ? "border-green-800" : "border-red-900"),
               )}
             >
               <div className="flex items-center gap-4 p-4 border-b border-border/50">
@@ -78,11 +80,12 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                       {match.mapName}
                     </span>
 
-                    {didWin ? (
-                      <Crown className="text-green-600 w-6 h-6" />
-                    ) : (
-                      <Skull className="text-red-500 w-6 h-6" />
-                    )}
+                    {finished &&
+                      (didWin ? (
+                        <Crown className="text-green-600 w-6 h-6" />
+                      ) : (
+                        <Skull className="text-red-500 w-6 h-6" />
+                      ))}
                   </div>
                   <div className="flex justify-center text-sm text-muted-foreground flex-col">
                     {match.finished ? (
@@ -91,7 +94,7 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                         {timeAgoFromISO(match.finished)}
                       </span>
                     ) : (
-                      <span>არ დამთავრებულა/დაიქრაშა</span>
+                      <span>არ დამთავრებულა</span>
                     )}
                     {matchDurationSeconds && (
                       <span className="hidden items-center gap-1 md:flex">
@@ -121,18 +124,20 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                       <div
                         key={pIndex}
                         className={clsx(
-                          "flex items-center justify-between bg-background/50 rounded-lg px-3 py-2",
-                          didWin
-                            ? "border border-green-800/50"
-                            : "border border-red-900/50",
+                          "flex items-center justify-between bg-background/50 rounded-lg px-3 py-2 border border-border",
+                          finished &&
+                            (didWin
+                              ? "border-green-800/50"
+                              : "border-red-900/50"),
                         )}
                       >
                         <div className="flex items-center gap-2">
-                          {didWin ? (
-                            <Crown className="text-green-600 w-4 h-4" />
-                          ) : (
-                            <Skull className="text-red-500 w-4 h-4" />
-                          )}
+                          {finished &&
+                            (didWin ? (
+                              <Crown className="text-green-600 w-4 h-4" />
+                            ) : (
+                              <Skull className="text-red-500 w-4 h-4" />
+                            ))}
                           <div className="flex gap-2">
                             <div className="flex gap-2 items-center">
                               <a
@@ -186,18 +191,20 @@ export const RecentMatchesList = ({ profileId }: RecentMatchesListProps) => {
                       <div
                         key={pIndex}
                         className={clsx(
-                          "flex items-center justify-between bg-background/50 rounded-lg px-3 py-2",
-                          didWin
-                            ? "border border-green-800/50"
-                            : "border border-red-900/50",
+                          "flex items-center justify-between bg-background/50 rounded-lg px-3 py-2 border border-border",
+                          finished &&
+                            (didWin
+                              ? "border-green-800/50"
+                              : "border-red-900/50"),
                         )}
                       >
                         <div className="flex items-center gap-2">
-                          {didWin ? (
-                            <Crown className="text-green-600 w-4 h-4" />
-                          ) : (
-                            <Skull className="text-red-500 w-4 h-4" />
-                          )}
+                          {finished &&
+                            (didWin ? (
+                              <Crown className="text-green-600 w-4 h-4" />
+                            ) : (
+                              <Skull className="text-red-500 w-4 h-4" />
+                            ))}
                           <div className="flex gap-2">
                             <div className="flex gap-2 items-center">
                               <a
