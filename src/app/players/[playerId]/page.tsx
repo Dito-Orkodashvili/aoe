@@ -243,7 +243,7 @@ const PlayerDetails = async ({
           </CardContent>
         </Card>
       </div>
-      <SetupCard />
+      {/*<SetupCard />*/}
       <Tabs defaultValue="matches" className="space-y-4">
         <TabsList className="grid grid-cols-3">
           <TabsTrigger value="matches" className="cursor-pointer">
