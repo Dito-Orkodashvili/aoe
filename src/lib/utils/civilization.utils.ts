@@ -16,7 +16,7 @@ export const CIVILIZATIONS: CivilizationType[] = [
   { id: 13, name: "Celts", icon: "celts.png" },
   { id: 14, name: "Spanish", icon: "spanish.png" },
   { id: 15, name: "Aztecs", icon: "aztecs.png" },
-  { id: 16, name: "Maya", icon: "maya.png" },
+  { id: 16, name: "Maya", icon: "mayans.png" },
   { id: 17, name: "Huns", icon: "huns.png" },
   { id: 18, name: "Koreans", icon: "koreans.png" },
   { id: 19, name: "Italians", icon: "italians.png" },
