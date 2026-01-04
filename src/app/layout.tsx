@@ -25,13 +25,13 @@ const notoSerif = Noto_Sans_Georgian({
 const isProd = process.env.NODE_ENV === "production";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(isProd ? "https://aoe.ge/" : "https://dev.aoe.ge/"),
+  metadataBase: new URL("https://aoe.ge/"),
   title: {
     default: "aoe.ge — ქართული Age of Empires II ქომუნითი",
     template: "%s — aoe.ge",
   },
   description:
-    "aoe.ge — ქართული Age of Empires II ქომუნითი — ტურნირები, სტრიმები, მოთამაშეები და თამაშის შესახებ ყველანაირი ინფორმაცია ერთ სივრცეში.",
+    "aoe.ge — ქართული Age of Empires II ქომუნითი. ტურნირები, სტრიმები, მოთამაშეები და სიახლეები.",
   applicationName: "aoe.ge",
   keywords: [
     "Age of Empires II",
@@ -49,9 +49,9 @@ export const metadata: Metadata = {
     locale: "ka_GE",
     url: isProd ? "https://aoe.ge/" : "https://dev.aoe.ge/",
     siteName: "aoe.ge",
-    title: "aoe.ge — ქართული Age of Empires II კომუნითი",
+    title: "aoe.ge — ქართული Age of Empires II ქომუნითი",
     description:
-      "ქართული Age of Empires II ქომუნითი — ტურნირები, სტრიმები, მოთამაშეები და თამაშის შესახებ ყველანაირი ინფორმაცია ერთ სივრცეში.",
+      "aoe.ge — ქართული Age of Empires II ქომუნითი. ტურნირები, სტრიმები, მოთამაშეები და სიახლეები.",
     images: [
       {
         url: "/og/aoe2.png",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "aoe.ge — ქართული Age of Empires II ქომუნითი",
     description:
-      "ქართული Age of Empires II ქომუნითი — ტურნირები, სტრიმები, მოთამაშეები და თამაშის შესახებ ყველანაირი ინფორმაცია ერთ სივრცეში.",
+      "aoe.ge — ქართული Age of Empires II ქომუნითი. ტურნირები, სტრიმები, მოთამაშეები და სიახლეები.",
     images: ["/og/aoe2.png"],
   },
 
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: isProd ? "https://aoe.ge/" : "https://dev.aoe.ge/",
+    canonical: "https://aoe.ge/",
   },
 };
 
