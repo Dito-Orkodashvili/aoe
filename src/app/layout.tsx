@@ -6,7 +6,6 @@ import { getAuthedUser } from "@/lib/supabase/user/get-authed-user";
 import { Footer } from "@/components/footer";
 import "./globals.css";
 import { ThemeAudio } from "@/components/theme-audio";
-import { Snowfall } from "@/components/christmas-decorations";
 import { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -101,7 +100,6 @@ export default async function RootLayout({
         <div className="min-h-screen bg-background">
           <Analytics />
           <ThemeAudio />
-          <Snowfall />
 
           <Providers>
             <Navigation authedUser={authedUser} />
