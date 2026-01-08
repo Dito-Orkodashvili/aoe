@@ -14,21 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
+      build_order_steps: {
+        Row: {
+          age: Database["public"]["Enums"]["age_enum"]
+          build_order_id: string
+          created_at: string | null
+          food_vils: number | null
+          gold_vils: number | null
+          icon: string | null
+          id: string
+          note: string | null
+          population: number | null
+          step_number: number
+          stone_vils: number | null
+          task: string
+          villager_count: number | null
+          wood_vils: number | null
+        }
+        Insert: {
+          age: Database["public"]["Enums"]["age_enum"]
+          build_order_id: string
+          created_at?: string | null
+          food_vils?: number | null
+          gold_vils?: number | null
+          icon?: string | null
+          id?: string
+          note?: string | null
+          population?: number | null
+          step_number: number
+          stone_vils?: number | null
+          task: string
+          villager_count?: number | null
+          wood_vils?: number | null
+        }
+        Update: {
+          age?: Database["public"]["Enums"]["age_enum"]
+          build_order_id?: string
+          created_at?: string | null
+          food_vils?: number | null
+          gold_vils?: number | null
+          icon?: string | null
+          id?: string
+          note?: string | null
+          population?: number | null
+          step_number?: number
+          stone_vils?: number | null
+          task?: string
+          villager_count?: number | null
+          wood_vils?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "build_order_steps_build_order_id_fkey"
+            columns: ["build_order_id"]
+            isOneToOne: false
+            referencedRelation: "build_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       build_orders: {
         Row: {
           author_id: string
-          civs: number[] | null
+          civilization_ids: number[]
           created_at: string | null
           description: string | null
-          difficulty: string | null
+          difficulty: Database["public"]["Enums"]["difficulty_enum"]
           feudal_click_pop: number | null
           id: string
-          map_type: string | null
+          map_types: Database["public"]["Enums"]["map_type"][]
           maps: number[] | null
           opening_type: string | null
-          patch_version: string | null
           slug: string
-          steps: Json
           strategy_type: string | null
           title: string
           updated_at: string | null
@@ -36,18 +93,16 @@ export type Database = {
         }
         Insert: {
           author_id: string
-          civs?: number[] | null
+          civilization_ids: number[]
           created_at?: string | null
           description?: string | null
-          difficulty?: string | null
+          difficulty: Database["public"]["Enums"]["difficulty_enum"]
           feudal_click_pop?: number | null
           id?: string
-          map_type?: string | null
+          map_types?: Database["public"]["Enums"]["map_type"][]
           maps?: number[] | null
           opening_type?: string | null
-          patch_version?: string | null
           slug: string
-          steps: Json
           strategy_type?: string | null
           title: string
           updated_at?: string | null
@@ -55,18 +110,16 @@ export type Database = {
         }
         Update: {
           author_id?: string
-          civs?: number[] | null
+          civilization_ids?: number[]
           created_at?: string | null
           description?: string | null
-          difficulty?: string | null
+          difficulty?: Database["public"]["Enums"]["difficulty_enum"]
           feudal_click_pop?: number | null
           id?: string
-          map_type?: string | null
+          map_types?: Database["public"]["Enums"]["map_type"][]
           maps?: number[] | null
           opening_type?: string | null
-          patch_version?: string | null
           slug?: string
-          steps?: Json
           strategy_type?: string | null
           title?: string
           updated_at?: string | null
@@ -680,7 +733,17 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      age_enum:
+        | "dark"
+        | "feudal"
+        | "castle"
+        | "imperial"
+        | "dark_to_feudal"
+        | "feudal_to_castle"
+        | "castle_to_imperial"
+      difficulty_enum: "beginner" | "intermediate" | "advanced"
       gender_enum: "male" | "female"
+      map_type: "open" | "semi_open" | "closed" | "hybrid" | "water"
       player_rank: "bronze" | "silver" | "gold"
       tournament_match_status:
         | "pending"
@@ -833,7 +896,18 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      age_enum: [
+        "dark",
+        "feudal",
+        "castle",
+        "imperial",
+        "dark_to_feudal",
+        "feudal_to_castle",
+        "castle_to_imperial",
+      ],
+      difficulty_enum: ["beginner", "intermediate", "advanced"],
       gender_enum: ["male", "female"],
+      map_type: ["open", "semi_open", "closed", "hybrid", "water"],
       player_rank: ["bronze", "silver", "gold"],
       tournament_match_status: [
         "pending",

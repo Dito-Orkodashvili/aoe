@@ -62,6 +62,12 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
               მეომრები
             </Link>
             <Link
+              href="/build-orders"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              სტრატეგიები
+            </Link>
+            <Link
               href="/tournaments"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
@@ -164,6 +170,13 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                     onClick={() => setOpen(false)}
                   >
                     მეომრები
+                  </Link>
+                  <Link
+                    href="/build-orders"
+                    className="text-muted-foreground hover:text-foreground transition-colors text-lg"
+                    onClick={() => setOpen(false)}
+                  >
+                    სტრატეგიები
                   </Link>
                   <Link
                     href="/tournaments"

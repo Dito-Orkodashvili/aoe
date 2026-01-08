@@ -1,20 +1,36 @@
 import { createClient } from "@/lib/supabase/server";
 import { ActionErrorCode } from "@/lib/utils/error.constants";
 import { ActionResultType } from "@/lib/types/action.types";
-import { BuildOrderType } from "@/lib/types/build-order.types";
+import { BuildOrderWithSteps } from "@/lib/types/build-order.types";
 
-export async function getBuildOrders(): Promise<
-  ActionResultType<BuildOrderType[]>
-> {
+export async function getBuildOrderBySlug(
+  slug: string,
+): Promise<ActionResultType<BuildOrderWithSteps>> {
   const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("build_orders")
     .select(
       `
-      *,
+      id,
+      slug,
+      title,
+      description,
+      difficulty,
+      opening_type,
+      strategy_type,
+      maps,
+      youtube_url,
+      civilization_ids,
+      feudal_click_pop,
+      author_id,
+      map_types,
+      created_at,
+      updated_at,
+      
       build_order_steps (
         id,
+        build_order_id,
         step_number,
         age,
         villager_count,
@@ -25,14 +41,17 @@ export async function getBuildOrders(): Promise<
         stone_vils,
         task,
         note,
-        icon
+        icon,
+        created_at
       )
     `,
     )
+    .eq("slug", slug)
     .order("step_number", {
       referencedTable: "build_order_steps",
       ascending: true,
-    });
+    })
+    .single();
 
   if (error) {
     return {

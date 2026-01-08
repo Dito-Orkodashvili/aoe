@@ -31,13 +31,13 @@ const getCategoryIcon = (category: string) => {
 
 const getCategoryVariant = (category: string) => {
   switch (category) {
-    case "Rush":
+    case "rush":
       return "destructive";
-    case "Boom":
+    case "boom":
       return "success";
-    case "Defensive":
+    case "defensive":
       return "secondary";
-    case "All-in":
+    case "all-in":
       return "destructive";
     default:
       return "outline";
@@ -70,7 +70,7 @@ const BuildOrders = async () => {
     <>
       <PageHero>
         <div className="text-center space-y-3">
-          <Trophy className="w-16 h-16 text-primary mx-auto animate-fade-in" />
+          <Swords className="w-16 h-16 text-primary mx-auto animate-fade-in" />
           <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg animate-fade-in">
             სტრატეგიები
           </h1>
@@ -90,24 +90,12 @@ const BuildOrders = async () => {
               <Card className="hover:border-primary/50 transition-colors group p-0">
                 <CardContent className="px-6 py-4">
                   <div className="flex items-center gap-4">
-                    <div className="flex-1 min-w-0 space-y-4">
-                      <div className="flex items-center gap-2 flex-wrap mb-1">
+                    <div className="flex-1 min-w-0 space-y-6">
+                      <div className="flex items-center gap-2 flex-wrap">
                         <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
                           {bo.title}
                         </h3>
-                        {bo.civs?.map((civ) => (
-                          <Badge
-                            variant="outline"
-                            className="text-xs"
-                            key={civ}
-                          >
-                            {getCivById(civ)?.name}
-                          </Badge>
-                        ))}
                       </div>
-                      <p className="text-sm text-muted-foreground line-clamp-1">
-                        {bo.description}
-                      </p>
                       <div className="flex items-center gap-3 mt-2 flex-wrap">
                         {bo.strategy_type && (
                           <Badge

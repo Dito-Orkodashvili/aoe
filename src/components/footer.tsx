@@ -77,7 +77,7 @@ export const Footer = () => {
                 თამაშის ინსტალაცია
               </a>
               <a
-                href="#"
+                href="/build-orders"
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors"
               >
                 ბილდ ორდერები
