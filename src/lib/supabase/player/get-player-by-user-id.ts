@@ -9,8 +9,7 @@ export async function getPlayerByUserId(id: string) {
     .eq("user_id", id)
     .single();
 
-  if (error) throw error;
-  if (!data) throw new Error("Player not found");
+  if (error || !data) return null;
 
   return data;
 }
