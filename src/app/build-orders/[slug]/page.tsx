@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Play } from "lucide-react";
 import Link from "next/link";
 import { getBuildOrderBySlug } from "@/lib/supabase/build-order/get-build-order-by-slug";
 import { notFound } from "next/navigation";
@@ -14,7 +14,7 @@ import {
 import Image from "next/image";
 import { BuildOrderStepType } from "@/lib/types/build-order.types";
 import { cn, getCivById } from "@/lib/utils";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 const ageIconsMap: Record<BuildOrderStepType["age"], string> = {
@@ -66,6 +66,7 @@ const BuildOrderDetail = async ({
     description,
     title,
     civilization_ids,
+    youtube_url,
   } = buildOrder;
 
   return (
@@ -99,6 +100,28 @@ const BuildOrderDetail = async ({
                 className="rich-content"
                 dangerouslySetInnerHTML={{ __html: description }}
               />
+            </CardContent>
+          </Card>
+        )}
+
+        {youtube_url && (
+          <Card className="mb-4">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Play className="w-5 h-5 text-primary" />
+                ვიდეო დემონსტრაცია
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="aspect-video rounded-lg overflow-hidden bg-muted">
+                <iframe
+                  className="w-full h-full"
+                  src={`https://www.youtube.com/embed/${youtube_url}`}
+                  title="Build Order Video Tutorial"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
             </CardContent>
           </Card>
         )}
