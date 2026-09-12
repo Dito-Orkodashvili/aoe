@@ -13,6 +13,7 @@ import {
   List,
   Mountain,
   Trophy,
+  Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ReactElement, useMemo, useState } from "react";
@@ -30,10 +31,24 @@ import { PlayerType } from "@/lib/types/player.types";
 import Link from "next/link";
 import Image from "next/image";
 import { getCivById } from "@/lib/utils/civilization.utils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface PlayerListProps {
   players: PlayerWithStats[];
 }
+
+type SortBy = "one_v_one" | "team_game";
+
+const sortOptions: Record<SortBy, string> = {
+  one_v_one: "1v1 რეიტინგი",
+  team_game: "გუნდური რეიტინგი",
+};
 
 const leagueIcons: Record<PlayerType["league"], ReactElement> = {
   bronze: <Trophy size={28} className="text-amber-700" />,
@@ -43,16 +58,19 @@ const leagueIcons: Record<PlayerType["league"], ReactElement> = {
 
 export const PlayersList = ({ players }: PlayerListProps) => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = useState<SortBy>("one_v_one");
 
   const sortedPlayers = useMemo(
     () =>
-      players?.sort((a, b) => {
-        const eloA = a.one_v_one_stats?.rating ?? 0;
-        const eloB = b.one_v_one_stats?.rating ?? 0;
+      [...(players ?? [])].sort((a, b) => {
+        const statsKey =
+          sortBy === "team_game" ? "team_game_stats" : "one_v_one_stats";
+        const eloA = a[statsKey]?.rating ?? 0;
+        const eloB = b[statsKey]?.rating ?? 0;
 
         return eloB - eloA;
       }),
-    [players],
+    [players, sortBy],
   );
 
   return (
@@ -65,6 +83,21 @@ export const PlayersList = ({ players }: PlayerListProps) => {
           რენკირება ხდება ოფიციალური რეიტინგის მიხედვით!
         </p>
         <div className="flex gap-2">
+          <Select
+            value={sortBy}
+            onValueChange={(value) => setSortBy(value as SortBy)}
+          >
+            <SelectTrigger className="w-[190px] bg-card border-border/50">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-card border-border">
+              {Object.entries(sortOptions).map(([value, label]) => (
+                <SelectItem key={value} value={value}>
+                  {label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Button
             variant={viewMode === "grid" ? "default" : "outline"}
             size="icon"
@@ -134,9 +167,19 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                     <div className="flex items-center gap-2">
                       <ChartNoAxesCombined className="w-5 h-5 text-primary" />
                       <span className="font-semibold">
-                        რეიტინგი:{" "}
+                        1v1 რეიტინგი:{" "}
                         <span className="text-secondary font-bold">
                           {player.one_v_one_stats?.rating ?? "N/A"}
+                        </span>
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Users className="w-5 h-5 text-primary" />
+                      <span className="font-semibold">
+                        გუნდური რეიტინგი:{" "}
+                        <span className="text-secondary font-bold">
+                          {player.team_game_stats?.rating ?? "N/A"}
                         </span>
                       </span>
                     </div>
@@ -213,7 +256,8 @@ export const PlayersList = ({ players }: PlayerListProps) => {
               <TableRow>
                 <TableHead className="w-20">Rank</TableHead>
                 <TableHead>Player</TableHead>
-                <TableHead>Elo</TableHead>
+                <TableHead>1v1 Elo</TableHead>
+                <TableHead>Team Elo</TableHead>
                 <TableHead>Wins/Loses</TableHead>
                 <TableHead>Win Streak</TableHead>
                 <TableHead>Highest Elo</TableHead>
@@ -222,7 +266,7 @@ export const PlayersList = ({ players }: PlayerListProps) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {players.map((player, index) => (
+              {sortedPlayers.map((player, index) => (
                 <TableRow key={player.id}>
                   <TableCell>
                     <Badge variant="outline">#{index + 1}</Badge>
@@ -232,6 +276,9 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                   </TableCell>
                   <TableCell className="font-medium">
                     {player.one_v_one_stats?.rating ?? "N/A"}
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {player.team_game_stats?.rating ?? "N/A"}
                   </TableCell>
                   <TableCell className="font-semibold">
                     {player.one_v_one_stats?.wins &&
