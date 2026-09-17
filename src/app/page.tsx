@@ -14,6 +14,11 @@ import { FaDiscord, FaTwitch, FaYoutube } from "react-icons/fa";
 import { getTournamentsCount } from "@/lib/supabase/tournament/get-tournaments-count";
 import { getPlayersCount } from "@/lib/supabase/player/get-players-count";
 import ReactCountryFlag from "react-country-flag";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default async function Home() {
   const playersCount = await getPlayersCount();

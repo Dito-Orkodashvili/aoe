@@ -32,4 +32,5 @@ export * from "./civilization.utils";
 export * from "./error.constants";
 export * from "./lobby.utils";
 export * from "./map.utils";
+export * from "./player.utils";
 export * from "./tournament.utils";

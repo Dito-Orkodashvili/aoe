@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
 import Link from "next/link";
-import type { User as UserType } from "@supabase/auth-js";
 import { Menu, User, LogOut, Swords, Heart } from "lucide-react";
 import {
   DropdownMenu,
@@ -18,20 +17,20 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { getInitials } from "@/lib/utils";
+import { useAuthedUser } from "@/hooks/use-authed-user";
+import { Skeleton } from "@/components/ui/skeleton";
 
-interface NavigationProps {
-  authedUser: UserType | null;
-}
-
-export const Navigation = ({ authedUser }: NavigationProps) => {
+export const Navigation = () => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const { authedUser, isResolved } = useAuthedUser();
 
   const logout = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
 
     router.push("/");
+    router.refresh();
   };
 
   const authedUserName = authedUser?.user_metadata?.full_name;
@@ -91,8 +90,10 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
             >
               FAQ
             </Link>
-            <div className="flex items-center gap-2">
-              {authedUser ? (
+            <div className="flex items-center justify-end gap-2 w-[130px] shrink-0">
+              {!isResolved ? (
+                <Skeleton className="h-9 w-9 rounded-full" />
+              ) : authedUser ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
@@ -206,7 +207,7 @@ export const Navigation = ({ authedUser }: NavigationProps) => {
                   >
                     FAQ
                   </Link>
-                  {authedUser ? (
+                  {!isResolved ? null : authedUser ? (
                     <div className="mt-6 pt-6 border-t border-border">
                       <div className="flex items-center gap-3 mb-4">
                         <Avatar className="h-10 w-10">

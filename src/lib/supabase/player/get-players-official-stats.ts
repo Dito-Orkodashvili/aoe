@@ -5,25 +5,47 @@ import {
   TransformedLobbySlot,
 } from "@/lib/types/lobby.types";
 
+const EMPTY_STATS: PersonalStatResponse = {
+  result: { code: 0, message: "no stats requested" },
+  statGroups: [],
+  leaderboardStats: [],
+};
+
 export async function getPlayersOfficialStats(
   players: PlayerType[],
 ): Promise<PersonalStatResponse> {
   const profileIds = players
-    .filter((p) => p.aoe_profile_id)
-    .map((p) => p.aoe_profile_id);
+    .map((p) => p.aoe_profile_id)
+    .filter((id): id is string => Boolean(id));
 
-  const formatted = `[${profileIds.map((id) => `'${id}'`).join(",")}]`;
-  const url = `https://aoe-api.worldsedgelink.com/community/leaderboard/GetPersonalStat?title=age2&profile_ids=${formatted}`;
+  // the upstream rejects an empty list with a 400
+  if (!profileIds.length) return EMPTY_STATS;
 
-  const res = await fetch(url, { next: { revalidate: 60 } });
+  const encoded = encodeURIComponent(JSON.stringify(profileIds));
+  const url = `https://aoe-api.worldsedgelink.com/community/leaderboard/GetPersonalStat?title=age2&profile_ids=${encoded}`;
 
-  return res.json();
+  try {
+    const res = await fetch(url, { next: { revalidate: 60 } });
+
+    // on errors the upstream answers with an HTML body, so json() would throw
+    if (!res.ok) {
+      console.error(`GetPersonalStat failed: ${res.status} ${res.statusText}`);
+      return EMPTY_STATS;
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("GetPersonalStat request failed", error);
+    return EMPTY_STATS;
+  }
 }
 
 export function mergePlayersWithStats(
   players: PlayerType[],
   stats: PersonalStatResponse,
 ): PlayerWithStats[] {
+  if (!stats?.statGroups?.length) return players;
+
   return players.map((player) => {
     if (!player.aoe_profile_id) return player;
 

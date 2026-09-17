@@ -104,66 +104,70 @@ export const LeaderboardTable = () => {
                         key={player.rank}
                         className="hover:bg-amber-500/5 border-border/30 transition-colors"
                       >
-                        <TableCell className="text-center font-medium">
+                        <TableCell className="text-center font-medium whitespace-nowrap">
                           <div className="flex items-center justify-center">
                             #{player.rank}
                           </div>
                         </TableCell>
-                        <TableCell className="flex gap-3 items-center">
-                          <Avatar className="w-8 h-8 rounded-full object-cover border-1 border-primary/20">
-                            <AvatarImage
-                              src={player.avatarSmallUrl}
-                              alt={player.name}
-                              className="object-cover"
-                            />
-                            <AvatarFallback className="rounded-none text-md">
-                              {player.name
-                                ?.split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
-                          </Avatar>
+                        <TableCell>
+                          <div className="flex gap-3 items-center min-w-0">
+                            <Avatar className="w-8 h-8 rounded-full object-cover border-1 border-primary/20">
+                              <AvatarImage
+                                src={player.avatarSmallUrl}
+                                alt={player.name}
+                                className="object-cover"
+                              />
+                              <AvatarFallback className="rounded-none text-md">
+                                {player.name
+                                  ?.split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
 
-                          <a
-                            href={`https://www.aoe2insights.com/user/relic/${player.profileId}/`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="font-semibold text-foreground hover:text-amber-400 transition-colors"
-                          >
-                            {player.name}
-                          </a>
+                            <a
+                              href={`https://www.aoe2insights.com/user/relic/${player.profileId}/`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-semibold text-foreground hover:text-amber-400 transition-colors truncate"
+                            >
+                              {player.name}
+                            </a>
+                          </div>
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right whitespace-nowrap">
                           <span className="font-mono font-bold text-amber-400">
                             {player.rating}
                           </span>
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right whitespace-nowrap">
                           <span className="text-muted-foreground">
                             {winRate}%
                           </span>
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right whitespace-nowrap">
                           <span className="text-muted-foreground">
                             {player.games.toLocaleString()}
                           </span>
                         </TableCell>
-                        <TableCell className="text-center flex items-center justify-center">
-                          {player.country === "ru" ? (
-                            <span title="ოკუპანტი">
-                              <TicketX className="text-xl text-red-600" />
-                            </span>
-                          ) : (
-                            <ReactCountryFlag
-                              className="text-xl"
-                              countryCode={player.country}
-                              aria-label={player.country}
-                              title={player.country}
-                              svg
-                            />
-                          )}
+                        <TableCell className="text-center whitespace-nowrap">
+                          <div className="flex items-center justify-center">
+                            {player.country === "ru" ? (
+                              <span title="ოკუპანტი">
+                                <TicketX className="text-xl text-red-600" />
+                              </span>
+                            ) : (
+                              <ReactCountryFlag
+                                className="text-xl"
+                                countryCode={player.country}
+                                aria-label={player.country}
+                                title={player.country}
+                                svg
+                              />
+                            )}
+                          </div>
                         </TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center whitespace-nowrap">
                           {getStreakBadge(player.streak)}
                         </TableCell>
                       </TableRow>

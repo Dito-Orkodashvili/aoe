@@ -1,5 +1,3 @@
-import { Swords } from "lucide-react";
-import { PageHero } from "@/components/sections/hero";
 import { LobbiesTable } from "@/components/lobbies-table";
 import { LobbyTabs } from "@/components/lobby-tabs";
 import { LiveMatchesTable } from "@/components/live-matches-table";
@@ -12,27 +10,13 @@ const Lobbies = async ({
   const { tab } = await searchParams;
 
   return (
-    <>
-      <PageHero>
-        <div className="text-center space-y-3">
-          <Swords className="w-16 h-16 text-primary mx-auto drop-shadow-lg animate-fade-in" />
-          <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg animate-fade-in">
-            ბრძოლის ველი
-          </h1>
-          <p className="text-lg text-gray-200 max-w-2xl mx-auto animate-fade-in">
-            უყურე ლაივ ბრძოლებს ან შეუერთდი აქტიურ ლობიებს
-          </p>
-        </div>
-      </PageHero>
-
-      <main className="container mx-auto px-4 py-8">
-        <LobbyTabs
-          activeTab={tab ?? "live"}
-          liveComponent={<LiveMatchesTable />}
-          lobbyComponent={<LobbiesTable />}
-        />
-      </main>
-    </>
+    <main className="container mx-auto px-4 py-8">
+      <LobbyTabs
+        activeTab={tab ?? "live"}
+        liveComponent={<LiveMatchesTable />}
+        lobbyComponent={<LobbiesTable />}
+      />
+    </main>
   );
 };
 

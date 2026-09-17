@@ -27,23 +27,27 @@ export const LeaderboardSkeleton = () => (
           <TableCell className="text-center">
             <Skeleton className="h-5 w-8 mx-auto" />
           </TableCell>
+          {/* the 32px avatar is what sets the row height in the real table */}
           <TableCell>
-            <Skeleton className="h-5 w-32" />
+            <div className="flex gap-3 items-center">
+              <Skeleton className="w-8 h-8 rounded-full" />
+              <Skeleton className="h-5 w-32" />
+            </div>
           </TableCell>
           <TableCell className="text-right">
-            <Skeleton className="h-6 w-6 mx-auto rounded-full" />
+            <Skeleton className="h-4 w-12 ml-auto" />
           </TableCell>
           <TableCell className="text-right">
-            <Skeleton className="h-5 w-12 ml-auto" />
+            <Skeleton className="h-5 w-10 ml-auto" />
           </TableCell>
-          <TableCell className="text-center flex items-center justify-center">
+          <TableCell className="text-right">
             <Skeleton className="h-5 w-14 ml-auto" />
           </TableCell>
           <TableCell className="text-center">
-            <Skeleton className="h-5 w-12 ml-auto" />
+            <Skeleton className="h-6 w-8 mx-auto" />
           </TableCell>
           <TableCell className="text-center">
-            <Skeleton className="h-5 w-10 mx-auto" />
+            <Skeleton className="h-[22px] w-12 mx-auto rounded-full" />
           </TableCell>
         </TableRow>
       ))}

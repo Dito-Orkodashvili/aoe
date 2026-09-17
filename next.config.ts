@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "avatars.akamai.steamstatic.com",
       },
+      {
+        protocol: "https",
+        hostname: "qzumqpgzpejfniplxemq.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
     ],
   },
 };

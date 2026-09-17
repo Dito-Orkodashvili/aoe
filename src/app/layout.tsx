@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Macondo, Noto_Sans_Georgian } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Navigation } from "@/components/navigation";
-import { getAuthedUser } from "@/lib/supabase/user/get-authed-user";
 import { Footer } from "@/components/footer";
 import "./globals.css";
 import { ThemeAudio } from "@/components/theme-audio";
@@ -13,13 +12,15 @@ const macondoCursive = Macondo({
   subsets: ["latin"],
   variable: "--font-macondo",
   weight: "400",
+  display: "optional",
 });
 
+// "georgian" is what the site actually renders, so that subset is the one that
+// has to be preloaded; omitting weight pulls the variable font as a single file
 const notoSerif = Noto_Sans_Georgian({
-  subsets: ["latin"],
+  subsets: ["georgian", "latin"],
   variable: "--font-noto",
-  weight: ["300", "400", "600", "800"],
-  display: "swap",
+  display: "optional",
 });
 
 const isProd = process.env.NODE_ENV === "production";
@@ -77,19 +78,13 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
-
-  alternates: {
-    canonical: "https://aoe.ge/",
-  },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const authedUser = await getAuthedUser();
-
   return (
     <html
       lang="ka"
@@ -102,7 +97,7 @@ export default async function RootLayout({
           <ThemeAudio />
 
           <Providers>
-            <Navigation authedUser={authedUser} />
+            <Navigation />
             {children}
           </Providers>
         </div>

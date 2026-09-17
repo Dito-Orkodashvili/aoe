@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ArrowRight, BookCheck, Calendar, Trophy } from "lucide-react";
 import Link from "next/link";
-import { PageHero } from "@/components/sections/hero";
 import { TournamentCard } from "@/components/tournament/tournament-card";
 import { Badge } from "@/components/ui/badge";
 import { cn, formatDateTime, sortTournaments } from "@/lib/utils";
@@ -26,18 +25,6 @@ export default async function Tournaments() {
 
   return (
     <>
-      <PageHero>
-        <div className="text-center space-y-3">
-          <Trophy className="w-16 h-16 text-primary mx-auto animate-fade-in" />
-          <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg animate-fade-in">
-            ტურნირები
-          </h1>
-          <p className="text-lg text-gray-200 max-w-2xl mx-auto animate-fade-in">
-            შეერკინე საუკეთესო მოთამაშეებს და დაიმკვიდრე შენი ადგილი ისტორიაში!
-          </p>
-        </div>
-      </PageHero>
-
       <section className="py-4 md:py-8 px-4 mt-8">
         <div className="container mx-auto max-w-6xl">
           <div className="flex items-center gap-3 mb-8">
