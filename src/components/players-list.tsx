@@ -1,14 +1,12 @@
 "use client";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
   ChartNoAxesCombined,
   Flag,
   Flame,
   Gamepad2,
-  Info,
   LayoutGrid,
   List,
   Mountain,
@@ -29,8 +27,11 @@ import { PlayerWithStats } from "@/lib/types";
 import { clsx } from "clsx";
 import { PlayerType } from "@/lib/types/player.types";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { getCivById } from "@/lib/utils/civilization.utils";
+import { anonymousPicture } from "@/lib/utils/player.utils";
+import { PlayersListInfo } from "@/components/players-list-info";
 import {
   Select,
   SelectContent,
@@ -44,11 +45,21 @@ interface PlayerListProps {
 }
 
 type SortBy = "one_v_one" | "team_game";
+type ViewMode = "grid" | "list";
 
 const sortOptions: Record<SortBy, string> = {
   one_v_one: "1v1 რეიტინგი",
   team_game: "გუნდური რეიტინგი",
 };
+
+const SORT_PARAM = "sort";
+const VIEW_PARAM = "view";
+
+const parseSort = (value: string | null): SortBy =>
+  value === "team" ? "team_game" : "one_v_one";
+
+const parseView = (value: string | null): ViewMode =>
+  value === "list" ? "list" : "grid";
 
 const leagueIcons: Record<PlayerType["league"], ReactElement> = {
   bronze: <Trophy size={28} className="text-amber-700" />,
@@ -57,37 +68,68 @@ const leagueIcons: Record<PlayerType["league"], ReactElement> = {
 };
 
 export const PlayersList = ({ players }: PlayerListProps) => {
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [sortBy, setSortBy] = useState<SortBy>("one_v_one");
+  const searchParams = useSearchParams();
+  const [viewMode, setViewMode] = useState<ViewMode>(() =>
+    parseView(searchParams.get(VIEW_PARAM)),
+  );
+  const [sortBy, setSortBy] = useState<SortBy>(() =>
+    parseSort(searchParams.get(SORT_PARAM)),
+  );
+
+  const syncUrl = (next: { sort?: SortBy; view?: ViewMode }) => {
+    const params = new URLSearchParams(searchParams.toString());
+    const sort = next.sort ?? sortBy;
+    const view = next.view ?? viewMode;
+
+    if (sort === "team_game") params.set(SORT_PARAM, "team");
+    else params.delete(SORT_PARAM);
+
+    if (view === "list") params.set(VIEW_PARAM, "list");
+    else params.delete(VIEW_PARAM);
+
+    const query = params.toString();
+    window.history.replaceState(
+      null,
+      "",
+      query ? `${window.location.pathname}?${query}` : window.location.pathname,
+    );
+  };
+
+  const changeSort = (value: SortBy) => {
+    setSortBy(value);
+    syncUrl({ sort: value });
+  };
+
+  const changeView = (value: ViewMode) => {
+    setViewMode(value);
+    syncUrl({ view: value });
+  };
+
+  const activeStatsKey =
+    sortBy === "team_game" ? "team_game_stats" : "one_v_one_stats";
+  const activeModeLabel = sortBy === "team_game" ? "Team" : "1v1";
 
   const sortedPlayers = useMemo(
     () =>
       [...(players ?? [])].sort((a, b) => {
-        const statsKey =
-          sortBy === "team_game" ? "team_game_stats" : "one_v_one_stats";
-        const eloA = a[statsKey]?.rating ?? 0;
-        const eloB = b[statsKey]?.rating ?? 0;
+        const eloA = a[activeStatsKey]?.rating ?? 0;
+        const eloB = b[activeStatsKey]?.rating ?? 0;
 
         return eloB - eloA;
       }),
-    [players, sortBy],
+    [players, activeStatsKey],
   );
 
   return (
     <div>
-      <div className="flex justify-between mb-2 items-center gap-4">
-        <p className="text-sm md:text-md text-muted-foreground flex gap-3 items-center">
-          <span>
-            <Info className="text-secondary" />
-          </span>{" "}
-          რენკირება ხდება ოფიციალური რეიტინგის მიხედვით!
-        </p>
-        <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
+        <PlayersListInfo />
+        <div className="flex gap-2 w-full sm:w-auto">
           <Select
             value={sortBy}
-            onValueChange={(value) => setSortBy(value as SortBy)}
+            onValueChange={(value) => changeSort(value as SortBy)}
           >
-            <SelectTrigger className="w-[190px] bg-card border-border/50">
+            <SelectTrigger className="flex-1 sm:flex-none sm:w-[190px] bg-card border-border/50">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-card border-border">
@@ -101,14 +143,14 @@ export const PlayersList = ({ players }: PlayerListProps) => {
           <Button
             variant={viewMode === "grid" ? "default" : "outline"}
             size="icon"
-            onClick={() => setViewMode("grid")}
+            onClick={() => changeView("grid")}
           >
             <LayoutGrid className="w-4 h-4" />
           </Button>
           <Button
             variant={viewMode === "list" ? "default" : "outline"}
             size="icon"
-            onClick={() => setViewMode("list")}
+            onClick={() => changeView("list")}
           >
             <List className="w-4 h-4" />
           </Button>
@@ -126,22 +168,16 @@ export const PlayersList = ({ players }: PlayerListProps) => {
               >
                 <CardHeader className="p-0">
                   <div className="relative aspect-square overflow-hidden bg-muted">
-                    <Avatar className="w-full h-full rounded-none">
-                      <AvatarImage
-                        src={
-                          player.picture_url ??
-                          `/aoe/anonymous_player_${player.gender}.webp`
-                        }
-                        alt={player.nickname}
-                        className="object-cover"
-                      />
-                      <AvatarFallback className="rounded-none text-4xl">
-                        {player.nickname
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
+                    <Image
+                      src={
+                        player.picture_url ?? anonymousPicture(player.gender)
+                      }
+                      alt={player.nickname}
+                      fill
+                      sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
+                      className="object-cover"
+                      priority={index < 4}
+                    />
                     <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
                       #{index + 1}
                     </Badge>
@@ -258,50 +294,75 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                 <TableHead>Player</TableHead>
                 <TableHead>1v1 Elo</TableHead>
                 <TableHead>Team Elo</TableHead>
-                <TableHead>Wins/Loses</TableHead>
-                <TableHead>Win Streak</TableHead>
-                <TableHead>Highest Elo</TableHead>
+                <TableHead>Wins/Loses ({activeModeLabel})</TableHead>
+                <TableHead>Win Streak ({activeModeLabel})</TableHead>
+                <TableHead>Highest Elo ({activeModeLabel})</TableHead>
                 <TableHead>League</TableHead>
                 <TableHead>Favorite Civ</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sortedPlayers.map((player, index) => (
-                <TableRow key={player.id}>
-                  <TableCell>
-                    <Badge variant="outline">#{index + 1}</Badge>
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    {player.nickname}
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    {player.one_v_one_stats?.rating ?? "N/A"}
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    {player.team_game_stats?.rating ?? "N/A"}
-                  </TableCell>
-                  <TableCell className="font-semibold">
-                    {player.one_v_one_stats?.wins &&
-                    player.one_v_one_stats?.losses
-                      ? `${player.one_v_one_stats?.wins}/${
-                          player.one_v_one_stats?.losses
-                        }`
-                      : "N/A"}
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    {player.one_v_one_stats?.streak ?? "N/A"}
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    {player.one_v_one_stats?.highestrating ?? "N/A"}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">{player.league}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="secondary">{player.fav_civ}</Badge>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {sortedPlayers.map((player, index) => {
+                const favCiv = getCivById(player.fav_civ);
+                const activeStats = player[activeStatsKey];
+
+                return (
+                  <TableRow key={player.id}>
+                    <TableCell>
+                      <Badge variant="outline">#{index + 1}</Badge>
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      <Link
+                        href={`/players/${player.id}`}
+                        className="hover:underline hover:text-secondary transition-all"
+                      >
+                        {player.nickname}
+                      </Link>
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {player.one_v_one_stats?.rating ?? "N/A"}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {player.team_game_stats?.rating ?? "N/A"}
+                    </TableCell>
+                    <TableCell className="font-semibold">
+                      {activeStats
+                        ? `${activeStats.wins}/${activeStats.losses}`
+                        : "N/A"}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {activeStats?.streak ?? "N/A"}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {activeStats?.highestrating ?? "N/A"}
+                    </TableCell>
+                    <TableCell>
+                      <span
+                        className="flex items-center gap-2"
+                        title={`${player.league} league`}
+                      >
+                        {leagueIcons[player.league]}
+                        <Badge variant="outline">{player.league}</Badge>
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      {favCiv ? (
+                        <span className="flex items-center gap-2">
+                          <Image
+                            src={`/aoe/civs/${favCiv.icon}`}
+                            alt={favCiv.name}
+                            width={20}
+                            height={20}
+                          />
+                          {favCiv.name}
+                        </span>
+                      ) : (
+                        "N/A"
+                      )}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>

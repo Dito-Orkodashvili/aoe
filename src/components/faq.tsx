@@ -9,7 +9,7 @@ import {
 import { Link2 } from "lucide-react";
 import { ReactNode, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface FAQItem {
   id: string;
@@ -118,7 +118,6 @@ const faqItems: FAQItem[] = [
 
 export const FAQ = () => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [openItem, setOpenItem] = useState<string>("");
 
   useEffect(() => {
@@ -132,7 +131,7 @@ export const FAQ = () => {
         element.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   const copyLink = (id: string) => {
     const url = `${window.location.origin}/faq#${id}`;

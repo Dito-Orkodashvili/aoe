@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  ArrowLeft,
   ChartNoAxesCombined,
   ExternalLink,
   Flag,
@@ -12,21 +11,56 @@ import {
   Trophy,
   User,
 } from "lucide-react";
-import Link from "next/link";
 import { getPlayerById } from "@/lib/supabase/player/get-player-by-id";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   getPlayerOfficialStats,
   mergePlayerWithStats,
 } from "@/lib/supabase/player/get-player-official-stats";
 import Image from "next/image";
 import { getCivById } from "@/lib/utils/civilization.utils";
+import { anonymousPicture } from "@/lib/utils/player.utils";
+import type { Metadata } from "next";
 import { TwitchLink } from "@/components/twitch-link";
 import { YoutubeLink } from "@/components/youtube-link";
 import { RecentMatchesList } from "@/components/player/recent-matches-list";
 import { CivStatsList } from "@/components/player/civ-stats-list";
 import { MapStatsList } from "@/components/player/map-stats-list";
-import { SetupCard } from "@/components/player/setup-card";
+import { PlayerStatCard } from "@/components/player/stat-card";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ playerId: string }>;
+}): Promise<Metadata> {
+  const { playerId } = await params;
+  const canonical = `/players/${playerId}`;
+
+  let player = null;
+
+  try {
+    player = await getPlayerById(playerId);
+  } catch {
+    return { title: "მოთამაშე", alternates: { canonical } };
+  }
+
+  const fullName = [player.name, player.last_name].filter(Boolean).join(" ");
+  const description = `${player.nickname}${fullName ? ` (${fullName})` : ""} — ${
+    player.team ?? "Team Georgia"
+  }. Age of Empires II რეიტინგი, სტატისტიკა და უახლესი ბრძოლები.`;
+
+  return {
+    title: player.nickname,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title: `${player.nickname} — aoe.ge`,
+      description,
+      url: canonical,
+      type: "profile",
+      images: player.picture_url ? [player.picture_url] : undefined,
+    },
+  };
+}
 
 const PlayerDetails = async ({
   params,
@@ -72,34 +106,21 @@ const PlayerDetails = async ({
   }
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <Link
-        href="/players"
-        className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        მეომრების სია
-      </Link>
-
+    <>
       <div className="relative mb-4">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent rounded-2xl" />
         <Card className="border-0 bg-card/50 backdrop-blur-sm p-0">
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-              <div className="relative">
-                <Avatar className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-4 border-primary/20">
-                  <AvatarImage
-                    src={picture_url ?? `/aoe/anonymous_player_${gender}.webp`}
-                    alt={nickname}
-                    className="object-cover"
-                  />
-                  <AvatarFallback className="rounded-none text-4xl">
-                    {nickname
-                      ?.split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </AvatarFallback>
-                </Avatar>
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-4 border-primary/20">
+                <Image
+                  src={picture_url ?? anonymousPicture(gender)}
+                  alt={nickname ?? ""}
+                  fill
+                  sizes="160px"
+                  className="object-cover"
+                  priority
+                />
               </div>
               <div className="flex-1 text-center md:text-left">
                 <h1 className="text-3xl md:text-4xl font-bold text-foreground font-medieval">
@@ -170,45 +191,31 @@ const PlayerDetails = async ({
       </Card>
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
-        <Card>
-          <CardContent className="p-6 text-center">
+        <PlayerStatCard
+          icon={
             <ChartNoAxesCombined className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <p className="text-3xl font-bold text-foreground">
-              {one_v_one_stats?.rating ?? "N/A"}
-            </p>
-            <p className="text-sm text-muted-foreground">მიმდინარე რეიტინგი</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6 text-center">
-            <Mountain className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <p className="text-3xl font-bold text-foreground">
-              {one_v_one_stats?.highestrating ?? "N/A"}
-            </p>
-            <p className="text-sm text-muted-foreground">პიკ რეიტინგი</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6 text-center">
-            <Flame className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <p className="text-3xl font-bold text-foreground">
-              {one_v_one_stats?.streak || "N/A"}
-            </p>
-            <p className="text-sm text-muted-foreground">მოგებების სერია</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6 text-center">
-            <Gamepad2 className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <p className="text-3xl font-bold text-foreground">
-              {total1v1Games}
-            </p>
-            <p className="text-sm text-muted-foreground">ბრძოლების რაოდენობა</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6 text-center">
-            {resolvedFavCiv ? (
+          }
+          value={one_v_one_stats?.rating ?? "N/A"}
+          label="მიმდინარე რეიტინგი"
+        />
+        <PlayerStatCard
+          icon={<Mountain className="w-8 h-8 mx-auto mb-2 text-primary" />}
+          value={one_v_one_stats?.highestrating ?? "N/A"}
+          label="პიკ რეიტინგი"
+        />
+        <PlayerStatCard
+          icon={<Flame className="w-8 h-8 mx-auto mb-2 text-primary" />}
+          value={one_v_one_stats?.streak || "N/A"}
+          label="მოგებების სერია"
+        />
+        <PlayerStatCard
+          icon={<Gamepad2 className="w-8 h-8 mx-auto mb-2 text-primary" />}
+          value={total1v1Games}
+          label="ბრძოლების რაოდენობა"
+        />
+        <PlayerStatCard
+          icon={
+            resolvedFavCiv ? (
               <a
                 className="flex justify-center mb-2"
                 href={`https://ageofempires.fandom.com/wiki/${resolvedFavCiv.name}`}
@@ -224,24 +231,23 @@ const PlayerDetails = async ({
               </a>
             ) : (
               <Flag className="w-8 h-8 mx-auto mb-2 text-primary" />
-            )}
-
-            <p className="text-3xl font-bold text-foreground">
-              {resolvedFavCiv ? (
-                <a
-                  className="flex justify-center"
-                  href={`https://ageofempires.fandom.com/wiki/${resolvedFavCiv.name}`}
-                  target="_blank"
-                >
-                  {resolvedFavCiv.name}
-                </a>
-              ) : (
-                "N/A"
-              )}
-            </p>
-            <p className="text-sm text-muted-foreground">საყვარელი ცივი</p>
-          </CardContent>
-        </Card>
+            )
+          }
+          value={
+            resolvedFavCiv ? (
+              <a
+                className="flex justify-center"
+                href={`https://ageofempires.fandom.com/wiki/${resolvedFavCiv.name}`}
+                target="_blank"
+              >
+                {resolvedFavCiv.name}
+              </a>
+            ) : (
+              "N/A"
+            )
+          }
+          label="საყვარელი ცივი"
+        />
       </div>
       {/*<SetupCard />*/}
       <Tabs defaultValue="matches" className="space-y-4">
@@ -289,7 +295,7 @@ const PlayerDetails = async ({
           </Card>
         </TabsContent>
       </Tabs>
-    </main>
+    </>
   );
 };
 

@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
+import { cache } from "react";
 
-export async function getPlayerById(id: string) {
+// cached so the page and generateMetadata share a single query per request
+export const getPlayerById = cache(async (id: string) => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -13,4 +15,4 @@ export async function getPlayerById(id: string) {
   if (!data) throw new Error("Player not found");
 
   return data;
-}
+});

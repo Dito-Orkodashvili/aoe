@@ -12,7 +12,6 @@ import {
 import Link from "next/link";
 import { getBuildOrders } from "@/lib/supabase/build-order/get-build-orders";
 import { getCivById } from "@/lib/utils";
-import { PageHero } from "@/components/sections/hero";
 
 const getCategoryIcon = (category: string) => {
   switch (category) {
@@ -68,17 +67,6 @@ const BuildOrders = async () => {
 
   return (
     <>
-      <PageHero>
-        <div className="text-center space-y-3">
-          <Swords className="w-16 h-16 text-primary mx-auto animate-fade-in" />
-          <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg animate-fade-in">
-            სტრატეგიები
-          </h1>
-          <p className="text-lg text-gray-200 max-w-2xl mx-auto animate-fade-in">
-            შეისწავლე ძირითადი სტრატეგიები და მნიშვნელოვნად გააუმჯობესე თამაში.
-          </p>
-        </div>
-      </PageHero>
       <main className="container mx-auto px-4 py-12 max-w-4xl">
         <div className="space-y-4">
           {buildOrders.map((bo) => (
