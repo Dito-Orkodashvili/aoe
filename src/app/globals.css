@@ -166,3 +166,82 @@
     content: "⚔";
     @apply text-primary text-lg absolute top-0 left-0
 }
+
+/* Top ranked player */
+@keyframes champion-pulse {
+    0%,
+    100% {
+        opacity: 0.35;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes champion-shimmer {
+    0%,
+    8% {
+        transform: translateX(-150%) skewX(-18deg);
+    }
+    45%,
+    100% {
+        transform: translateX(460%) skewX(-18deg);
+    }
+}
+
+@keyframes champion-crown {
+    0%,
+    92%,
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+    95% {
+        transform: rotate(-12deg) scale(1.15);
+    }
+    98% {
+        transform: rotate(10deg) scale(1.15);
+    }
+}
+
+@keyframes champion-rating {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.85;
+    }
+    50% {
+        transform: scale(1.14);
+        opacity: 1;
+    }
+}
+
+@utility animate-champion-rating {
+    text-shadow:
+        0 0 12px hsl(var(--secondary) / 0.85),
+        0 0 28px hsl(var(--secondary) / 0.45);
+    animation: champion-rating 2s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+@utility animate-champion-pulse {
+    animation: champion-pulse 2.4s ease-in-out infinite;
+    will-change: opacity;
+}
+
+@utility animate-champion-shimmer {
+    animation: champion-shimmer 4.5s ease-in-out infinite;
+    will-change: transform;
+}
+
+@utility animate-champion-crown {
+    animation: champion-crown 4.5s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-champion-shimmer,
+    .animate-champion-crown,
+    .animate-champion-rating {
+        animation: none;
+    }
+}

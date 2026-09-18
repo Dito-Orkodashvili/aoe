@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   ChartNoAxesCombined,
+  Crown,
   Flag,
   Flame,
   Gamepad2,
@@ -160,12 +161,23 @@ export const PlayersList = ({ players }: PlayerListProps) => {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {sortedPlayers.map((player, index) => {
             const favCiv = getCivById(player.fav_civ);
+            const isTopPlayer = index === 0;
 
             return (
               <Card
                 key={player.id}
-                className="overflow-hidden hover:shadow-lg transition-shadow pt-0 pb-0 gap-2"
+                className={clsx(
+                  "overflow-hidden hover:shadow-lg transition-shadow pt-0 pb-0 gap-2",
+                  isTopPlayer &&
+                    "relative shadow-[0_0_28px_-4px_hsl(var(--secondary)/0.55)]",
+                )}
               >
+                {isTopPlayer && (
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 z-20 rounded-xl ring-2 ring-inset ring-secondary animate-champion-pulse"
+                  />
+                )}
                 <CardHeader className="p-0">
                   <div className="relative aspect-square overflow-hidden bg-muted">
                     <Image
@@ -178,7 +190,17 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                       className="object-cover"
                       priority={index < 4}
                     />
-                    <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
+                    <Badge
+                      className={clsx(
+                        "absolute top-4 left-4 z-10",
+                        isTopPlayer
+                          ? "gap-1 bg-secondary text-secondary-foreground font-bold"
+                          : "bg-primary text-primary-foreground",
+                      )}
+                    >
+                      {isTopPlayer && (
+                        <Crown className="w-3.5 h-3.5 animate-champion-crown" />
+                      )}
                       #{index + 1}
                     </Badge>
                     <span
@@ -187,6 +209,11 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                     >
                       {leagueIcons[player.league]}
                     </span>
+                    {isTopPlayer && (
+                      <span className="pointer-events-none absolute inset-0 overflow-hidden">
+                        <span className="absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-champion-shimmer" />
+                      </span>
+                    )}
                   </div>
                 </CardHeader>
                 <CardContent className="px-6 pb-4 pt-0">
@@ -196,7 +223,14 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                         className="hover:underline hover:text-secondary font-semibold transition-all"
                         href={`/players/${player.id}`}
                       >
-                        <h3 className="text-xl font-bold">{player.nickname}</h3>
+                        <h3
+                          className={clsx(
+                            "text-xl font-bold",
+                            isTopPlayer && "text-secondary",
+                          )}
+                        >
+                          {player.nickname}
+                        </h3>
                       </Link>
                     </div>
                     <div className="bg-border w-full h-[1px]" />
@@ -204,7 +238,14 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                       <ChartNoAxesCombined className="w-5 h-5 text-primary" />
                       <span className="font-semibold">
                         1v1 რეიტინგი:{" "}
-                        <span className="text-secondary font-bold">
+                        <span
+                          className={clsx(
+                            "text-secondary font-bold",
+                            isTopPlayer &&
+                              sortBy === "one_v_one" &&
+                              "inline-block animate-champion-rating",
+                          )}
+                        >
                           {player.one_v_one_stats?.rating ?? "N/A"}
                         </span>
                       </span>
@@ -214,7 +255,14 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                       <Users className="w-5 h-5 text-primary" />
                       <span className="font-semibold">
                         გუნდური რეიტინგი:{" "}
-                        <span className="text-secondary font-bold">
+                        <span
+                          className={clsx(
+                            "text-secondary font-bold",
+                            isTopPlayer &&
+                              sortBy === "team_game" &&
+                              "inline-block animate-champion-rating",
+                          )}
+                        >
                           {player.team_game_stats?.rating ?? "N/A"}
                         </span>
                       </span>
@@ -306,24 +354,62 @@ export const PlayersList = ({ players }: PlayerListProps) => {
                 const favCiv = getCivById(player.fav_civ);
                 const activeStats = player[activeStatsKey];
 
+                const isTopPlayer = index === 0;
+
                 return (
-                  <TableRow key={player.id}>
+                  <TableRow
+                    key={player.id}
+                    className={clsx(
+                      isTopPlayer && "bg-secondary/5 hover:bg-secondary/10",
+                    )}
+                  >
                     <TableCell>
-                      <Badge variant="outline">#{index + 1}</Badge>
+                      <Badge
+                        className={clsx(
+                          isTopPlayer
+                            ? "gap-1 bg-secondary text-secondary-foreground"
+                            : "",
+                        )}
+                        variant={isTopPlayer ? "default" : "outline"}
+                      >
+                        {isTopPlayer && (
+                          <Crown className="w-3.5 h-3.5 animate-champion-crown" />
+                        )}
+                        #{index + 1}
+                      </Badge>
                     </TableCell>
                     <TableCell className="font-medium">
                       <Link
                         href={`/players/${player.id}`}
-                        className="hover:underline hover:text-secondary transition-all"
+                        className={clsx(
+                          "hover:underline hover:text-secondary transition-all",
+                          isTopPlayer && "font-bold text-secondary",
+                        )}
                       >
                         {player.nickname}
                       </Link>
                     </TableCell>
                     <TableCell className="font-medium">
-                      {player.one_v_one_stats?.rating ?? "N/A"}
+                      <span
+                        className={clsx(
+                          isTopPlayer &&
+                            sortBy === "one_v_one" &&
+                            "inline-block text-secondary font-bold animate-champion-rating",
+                        )}
+                      >
+                        {player.one_v_one_stats?.rating ?? "N/A"}
+                      </span>
                     </TableCell>
                     <TableCell className="font-medium">
-                      {player.team_game_stats?.rating ?? "N/A"}
+                      <span
+                        className={clsx(
+                          isTopPlayer &&
+                            sortBy === "team_game" &&
+                            "inline-block text-secondary font-bold animate-champion-rating",
+                        )}
+                      >
+                        {player.team_game_stats?.rating ?? "N/A"}
+                      </span>
                     </TableCell>
                     <TableCell className="font-semibold">
                       {activeStats
